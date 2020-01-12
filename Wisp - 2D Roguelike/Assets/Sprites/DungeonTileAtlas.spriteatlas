@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DungeonTileAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: -3556371926663002061, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: 1911725316743810054, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -2244918612654748325, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -5162015489556205535, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -8343677356653468686, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -624796835128939725, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: 4254225002239714017, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -469151343140835996, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: 5950531400997852737, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: 295135292239156378, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: 1774709191638950811, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    - {fileID: -6976568829108321608, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+    totalSpriteSurfaceArea: 3072
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 9ddee808556d6ccb025007cfe1ce5384
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -5162015489556205535, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -2244918612654748325, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: 1911725316743810054, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -3556371926663002061, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -469151343140835996, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: 4254225002239714017, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -624796835128939725, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -8343677356653468686, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: 295135292239156378, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: 5950531400997852737, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: 1774709191638950811, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  - {fileID: -6976568829108321608, guid: 3bcf83a3cc15625429c2c9ce56dd217e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Dungeon_Test_3
+  - Dungeon_Test_2
+  - Dungeon_Test_1
+  - Dungeon_Test_0
+  - Dungeon_Test_7
+  - Dungeon_Test_6
+  - Dungeon_Test_5
+  - Dungeon_Test_4
+  - Dungeon_Test_9
+  - Dungeon_Test_8
+  - Dungeon_Test_10
+  - Dungeon_Test_11
+  m_Tag: DungeonTileAtlas
+  m_IsVariant: 0
