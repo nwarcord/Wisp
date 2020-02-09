@@ -1,43 +1,36 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // Script to attach to objects, allowing movement in a grid-like pattern.
 // When changing scenes (or Grid object) the grid of this component will have to be updated.
 
-public class MovementComponent {
+public class MovementComponent : MonoBehaviour {
 
-    private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
+    public float moveTime = 0.1f;       // Time it will take object to move, in seconds.
     private LayerMask obstructionLayer;  // Layer on which collision will be checked.
     private LayerMask characterLayer;
 
+    [SerializeField]
     private GameObject actor;
+    [SerializeField]
     private BoxCollider2D boxCollider;  // The BoxCollider2D component attached to this object.
+    [SerializeField]
     private Rigidbody2D rb2D;           // The Rigidbody2D component attached to this object.
+    [SerializeField]
     private Transform actorTransform;
+    [SerializeField]
     private Grid grid;
-    private MonoBehaviour mb;
 
     private float inverseMoveTime;      // Used to make movement more efficient.
 
     // ----------------------------------------------------------------
 
-    // void Awake() {
-    //     inverseMoveTime = 1f / moveTime;
-    //     obstructionLayer = LayerMask.GetMask("Obstructions");
-    //     characterLayer = LayerMask.GetMask("Characters");
-    //     // grid = GameObject.Find("Grid").GetComponent<Grid>();
-    // }
-
-    public MovementComponent(GameObject actor, MonoBehaviour mb, Grid grid) {
+    void Awake() {
         inverseMoveTime = 1f / moveTime;
         obstructionLayer = LayerMask.GetMask("Obstructions");
         characterLayer = LayerMask.GetMask("Characters");
-        boxCollider = actor.GetComponent<BoxCollider2D>();
-        rb2D = actor.GetComponent<Rigidbody2D>();
-        actorTransform = actor.transform;
-        this.grid = grid;
-        this.mb = mb;
+        // grid = GameObject.Find("Grid").GetComponent<Grid>();
     }
 
     // ----------------------------------------------------------------
@@ -83,10 +76,11 @@ public class MovementComponent {
 
             // If no collision, then start coroutine for movement
             if (hit.transform == null) {
-                mb.StartCoroutine(SmoothMovement(endPos));
+                StartCoroutine(SmoothMovement(endPos));
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -95,7 +89,7 @@ public class MovementComponent {
     // Co-routine for moving units from one space to next, takes a parameter end to specify where to move to.
     private IEnumerator SmoothMovement (Vector3 end) {
         
-        float sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+        float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         
         while (sqrRemainingDistance > float.Epsilon) {
 
@@ -105,7 +99,7 @@ public class MovementComponent {
             rb2D.MovePosition(newPostion);
 
             // Recalculate the remaining distance after moving.
-            sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
             // Return and loop until sqrRemainingDistance is close enough to zero to end the function
             yield return null;

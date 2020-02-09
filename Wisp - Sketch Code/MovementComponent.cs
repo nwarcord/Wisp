@@ -1,9 +1,6 @@
-﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-
-// Script to attach to objects, allowing movement in a grid-like pattern.
-// When changing scenes (or Grid object) the grid of this component will have to be updated.
 
 public class MovementComponent {
 
@@ -16,7 +13,6 @@ public class MovementComponent {
     private Rigidbody2D rb2D;           // The Rigidbody2D component attached to this object.
     private Transform actorTransform;
     private Grid grid;
-    private MonoBehaviour mb;
 
     private float inverseMoveTime;      // Used to make movement more efficient.
 
@@ -29,7 +25,7 @@ public class MovementComponent {
     //     // grid = GameObject.Find("Grid").GetComponent<Grid>();
     // }
 
-    public MovementComponent(GameObject actor, MonoBehaviour mb, Grid grid) {
+    public MovementComponent(GameObject actor, Grid grid) {
         inverseMoveTime = 1f / moveTime;
         obstructionLayer = LayerMask.GetMask("Obstructions");
         characterLayer = LayerMask.GetMask("Characters");
@@ -37,7 +33,6 @@ public class MovementComponent {
         rb2D = actor.GetComponent<Rigidbody2D>();
         actorTransform = actor.transform;
         this.grid = grid;
-        this.mb = mb;
     }
 
     // ----------------------------------------------------------------
@@ -83,10 +78,11 @@ public class MovementComponent {
 
             // If no collision, then start coroutine for movement
             if (hit.transform == null) {
-                mb.StartCoroutine(SmoothMovement(endPos));
+                StartCoroutine(SmoothMovement(endPos));
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -95,7 +91,7 @@ public class MovementComponent {
     // Co-routine for moving units from one space to next, takes a parameter end to specify where to move to.
     private IEnumerator SmoothMovement (Vector3 end) {
         
-        float sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+        float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         
         while (sqrRemainingDistance > float.Epsilon) {
 
@@ -105,7 +101,7 @@ public class MovementComponent {
             rb2D.MovePosition(newPostion);
 
             // Recalculate the remaining distance after moving.
-            sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
             // Return and loop until sqrRemainingDistance is close enough to zero to end the function
             yield return null;
