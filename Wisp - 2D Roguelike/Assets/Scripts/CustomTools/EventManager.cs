@@ -12,6 +12,8 @@ public static class EventManager {
     public static event Action actorTurnOver;
     public static event Action combatOver;
     public static event Action<ITurnAct> combatSpawn;
+    public static event Action aggroPlayer;
+    public static event Action enemyDeath;
 
     public static void RaiseOnCombat() => onCombat?.Invoke();
     public static void RaiseOnCombatExit() => combatExit?.Invoke();
@@ -20,6 +22,8 @@ public static class EventManager {
     public static void RaiseActorTurnOver() => actorTurnOver?.Invoke();
     public static void RaiseCombatOver() => combatOver?.Invoke();
     public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn?.Invoke(spawn);
+    public static void RaiseAggroPlayer() => aggroPlayer?.Invoke();
+    public static void RaiseEnemyDeath() => enemyDeath?.Invoke();
 
     public static void CheckActorTurnOver() {
         Debug.Log(actorTurnOver == null);

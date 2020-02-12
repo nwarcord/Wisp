@@ -43,7 +43,6 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     private void NextTurn() {
-        Debug.Log("NextTurn!");
         if (combatRunning) {
             currentTurn++;
 

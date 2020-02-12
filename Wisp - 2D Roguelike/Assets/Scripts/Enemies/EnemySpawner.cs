@@ -11,11 +11,13 @@ public class EnemySpawner : MonoBehaviour {
     private bool spawnerBlocked;
 
     private void OnEnable() {
-        EventManager.combatExit += SpawnEnemy;
+        // EventManager.combatExit += SpawnEnemy;
+        EventManager.enemyDeath += SpawnEnemy;
     }
 
     private void OnDisable() {
-        EventManager.combatExit -= SpawnEnemy;
+        // EventManager.combatExit -= SpawnEnemy;
+        EventManager.enemyDeath -= SpawnEnemy;
     }
 
     void Awake() {

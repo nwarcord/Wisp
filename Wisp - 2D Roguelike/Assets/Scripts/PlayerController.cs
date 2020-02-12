@@ -19,15 +19,19 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
     private void OnEnable() {
         // EventManager.onCombat += combat.EnterCombat;
         // EventManager.combatExit += combat.ExitCombat;
-        EventManager.playerEntersCombat += combat.EnterCombat;
-        EventManager.playerLeftCombat += combat.ExitCombat;
+        // EventManager.playerEntersCombat += combat.EnterCombat;
+        // EventManager.playerLeftCombat += combat.ExitCombat;
+        EventManager.enemyDeath += CheckIfCombatOver;
+        EventManager.aggroPlayer += PlayerEnterCombat;
     }
 
     private void OnDisable() {
         // EventManager.onCombat -= combat.EnterCombat;
         // EventManager.combatExit -= combat.ExitCombat;
-        EventManager.playerEntersCombat -= combat.EnterCombat;
-        EventManager.playerLeftCombat -= combat.ExitCombat;
+        // EventManager.playerEntersCombat -= combat.EnterCombat;
+        // EventManager.playerLeftCombat -= combat.ExitCombat;
+        EventManager.enemyDeath -= CheckIfCombatOver;
+        EventManager.aggroPlayer -= PlayerEnterCombat;
     }
 
     // ----------------------------------------------------------------
@@ -57,6 +61,16 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
     // ----------------------------------------------------------------
     // Combat mechanics
     // ----------------------------------------------------------------
+
+    public void PlayerEnterCombat() {
+        if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
+        combat.EnterCombat();
+    }
+
+    public void CheckIfCombatOver() {
+        combat.ExitCombat();
+        if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
+    }
 
     public bool TakeDamage(int damage) {
         health -= damage;

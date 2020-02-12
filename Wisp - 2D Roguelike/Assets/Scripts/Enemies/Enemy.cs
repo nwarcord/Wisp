@@ -52,7 +52,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected void AggroPlayer() {
         combat.EnterCombat();
         // EventManager.RaiseOnCombat();
-        EventManager.RaisePlayerEntersCombat();
+        // EventManager.RaisePlayerEntersCombat();
+        EventManager.RaiseAggroPlayer();
     }
 
     protected Vector3 GetPlayerPosition() {
@@ -70,7 +71,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     protected void Die() {
-        if (combat.inCombat) EventManager.RaiseOnCombatExit();
+        // if (combat.inCombat) EventManager.RaiseOnCombatExit();
+        if (combat.inCombat) EventManager.RaiseEnemyDeath();
         Destroy(gameObject);
     }
 
@@ -94,7 +96,11 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     public bool MyTurn() {
         // inputDelay.DelayTick();
-        if (inputDelay.CanAct()) { return true; }
+        inputDelay.DelayTick();
+        if (inputDelay.CanAct()) {
+            inputDelay.ResetInputDelay(); 
+            return true;
+        }
         return false;
     }
 
