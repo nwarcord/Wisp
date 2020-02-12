@@ -19,6 +19,10 @@ public static class EventManager {
     public static void RaisePlayerLeftCombat() => playerLeftCombat?.Invoke();
     public static void RaiseActorTurnOver() => actorTurnOver?.Invoke();
     public static void RaiseCombatOver() => combatOver?.Invoke();
-    public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn.Invoke(spawn);
+    public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn?.Invoke(spawn);
+
+    public static void CheckActorTurnOver() {
+        Debug.Log(actorTurnOver == null);
+    }
 
 }

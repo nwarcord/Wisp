@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputDelay {
     
-    private const float delayDuration = 0.75f;
+    private const float delayDuration = 1.25f;
     private float inputDelay = delayDuration;
     private bool available = false;
 

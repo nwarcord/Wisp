@@ -1,21 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInput : MonoBehaviour, ITurnAct {
+public class UserInput : MonoBehaviour {//, ITurnAct {
 
     public GameObject player; // User controlled GameObject
     private MovementComponent playerMovement;
     private CombatComponent playerCombat;
-    // private InputDelay inputDelay;
-    private const float delayDuration = 0.75f;
-    private float inputDelay = delayDuration;
+    private InputDelay inputDelay;
     private bool inputEnabled = true; // User input flag
-    private bool actionTaken = false;
 
     // Keybindings
     // private KeyCode activate = KeyCode.E;
-    private KeyCode attack = KeyCode.Q;
+    // private KeyCode attack = KeyCode.Q;
     // private KeyCode up = KeyCode.W;
     // private KeyCode down = KeyCode.S;
     // private KeyCode left = KeyCode.A;
@@ -28,18 +25,19 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Add listeners
     private void OnEnable() {
         // Pause constant-enables user input during combat
-        EventManager.playerEntersCombat += DisableInput;
-        EventManager.playerLeftCombat += EnableInput;
+        // EventManager.playerEntersCombat += DisableInput;
+        // EventManager.playerLeftCombat += EnableInput;
     }
 
     // Remove listeners
     private void OnDisable() {
-        EventManager.playerEntersCombat -= DisableInput;
-        EventManager.playerLeftCombat -= EnableInput;
+        // EventManager.playerEntersCombat -= DisableInput;
+        // EventManager.playerLeftCombat -= EnableInput;
     }
 
     // Using Start instead of Awake to ensure Player is initialized first
     public void Start() {
+        inputDelay = new InputDelay();
         playerMovement = player.GetComponent<PlayerController>().GetMovement();
         playerCombat = player.GetComponent<PlayerController>().Combat();
     }
@@ -50,36 +48,21 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     public void Update() {
         
-        if (inputDelay > 0) {
-            inputDelay -= Time.deltaTime;
-        }
-
-        else if (inputEnabled) {
-                
+        if (inputEnabled && inputDelay.CanAct()) {
+            
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
-            if (AttackAction()) {
+            if (Input.GetKey(KeyCode.Q) && Input.GetMouseButtonUp(0)) {
+            // if (AttackAction()) {
                 Debug.Log("Attack action");
                 playerCombat.OneTileAttack(Input.mousePosition);
-                ResetInputDelay();
             }
-            // else if (Input.GetMouseButtonUp(0)) {
-            else if (LeftClick()) {
+            else if (Input.GetMouseButtonUp(0)) {
+            // if (LeftClick()) {
                 Debug.Log("Move action");
                 playerMovement.AttemptMove(mouseWorldPos);
-                ResetInputDelay();
             }
 
         }
-    }
-
-    // ----------------------------------------------------------------
-    // Turn Actions
-    // ----------------------------------------------------------------
-    
-    private void ResetInputDelay() {
-        inputDelay = delayDuration;
-        actionTaken = true;
     }
 
     // ----------------------------------------------------------------
@@ -88,12 +71,10 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     private void DisableInput() {
         inputEnabled = false;
-        actionTaken = false;
     }
 
     private void EnableInput() {
         inputEnabled = true;
-        actionTaken = false;
     }
 
     // ----------------------------------------------------------------
@@ -101,7 +82,8 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     private bool AttackAction() {
-        return Input.GetKey(attack) && LeftClick();
+        // return Input.GetKey(attack) && Input.GetMouseButtonUp(0);
+        return Input.GetKey(KeyCode.Q) && LeftClick();
     }
 
     private bool LeftClick() {
@@ -112,26 +94,37 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Turn Actions
     // ----------------------------------------------------------------
 
-    public void TakeTurn() {
-        Debug.Log("Player turn!");
-        EnableInput();
-        StartCoroutine(WaitForAction());
-    }
+    // public void TakeTurn() {
+    //     StartCoroutine(WaitForAction());
+    // }
 
-    bool ParseTurn() {
-        return actionTaken;
-    }
+    // bool ParseTurn() {
+    //     if (inputEnabled && inputDelay.CanAct()) {
 
-    private IEnumerator WaitForAction() {
+    //         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //         if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
+    //         // if (AttackAction()) {
+    //             playerCombat.OneTileAttack(Input.mousePosition);
+    //             return true;
+    //         }
+    //         else if (Input.GetMouseButtonUp(0)) {
+    //         // if (LeftClick()) {
+    //             playerMovement.AttemptMove(mouseWorldPos);
+    //             return true;
+    //         }
 
-        while(!ParseTurn()) {
-            yield return null;
-        }
+    //     }
+    //     return false;
+    // }
 
-        DisableInput();
+    // private IEnumerator WaitForAction() {
 
-        EventManager.RaiseActorTurnOver();
+    //     while(!ParseTurn()) {
+    //         yield return null;
+    //     }
 
-    }
+    //     EventManager.RaiseActorTurnOver();
+
+    // }
 
 }

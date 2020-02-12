@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, ICanBeDamaged, ITurnAct {
+public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
 
     private int health;
     private CombatComponent combat;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged, ITurnAct {
         turnComponent = new TurnComponent();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         // combat = new CombatComponent(1, this.grid, this.boxCollider, this.turnComponent);
-        combat = new CombatComponent(1, this.grid, this.boxCollider);
+        combat = new CombatComponent(2, this.grid, this.boxCollider);
         movement = new MovementComponent(gameObject, this, grid);
     }
 
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged, ITurnAct {
         // if (!IsAlive()) {
             // Destroy(gameObject);
         // }
-        TakeTurn();
+        // TakeTurn();
     }
 
     public CombatComponent Combat() {
@@ -76,10 +76,10 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged, ITurnAct {
         return movement;
     }
 
-    public void TakeTurn() {
+    // public void TakeTurn() {
         
-        EventManager.RaiseActorTurnOver();
-    }
+    //     EventManager.RaiseActorTurnOver();
+    // }
 
     // public bool MyTurn() {
     //     return false;

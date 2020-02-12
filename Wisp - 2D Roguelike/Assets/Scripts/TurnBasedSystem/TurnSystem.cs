@@ -20,18 +20,22 @@ public class TurnSystem {
         
         Debug.Log("Turn System Created");
         actors = new List<ITurnAct>();
-        InitActors();
+        // InitActors();
 
         // Listeners
         EventManager.playerLeftCombat += EndCombat;
         EventManager.actorTurnOver += NextTurn;
+        // EventManager.CheckActorTurnOver();
         EventManager.combatSpawn += InsertSpawn;
+        InitActors();
 
     }
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
-        Debug.Log(actors);
+        NextTurn();
+        Debug.Log(actors.Count);
+        // EventManager.CheckActorTurnOver();
     }
 
     // ----------------------------------------------------------------
@@ -39,7 +43,7 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     private void NextTurn() {
-
+        Debug.Log("NextTurn!");
         if (combatRunning) {
             currentTurn++;
 

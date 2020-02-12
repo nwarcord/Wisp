@@ -38,9 +38,11 @@ public class BlobMonster : Enemy {
     }
 
     protected override void Patrol() {
+        CheckAlive();
         if (!MyTurn()) return;
         else if (PlayerVisible()) AggroPlayer();
         else {
+            Debug.Log("Blob move");
             System.Random rand = new System.Random();
             Vector3 move = myPosition.position;
             int randX = rand.Next(3) - 1;
@@ -84,6 +86,7 @@ public class BlobMonster : Enemy {
             combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
         }
         EventManager.RaiseActorTurnOver();
+        Debug.Log("Blob turn over!");
         // }
 
         // else if (isTurn && PlayerVisible()) AggroPlayer();
