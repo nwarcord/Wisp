@@ -2,24 +2,103 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
 
+    private int health;
     private CombatComponent combat;
-    [SerializeField]
     private MovementComponent movement;
+    private BoxCollider2D boxCollider;
+    private CircleCollider2D circleCollider;
+    private TurnComponent turnComponent;
+    [SerializeField]
+    private Grid grid;
+
+    // ----------------------------------------------------------------
+    // Event subscribe and unsubscribe
+    // ----------------------------------------------------------------
+
+    private void OnEnable() {
+        // EventManager.onCombat += combat.EnterCombat;
+        // EventManager.combatExit += combat.ExitCombat;
+        // EventManager.playerEntersCombat += combat.EnterCombat;
+        // EventManager.playerLeftCombat += combat.ExitCombat;
+        EventManager.enemyDeath += CheckIfCombatOver;
+        EventManager.aggroPlayer += PlayerEnterCombat;
+    }
+
+    private void OnDisable() {
+        // EventManager.onCombat -= combat.EnterCombat;
+        // EventManager.combatExit -= combat.ExitCombat;
+        // EventManager.playerEntersCombat -= combat.EnterCombat;
+        // EventManager.playerLeftCombat -= combat.ExitCombat;
+        EventManager.enemyDeath -= CheckIfCombatOver;
+        EventManager.aggroPlayer -= PlayerEnterCombat;
+    }
+
+    // ----------------------------------------------------------------
+    // Initialization
+    // ----------------------------------------------------------------
 
     void Awake() {
-        combat = new CombatComponent(3, 1);
+        health = 3;
+        turnComponent = new TurnComponent();
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        circleCollider = gameObject.GetComponent<CircleCollider2D>();
+        // combat = new CombatComponent(1, this.grid, this.boxCollider, this.turnComponent);
+        combat = new CombatComponent(2, this.grid, this.boxCollider);
+        movement = new MovementComponent(gameObject, this, grid);
     }
 
     private void Update() {
-        if (!this.combat.IsAlive()) {
-            Destroy(this.transform.parent.gameObject);
-        }
+        // if (!IsAlive()) {
+            // Destroy(gameObject);
+        // }
+        // TakeTurn();
     }
 
     public CombatComponent Combat() {
         return this.combat;
     }
+
+    // ----------------------------------------------------------------
+    // Combat mechanics
+    // ----------------------------------------------------------------
+
+    public void PlayerEnterCombat() {
+        if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
+        combat.EnterCombat();
+    }
+
+    public void CheckIfCombatOver() {
+        combat.ExitCombat();
+        if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
+    }
+
+    public bool TakeDamage(int damage) {
+        health -= damage;
+        Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
+        return true;
+    }
+
+    public bool IsAlive() {
+        return health > 0;
+    }
+
+    // ----------------------------------------------------------------
+    // Turn mechanics
+    // ----------------------------------------------------------------
+
+    public MovementComponent GetMovement() {
+        return movement;
+    }
+
+    // public void TakeTurn() {
+        
+    //     EventManager.RaiseActorTurnOver();
+    // }
+
+    // public bool MyTurn() {
+    //     return false;
+    // }
 
 }

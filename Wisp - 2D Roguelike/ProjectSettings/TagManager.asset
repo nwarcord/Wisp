@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - 
   - 
   - Obstructions
-  - 
-  - 
+  - Characters
+  - Items
   - 
   - 
   - 
@@ -41,11 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 89115237
+    locked: 0
   - name: Walls
     uniqueID: 2013355519
     locked: 0
-  - name: Ground
-    uniqueID: 89115237
+  - name: Items
+    uniqueID: 1475754787
     locked: 0
   - name: Characters
     uniqueID: 2929514971

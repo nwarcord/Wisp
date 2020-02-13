@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 8295743589471481427}
   - component: {fileID: 8295743589471481426}
   - component: {fileID: 8295743589471481425}
-  - component: {fileID: -798182630910046243}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GooMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,24 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-798182630910046243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8295743589471481424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53de536540658044f86e6f8392431646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveTime: 0.1
-  obstructionLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  actor: {fileID: 8295743589471481424}
-  boxCollider: {fileID: 8295743589471481425}
-  rb2D: {fileID: 8295743589471481426}
-  actorTransform: {fileID: 8295743589471481428}
-  grid: {fileID: 0}

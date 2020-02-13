@@ -19,9 +19,12 @@ public class BoardManager : MonoBehaviour {
     // Holds location of all objects present on board
     private Dictionary<GameObject, Vector3Int> objectLocations;
 
+    private List<ITurnAct> combatActors;
+
     private void Awake() {
         worldObjects = new Dictionary<Vector3Int, GameObject>();
         objectLocations = new Dictionary<GameObject, Vector3Int>();
+        combatActors = new List<ITurnAct>();
         InitBoard();
     }
 

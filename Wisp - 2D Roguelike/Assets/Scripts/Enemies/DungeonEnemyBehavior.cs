@@ -9,7 +9,7 @@ public class DungeonEnemyBehavior : MonoBehaviour {
     private Vector3 playerPosition;
     private GameObject gooMonster;
     private MovementComponent gooMove;
-    private CombatComponent combat;
+    private ICanBeDamaged vitals;
     [SerializeField]
     private Grid grid;
 
@@ -17,18 +17,18 @@ public class DungeonEnemyBehavior : MonoBehaviour {
     private BoardManager boardManager;
 
     public void Awake() {
-        combat = new CombatComponent(1, 1);
         playerPosition = playerObject.transform.position;
         gooMonster = GameObject.Instantiate(enemies[0], new Vector3(5.5f, 2.5f, 0), new Quaternion());
         gooMove = gooMonster.GetComponent<MovementComponent>();
         gooMove.UpdateGrid(grid);
+        vitals = gooMonster.GetComponent<ICanBeDamaged>();
     }
 
     public void Update() {
-        if (!combat.IsAlive()) {
-            Destroy(gooMonster);
-            gooMonster = GameObject.Instantiate(enemies[0], new Vector3(5.5f, 2.5f, 0), new Quaternion());
-        }
+        // if (!vitals.IsAlive()) {
+        //     Destroy(gooMonster);
+        //     gooMonster = GameObject.Instantiate(enemies[0], new Vector3(5.5f, 2.5f, 0), new Quaternion());
+        // }
         
         if (Input.GetMouseButtonUp(0)) {
             playerPosition = playerObject.transform.position;
@@ -53,17 +53,14 @@ public class DungeonEnemyBehavior : MonoBehaviour {
             // if (boardManager.PlaceObjectOnBoard(gooMonster, move)) {
             //     gooMonster.transform.position = move;
             // }
-            gooMove.AttemptMove(move);
+            if (playerPosition != move)
+                gooMove.AttemptMove(move);
 
         }
     }
 
     private bool PlayerAdjacent(Vector3 monster) {
         return Vector3.Magnitude(monster - this.playerPosition) <= 1;
-    }
-
-    public CombatComponent Combat() {
-        return this.combat;
     }
 
 }
