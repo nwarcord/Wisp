@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
     private CombatComponent combat;
     private MovementComponent movement;
     private BoxCollider2D boxCollider;
+    private CircleCollider2D circleCollider;
     private TurnComponent turnComponent;
     [SerializeField]
     private Grid grid;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
         health = 3;
         turnComponent = new TurnComponent();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        circleCollider = gameObject.GetComponent<CircleCollider2D>();
         // combat = new CombatComponent(1, this.grid, this.boxCollider, this.turnComponent);
         combat = new CombatComponent(2, this.grid, this.boxCollider);
         movement = new MovementComponent(gameObject, this, grid);

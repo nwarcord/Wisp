@@ -10,6 +10,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     private Transform playerTransform;
     protected CombatComponent combat;
     protected BoxCollider2D boxCollider;
+    protected CircleCollider2D circleCollider;
     [SerializeField]
     protected Grid grid;
     // protected TurnComponent turnComponent;
@@ -28,9 +29,10 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     protected void Init() {
-        myPosition = this.transform;
+        myPosition = gameObject.transform;
         movement = new MovementComponent(gameObject, this, grid);
-        boxCollider = this.GetComponent<BoxCollider2D>();
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        circleCollider = gameObject.GetComponent<CircleCollider2D>();
         // turnComponent = new TurnComponent();
         inputDelay = new InputDelay();
         // movement.UpdateGrid(grid);
@@ -112,7 +114,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         if (Vector3.Magnitude(playerTransform.position - transform.position) > vision && !combat.inCombat) {
             return false;
         }
-        return RayLinecastTools.ObjectVisible(boxCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
+        // return RayLinecastTools.ObjectVisible(boxCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
+        return RayLinecastTools.ObjectVisible(boxCollider, circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
     }
 
 }

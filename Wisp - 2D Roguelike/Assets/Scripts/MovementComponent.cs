@@ -17,6 +17,7 @@ public class MovementComponent {
     private Transform actorTransform;
     private Grid grid;
     private MonoBehaviour mb;
+    private CircleCollider2D finalPosition;
 
     private float inverseMoveTime;      // Used to make movement more efficient.
 
@@ -30,14 +31,24 @@ public class MovementComponent {
     // }
 
     public MovementComponent(GameObject actor, MonoBehaviour mb, Grid grid) {
+        this.actor = actor;
         inverseMoveTime = 1f / moveTime;
         obstructionLayer = LayerMask.GetMask("Obstructions");
         characterLayer = LayerMask.GetMask("Characters");
         boxCollider = actor.GetComponent<BoxCollider2D>();
+        finalPosition = actor.GetComponent<CircleCollider2D>();
         rb2D = actor.GetComponent<Rigidbody2D>();
         actorTransform = actor.transform;
         this.grid = grid;
         this.mb = mb;
+        InitFinalPosition();
+    }
+
+    private void InitFinalPosition() {
+        // finalPosition = actor.AddComponent<CircleCollider2D>() as CircleCollider2D;
+        Physics2D.IgnoreCollision(boxCollider, finalPosition);
+        finalPosition.radius = 0.5f;
+        ResetFinalPosition();
     }
 
     // ----------------------------------------------------------------
@@ -74,15 +85,18 @@ public class MovementComponent {
             Vector2 endCheck = startCheck + tileDistance;
 
             // Detect collision, ignoring the objects own boxcollider
-            boxCollider.enabled = false;
+            // boxCollider.enabled = false;
+            EnableColliders(false);
             RaycastHit2D hit = Physics2D.Linecast(startCheck, endCheck, obstructionLayer);
             if (hit.transform == null) {
                 hit = Physics2D.Linecast(startCheck, endCheck, characterLayer);
             }
-            boxCollider.enabled = true;
+            // boxCollider.enabled = true;
+            EnableColliders(true);
 
             // If no collision, then start coroutine for movement
             if (hit.transform == null) {
+                // finalPosition.offset = new Vector2(endPos.x - actorTransform.position.x, endPos.y - actorTransform.position.y);
                 mb.StartCoroutine(SmoothMovement(endPos));
                 return true;
             }
@@ -94,7 +108,7 @@ public class MovementComponent {
 
     // Co-routine for moving units from one space to next, takes a parameter end to specify where to move to.
     private IEnumerator SmoothMovement (Vector3 end) {
-        
+
         float sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
         
         while (sqrRemainingDistance > float.Epsilon) {
@@ -106,10 +120,15 @@ public class MovementComponent {
 
             // Recalculate the remaining distance after moving.
             sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+            finalPosition.offset = new Vector2(end.x - actorTransform.position.x + boxCollider.offset.x, end.y - actorTransform.position.y + boxCollider.offset.y);
 
             // Return and loop until sqrRemainingDistance is close enough to zero to end the function
             yield return null;
         }
+
+        // GameObject.Destroy(finalPosition);
+        ResetFinalPosition();
+
     }
 
     // ----------------------------------------------------------------
@@ -122,6 +141,15 @@ public class MovementComponent {
 
     public void UpdateGrid(Grid newGrid) {
         this.grid = newGrid;
+    }
+
+    private void ResetFinalPosition() {
+        finalPosition.offset = boxCollider.offset;
+    }
+
+    private void EnableColliders(bool state) {
+        boxCollider.enabled = state;
+        finalPosition.enabled = state;
     }
 
 }
