@@ -9,6 +9,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private CombatComponent playerCombat;
     // private InputDelay inputDelay;
     private const float delayDuration = 0.75f;
+    private const float shortDelay = 0.5f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
@@ -16,10 +17,10 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Keybindings
     // private KeyCode activate = KeyCode.E;
     private KeyCode attack = KeyCode.Q;
-    // private KeyCode up = KeyCode.W;
-    // private KeyCode down = KeyCode.S;
-    // private KeyCode left = KeyCode.A;
-    // private KeyCode right = KeyCode.D;
+    private KeyCode up = KeyCode.W;
+    private KeyCode down = KeyCode.S;
+    private KeyCode left = KeyCode.A;
+    private KeyCode right = KeyCode.D;
 
     // ----------------------------------------------------------------
     // Initialization    
@@ -64,8 +65,9 @@ public class UserInput : MonoBehaviour, ITurnAct {
                 }
             }
             // else if (Input.GetMouseButtonUp(0)) {
-            else if (LeftClick()) {
-                playerMovement.AttemptMove(mouseWorldPos);
+            // else if (LeftClick()) {
+            else if (MoveAction()) {
+                // playerMovement.AttemptMove(mouseWorldPos);
                 ResetInputDelay();
             }
 
@@ -77,7 +79,13 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
     
     private void ResetInputDelay() {
-        inputDelay = delayDuration;
+        if (playerCombat.inCombat) {
+            inputDelay = delayDuration;
+        }
+        else {
+            inputDelay = shortDelay;
+        }
+        // inputDelay = delayDuration;
         actionTaken = true;
     }
 
@@ -105,6 +113,18 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     private bool LeftClick() {
         return Input.GetMouseButtonUp(0);
+    }
+
+    private bool MoveAction() {
+        if (Input.GetKey(up))
+            return playerMovement.AttemptMove(MoveDirection.Up);
+        else if (Input.GetKey(down))
+            return playerMovement.AttemptMove(MoveDirection.Down);
+        else if (Input.GetKey(right))
+            return playerMovement.AttemptMove(MoveDirection.Right);
+        else if (Input.GetKey(left))
+            return playerMovement.AttemptMove(MoveDirection.Left);
+        else return false;
     }
 
     // ----------------------------------------------------------------
