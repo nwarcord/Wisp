@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
+public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     private int health;
     private CombatComponent combat;
@@ -18,19 +18,11 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
     // ----------------------------------------------------------------
 
     private void OnEnable() {
-        // EventManager.onCombat += combat.EnterCombat;
-        // EventManager.combatExit += combat.ExitCombat;
-        // EventManager.playerEntersCombat += combat.EnterCombat;
-        // EventManager.playerLeftCombat += combat.ExitCombat;
         EventManager.enemyDeath += CheckIfCombatOver;
         EventManager.aggroPlayer += PlayerEnterCombat;
     }
 
     private void OnDisable() {
-        // EventManager.onCombat -= combat.EnterCombat;
-        // EventManager.combatExit -= combat.ExitCombat;
-        // EventManager.playerEntersCombat -= combat.EnterCombat;
-        // EventManager.playerLeftCombat -= combat.ExitCombat;
         EventManager.enemyDeath -= CheckIfCombatOver;
         EventManager.aggroPlayer -= PlayerEnterCombat;
     }
@@ -44,16 +36,14 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
         turnComponent = new TurnComponent();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        // combat = new CombatComponent(1, this.grid, this.boxCollider, this.turnComponent);
-        combat = new CombatComponent(2, this.grid, this.boxCollider);
+        combat = new CombatComponent(gameObject, 2, this.grid, this.boxCollider);
         movement = new MovementComponent(gameObject, this, grid);
     }
 
     private void Update() {
-        // if (!IsAlive()) {
-            // Destroy(gameObject);
-        // }
-        // TakeTurn();
+
+        // Frame to frame behavior
+
     }
 
     public CombatComponent Combat() {
@@ -91,14 +81,5 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {//, ITurnAct {
     public MovementComponent GetMovement() {
         return movement;
     }
-
-    // public void TakeTurn() {
-        
-    //     EventManager.RaiseActorTurnOver();
-    // }
-
-    // public bool MyTurn() {
-    //     return false;
-    // }
 
 }

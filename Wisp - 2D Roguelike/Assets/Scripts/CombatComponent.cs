@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+// using UnityEngine.Tilemaps;
 
 public interface ICanBeDamaged {
     bool TakeDamage(int damage);
@@ -22,23 +22,21 @@ public class CombatComponent {
     private int attackPower;
     private Grid grid;
     private BoxCollider2D boxCollider;
-    // private TurnComponent turnComponent;
-    private Transform actorPosition; //TODO: initialize and utilize
+    private Transform actorPosition;
+    private const float oneTileMax = 1.42f; // Rounded root of 2
 
-    // public CombatComponent(int attackPower, Grid grid, BoxCollider2D boxCollider, TurnComponent turnComponent) {
-    public CombatComponent(int attackPower, Grid grid, BoxCollider2D boxCollider) {
+    public CombatComponent(GameObject actor, int attackPower, Grid grid, BoxCollider2D boxCollider) {
         this.combatants = 0;
         this.inCombat = false;
         this.attackPower = attackPower;
         this.grid = grid;
         this.boxCollider = boxCollider;
-        // this.turnComponent = turnComponent;
+        this.actorPosition = actor.transform;
     }
 
     public void EnterCombat() {
         if (!this.inCombat) {
             this.inCombat = true;
-            // turnComponent.ToggleCombat(true);
         }
         Debug.Log("COMBAT!!!!!!!!!!");
         combatants += 1;
@@ -49,7 +47,6 @@ public class CombatComponent {
         if (combatants <= 0) {
             this.combatants = 0;
             this.inCombat = false;
-            // turnComponent.ToggleCombat(false);
             Debug.Log("Combat over.");
         }
     }
@@ -58,22 +55,22 @@ public class CombatComponent {
         return target.TakeDamage(attackPower);
     }
 
-    public void OneTileAttack(Vector3 tileCoords) {
-        OneTileAttack(tileCoords, attackPower);
+    public bool OneTileAttack(Vector3 tileCoords) {
+        return OneTileAttack(tileCoords, attackPower);
     }
 
-    public void OneTileAttack(Vector3 tileCoords, int damage) {
+    public bool OneTileAttack(Vector3 tileCoords, int damage) {
 
         Transform target = TileSystem.ObjectAtTile(tileCoords);
-
-        if (target != null) {
+        if (target != null && TileSystem.TileDistance(target.position, actorPosition.position) <= 1) {
             ICanBeDamaged victim = target.GetComponent<ICanBeDamaged>();
             if (victim != null) {
                 victim.TakeDamage(damage);
-            }
-            
-        }
+                return true;
+            }   
 
+        }
+        return false;
     }
 
 }

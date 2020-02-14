@@ -23,29 +23,21 @@ public class MovementComponent {
 
     // ----------------------------------------------------------------
 
-    // void Awake() {
-    //     inverseMoveTime = 1f / moveTime;
-    //     obstructionLayer = LayerMask.GetMask("Obstructions");
-    //     characterLayer = LayerMask.GetMask("Characters");
-    //     // grid = GameObject.Find("Grid").GetComponent<Grid>();
-    // }
-
     public MovementComponent(GameObject actor, MonoBehaviour mb, Grid grid) {
         this.actor = actor;
         inverseMoveTime = 1f / moveTime;
         obstructionLayer = LayerMask.GetMask("Obstructions");
         characterLayer = LayerMask.GetMask("Characters");
         boxCollider = actor.GetComponent<BoxCollider2D>();
-        finalPosition = actor.GetComponent<CircleCollider2D>();
+        InitFinalPosition();
         rb2D = actor.GetComponent<Rigidbody2D>();
         actorTransform = actor.transform;
         this.grid = grid;
         this.mb = mb;
-        InitFinalPosition();
     }
 
     private void InitFinalPosition() {
-        // finalPosition = actor.AddComponent<CircleCollider2D>() as CircleCollider2D;
+        finalPosition = actor.GetComponent<CircleCollider2D>();
         Physics2D.IgnoreCollision(boxCollider, finalPosition);
         finalPosition.radius = 0.5f;
         ResetFinalPosition();
@@ -84,19 +76,16 @@ public class MovementComponent {
             // Calculate the end of linecast by adding distance to the start
             Vector2 endCheck = startCheck + tileDistance;
 
-            // Detect collision, ignoring the objects own boxcollider
-            // boxCollider.enabled = false;
+            // Detect collision, ignoring the objects own colliders
             EnableColliders(false);
             RaycastHit2D hit = Physics2D.Linecast(startCheck, endCheck, obstructionLayer);
             if (hit.transform == null) {
                 hit = Physics2D.Linecast(startCheck, endCheck, characterLayer);
             }
-            // boxCollider.enabled = true;
             EnableColliders(true);
 
             // If no collision, then start coroutine for movement
             if (hit.transform == null) {
-                // finalPosition.offset = new Vector2(endPos.x - actorTransform.position.x, endPos.y - actorTransform.position.y);
                 mb.StartCoroutine(SmoothMovement(endPos));
                 return true;
             }
@@ -120,13 +109,13 @@ public class MovementComponent {
 
             // Recalculate the remaining distance after moving.
             sqrRemainingDistance = (actorTransform.position - end).sqrMagnitude;
+            // Set placeholder collider to save spot
             finalPosition.offset = new Vector2(end.x - actorTransform.position.x + boxCollider.offset.x, end.y - actorTransform.position.y + boxCollider.offset.y);
 
             // Return and loop until sqrRemainingDistance is close enough to zero to end the function
             yield return null;
         }
 
-        // GameObject.Destroy(finalPosition);
         ResetFinalPosition();
 
     }
