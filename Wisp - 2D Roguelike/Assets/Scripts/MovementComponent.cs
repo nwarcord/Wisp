@@ -5,6 +5,8 @@ using UnityEngine;
 // Script to attach to objects, allowing movement in a grid-like pattern.
 // When changing scenes (or Grid object) the grid of this component will have to be updated.
 
+public enum MoveDirection { Up, Down, Left, Right }
+
 public class MovementComponent {
 
     private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
@@ -91,6 +93,17 @@ public class MovementComponent {
             }
         }
         return false;
+    }
+
+    public bool AttemptMove(MoveDirection direction) {
+        Vector3 pos = actorTransform.position;
+        pos.y -= 0.5f;
+        if (direction == MoveDirection.Up) pos.y++;
+        else if (direction == MoveDirection.Down) pos.y--;
+        else if (direction == MoveDirection.Right) pos.x++;
+        else if (direction == MoveDirection.Left) pos.x--;
+        else { Debug.LogError("Invalid move direction"); }
+        return AttemptMove(pos);
     }
 
     // ----------------------------------------------------------------
