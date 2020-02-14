@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
 public static class EventManager {
 
@@ -24,9 +24,5 @@ public static class EventManager {
     public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn?.Invoke(spawn);
     public static void RaiseAggroPlayer() => aggroPlayer?.Invoke();
     public static void RaiseEnemyDeath() => enemyDeath?.Invoke();
-
-    public static void CheckActorTurnOver() {
-        Debug.Log(actorTurnOver == null);
-    }
 
 }

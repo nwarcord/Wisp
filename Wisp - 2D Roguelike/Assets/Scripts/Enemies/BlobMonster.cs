@@ -21,8 +21,7 @@ public class BlobMonster : Enemy {
     }
 
     protected override void SetCombat() {
-        // this.combat = new CombatComponent(1, this.grid, this.boxCollider, this.turnComponent);
-        this.combat = new CombatComponent(1, this.grid, this.boxCollider);
+        this.combat = new CombatComponent(gameObject, 1, this.grid, this.boxCollider);
     }
 
     protected override void SetVision() {
@@ -42,7 +41,6 @@ public class BlobMonster : Enemy {
         if (!MyTurn()) return;
         else if (PlayerVisible()) AggroPlayer();
         else {
-            Debug.Log("Blob move");
             System.Random rand = new System.Random();
             Vector3 move = myPosition.position;
             int randX = rand.Next(3) - 1;
@@ -54,12 +52,7 @@ public class BlobMonster : Enemy {
     }
 
     public override void TakeTurn() {
-        Debug.Log("Blob Turn!");
         CheckAlive();
-        // bool isTurn = MyTurn();
-
-        // if (isTurn && combat.inCombat) {
-        // if (combat.inCombat) {
         Vector3 playerPosition = GetPlayerPosition();
         playerPosition.y -= 0.5f;
         Vector3 move = myPosition.position;
@@ -86,14 +79,6 @@ public class BlobMonster : Enemy {
             combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
         }
         EventManager.RaiseActorTurnOver();
-        Debug.Log("Blob turn over!");
-        // }
-
-        // else if (isTurn && PlayerVisible()) AggroPlayer();
-        // else if (PlayerVisible()) AggroPlayer();
-        
-        // else if (isTurn) Patrol();
-        // else Patrol();
     }
 
 }

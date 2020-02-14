@@ -11,7 +11,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private const float delayDuration = 0.75f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
-    private bool actionTaken = false;
+    private bool actionTaken = false; // For turn coroutine
 
     // Keybindings
     // private KeyCode activate = KeyCode.E;
@@ -59,13 +59,12 @@ public class UserInput : MonoBehaviour, ITurnAct {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
             if (AttackAction()) {
-                Debug.Log("Attack action");
-                playerCombat.OneTileAttack(Input.mousePosition);
-                ResetInputDelay();
+                if (playerCombat.OneTileAttack(Input.mousePosition)) {
+                    ResetInputDelay();
+                }
             }
             // else if (Input.GetMouseButtonUp(0)) {
             else if (LeftClick()) {
-                Debug.Log("Move action");
                 playerMovement.AttemptMove(mouseWorldPos);
                 ResetInputDelay();
             }
@@ -113,7 +112,6 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void TakeTurn() {
-        Debug.Log("Player turn!");
         EnableInput();
         StartCoroutine(WaitForAction());
     }
