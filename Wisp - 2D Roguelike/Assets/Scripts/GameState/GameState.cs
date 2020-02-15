@@ -19,6 +19,7 @@ public class GameState : MonoBehaviour {
 
     void Awake() {
         player = GameObject.FindWithTag("Player");
+        IgnoreSpawnerColliders();
         DontDestroyOnLoad(gameObject);
     }
 
@@ -29,6 +30,12 @@ public class GameState : MonoBehaviour {
 
     private void ClearTurnSystem() {
         turnSystem = null;
+    }
+
+    private void IgnoreSpawnerColliders() {
+        Physics2D.IgnoreLayerCollision(11, 8);
+        Physics2D.IgnoreLayerCollision(11, 9);
+        Physics2D.IgnoreLayerCollision(11, 10);
     }
 
 }

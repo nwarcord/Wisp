@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
 
     void Update() {
         // if (!combatActive) transform.Translate(transform.up * 0.5f * Time.deltaTime);
-        if (!combatActive) rb.velocity = transform.up * 50.5f * Time.deltaTime;
+        if (!combatActive) rb.velocity = (transform.up - transform.right) * 750.0f * Time.deltaTime;
     }
 
     public void TakeTurn() {
