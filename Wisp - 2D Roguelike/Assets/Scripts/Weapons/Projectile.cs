@@ -5,30 +5,29 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, ITurnAct {
 
     [SerializeField]
-    private int baseDamage;
+    private int baseDamage = 0;
     [SerializeField]
-    private int tileMovePerTurn;
+    private int tileMovePerTurn = 0;
     [SerializeField]
-    private bool isContinuous;
+    private bool isContinuous = false;
     private BoxCollider2D boxCollider;
-    private MovementComponent movement;
-    private TurnComponent turnComponent;
+    private Rigidbody2D rb;
+    private ProjectileMovement movement;
+    private bool combatActive = false;
 
     void Awake() {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
-        turnComponent = new TurnComponent();
-        movement = new MovementComponent(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
+        movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
     }
 
     void Update() {
-        TakeTurn();
+        // if (!combatActive) transform.Translate(transform.up * 0.5f * Time.deltaTime);
+        if (!combatActive) rb.velocity = transform.up * 50.5f * Time.deltaTime;
     }
 
     public void TakeTurn() {
-        // bool isTurn = MyTurn();
-        // if (isTurn) {
-        //     return;
-        // }
+        ProjectileMove();
     }
 
     // public bool MyTurn() {
@@ -38,6 +37,18 @@ public class Projectile : MonoBehaviour, ITurnAct {
     //     }
     //     return false;
     // }
+
+    private void ProjectileMove() {
+        movement.AttemptMove(transform.forward * tileMovePerTurn);
+    }
+
+    private void EnableCombatFlag() {
+        combatActive = true;
+    }
+
+    private void DisableCombatFlag() {
+        combatActive = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D other) {
         ICanBeDamaged victim = other.gameObject.GetComponent<ICanBeDamaged>();

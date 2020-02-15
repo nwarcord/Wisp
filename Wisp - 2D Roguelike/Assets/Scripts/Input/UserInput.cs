@@ -13,14 +13,16 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
+    public Projectile arrows;
 
     // Keybindings
-    // private KeyCode activate = KeyCode.E;
+    private KeyCode activate = KeyCode.E;
     private KeyCode attack = KeyCode.Q;
     private KeyCode up = KeyCode.W;
     private KeyCode down = KeyCode.S;
     private KeyCode left = KeyCode.A;
     private KeyCode right = KeyCode.D;
+    private KeyCode ranged = KeyCode.LeftShift;
 
     // ----------------------------------------------------------------
     // Initialization    
@@ -61,6 +63,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
             // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
             if (AttackAction()) {
                 if (playerCombat.OneTileAttack(Input.mousePosition)) {
+                    ResetInputDelay();
+                }
+            }
+            else if (RangedAttackAction()) {
+                if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
                     ResetInputDelay();
                 }
             }
@@ -125,6 +132,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
         else if (Input.GetKey(left))
             return playerMovement.AttemptMove(MoveDirection.Left);
         else return false;
+    }
+
+    private bool InteractAction() {
+        return Input.GetKey(activate);
+    }
+
+    private bool RangedAttackAction() {
+        return Input.GetKey(ranged) && LeftClick();
     }
 
     // ----------------------------------------------------------------
