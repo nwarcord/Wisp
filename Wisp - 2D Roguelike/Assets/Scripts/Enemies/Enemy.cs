@@ -75,6 +75,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected void Die() {
         // if (combat.inCombat) EventManager.RaiseOnCombatExit();
         if (combat.inCombat) EventManager.RaiseEnemyDeath();
+        else EventManager.RaiseEnemyDeath();
         Destroy(gameObject);
     }
 

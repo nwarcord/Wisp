@@ -30,4 +30,23 @@ public static class TileSystem {
         return Mathf.FloorToInt(distance);
     }
 
+    public static int TileDistance(Vector3 tileOne, Vector3 tileTwo) {
+        Vector2 tileOneConverted = new Vector2(tileOne.x, tileOne.y);
+        Vector2 tileTwoConverted = new Vector2(tileTwo.x, tileTwo.y);
+        return TileDistance(tileOneConverted, tileTwoConverted);
+    }
+
+    public static Vector3 AdjacentTile(Vector3Int target, Vector3Int home, Vector3 actor) {
+        Vector3 adjacentTile = actor;
+        if (target.x != home.x) {
+            if (target.x < home.x) adjacentTile.x--;
+            else adjacentTile.x ++;
+        }
+        if (target.y != home.y) {
+            if (target.y < home.y) adjacentTile.y--;
+            else adjacentTile.y++;
+        }
+        return adjacentTile;
+    }
+
 }

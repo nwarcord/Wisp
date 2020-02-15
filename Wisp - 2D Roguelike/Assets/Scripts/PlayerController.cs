@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private CircleCollider2D circleCollider;
     private TurnComponent turnComponent;
     [SerializeField]
-    private Grid grid;
+    private Grid grid = default;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe

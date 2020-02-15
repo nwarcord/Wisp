@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 
     [SerializeField]
-    private Enemy enemyType;
+    private Enemy enemyType = default;
     private BoxCollider2D spawnCollider;
     private Vector3 position;
     private bool spawnerBlocked;
@@ -34,7 +34,8 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     public void SpawnEnemy() {
-        GameObject.Instantiate(enemyType, position, new Quaternion());
+        if (!spawnerBlocked)
+            GameObject.Instantiate(enemyType, position, new Quaternion());
         spawnerBlocked = true;
     }
 

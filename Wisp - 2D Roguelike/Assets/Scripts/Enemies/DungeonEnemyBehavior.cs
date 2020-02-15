@@ -11,7 +11,7 @@ public class DungeonEnemyBehavior : MonoBehaviour {
     private MovementComponent gooMove;
     private ICanBeDamaged vitals;
     [SerializeField]
-    private Grid grid;
+    private Grid grid = default;
 
     [SerializeField]
     private BoardManager boardManager;

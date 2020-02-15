@@ -11,7 +11,7 @@ public class BoardManager : MonoBehaviour {
     private GameObject player;
 
     [SerializeField]
-    private Grid grid;
+    private Grid grid = default;
 
     // Holds which object (if any) are at any given coordinates
     private Dictionary<Vector3Int, GameObject> worldObjects;
