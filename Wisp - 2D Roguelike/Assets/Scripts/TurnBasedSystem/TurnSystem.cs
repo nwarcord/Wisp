@@ -43,8 +43,11 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     private void NextTurn() {
+        TurnProcess();
+    }
+
+    private void TurnProcess() {
         if (combatRunning) {
-            currentTurn++;
 
             if (currentTurn >= actors.Count) {    
                 currentTurn = 0;
@@ -52,10 +55,12 @@ public class TurnSystem {
             }
 
             actors[currentTurn].TakeTurn();
+            
+            currentTurn++;
         }
 
         else { CombatOver(); }
-
+        EventManager.RaiseActorTurnOver();
     }
 
     private void InsertSpawn(ITurnAct spawn) {

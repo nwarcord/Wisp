@@ -78,7 +78,7 @@ public class BlobMonster : Enemy {
         else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
             combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
         }
-        EventManager.RaiseActorTurnOver();
+        // EventManager.RaiseActorTurnOver();
     }
 
 }

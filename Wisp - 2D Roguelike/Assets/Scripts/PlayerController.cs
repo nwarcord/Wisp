@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     }
 
     public void CheckIfCombatOver() {
+        if (!combat.inCombat) return;
         combat.ExitCombat();
         if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
     }

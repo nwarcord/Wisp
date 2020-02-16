@@ -163,7 +163,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
         DisableInput();
 
-        EventManager.RaiseActorTurnOver();
+        // EventManager.RaiseActorTurnOver();
 
     }
 
