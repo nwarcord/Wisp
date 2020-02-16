@@ -28,6 +28,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
 
     public void TakeTurn() {
         ProjectileMove();
+        // EventManager.RaiseActorTurnOver();
     }
 
     // public bool MyTurn() {
@@ -39,7 +40,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
     // }
 
     private void ProjectileMove() {
-        movement.AttemptMove(transform.forward * tileMovePerTurn);
+        movement.AttemptMove((transform.up - transform.right) * tileMovePerTurn);
     }
 
     private void EnableCombatFlag() {
@@ -56,6 +57,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
             victim.TakeDamage(baseDamage);
         }
         if (!isContinuous) {
+            // if (combatActive) EventManager.RaiseActorTurnOver();
             Destroy(gameObject);
         }
     }
