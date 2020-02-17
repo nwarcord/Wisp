@@ -37,4 +37,8 @@ public class GooMonsterAI : MonoBehaviour, ITurnAct, ICanBeDamaged {
         return health > 0;
     }
 
+    public IEnumerator TurnRoutine() {
+        yield return null;
+    }
+
 }

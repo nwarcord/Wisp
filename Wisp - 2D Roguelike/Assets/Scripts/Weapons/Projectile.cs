@@ -15,29 +15,31 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private ProjectileMovement movement;
     private bool combatActive = false;
 
+    private void OnEnable() {
+        EventManager.playerEntersCombat += EnableCombatFlag;
+        EventManager.playerLeftCombat += DisableCombatFlag;
+    }
+
+    private void OnDisable() {
+        EventManager.playerEntersCombat -= EnableCombatFlag;
+        EventManager.playerLeftCombat -= DisableCombatFlag;
+        StopAllCoroutines();
+    }
+
     void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
     }
 
-    void Update() {
-        // if (!combatActive) transform.Translate(transform.up * 0.5f * Time.deltaTime);
-        if (!combatActive) rb.velocity = (transform.up - transform.right) * 750.0f * Time.deltaTime;
+    void FixedUpdate() {
+        if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
+        else rb.velocity = new Vector2();
     }
 
     public void TakeTurn() {
-        ProjectileMove();
-        // EventManager.RaiseActorTurnOver();
+        StartCoroutine(TurnRoutine());
     }
-
-    // public bool MyTurn() {
-    //     turnComponent.TurnTick();
-    //     if (Input.GetMouseButtonUp(0) && turnComponent.CanAct()) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     private void ProjectileMove() {
         movement.AttemptMove((transform.up - transform.right) * tileMovePerTurn);
@@ -57,9 +59,14 @@ public class Projectile : MonoBehaviour, ITurnAct {
             victim.TakeDamage(baseDamage);
         }
         if (!isContinuous) {
-            // if (combatActive) EventManager.RaiseActorTurnOver();
             Destroy(gameObject);
         }
+    }
+
+    public IEnumerator TurnRoutine() {
+        ProjectileMove();
+        yield return null;
+        EventManager.RaiseActorTurnOver();
     }
 
 }

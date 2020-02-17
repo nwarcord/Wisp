@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// using System.Threading;
 
 public interface ITurnAct {
     void TakeTurn();
+    IEnumerator TurnRoutine();
 }
 
 public class TurnSystem {
@@ -17,36 +19,31 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     public TurnSystem() {
-        
         Debug.Log("Turn System Created");
         actors = new List<ITurnAct>();
-        // InitActors();
 
         // Listeners
         EventManager.playerLeftCombat += EndCombat;
-        EventManager.actorTurnOver += NextTurn;
-        // EventManager.CheckActorTurnOver();
         EventManager.combatSpawn += InsertSpawn;
+        EventManager.actorTurnOver += NextTurn;
         InitActors();
 
     }
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
-        NextTurn();
         Debug.Log(actors.Count);
-        // EventManager.CheckActorTurnOver();
+        for (int i = 0; i < actors.Count; i++) {
+            Debug.Log("Actor " + i + ": " + actors[i]);
+        }
     }
 
     // ----------------------------------------------------------------
     // Turn handling
     // ----------------------------------------------------------------
 
-    private void NextTurn() {
-        TurnProcess();
-    }
-
-    private void TurnProcess() {
+    public void NextTurn() {
+        Debug.Log("Turn " + currentTurn);
         if (combatRunning) {
 
             if (currentTurn >= actors.Count) {    
@@ -54,13 +51,15 @@ public class TurnSystem {
                 actors.RemoveAll(item => item == null); // GC for null objects
             }
 
-            actors[currentTurn].TakeTurn();
-            
+            if (actors[currentTurn] != null) {
+                actors[currentTurn].TakeTurn();
+            }
             currentTurn++;
+
         }
 
         else { CombatOver(); }
-        EventManager.RaiseActorTurnOver();
+
     }
 
     private void InsertSpawn(ITurnAct spawn) {
@@ -79,8 +78,8 @@ public class TurnSystem {
 
         // Remove listeners
         EventManager.playerLeftCombat -= EndCombat;
-        EventManager.actorTurnOver -= NextTurn;
         EventManager.combatSpawn -= InsertSpawn;
+        EventManager.actorTurnOver -= NextTurn;
 
         // Broadcast that Combat has ended
         EventManager.RaiseCombatOver();
