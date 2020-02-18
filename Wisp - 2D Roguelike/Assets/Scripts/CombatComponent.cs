@@ -8,13 +8,6 @@ public interface ICanBeDamaged {
     bool IsAlive();
 }
 
-// public interface ICombat {
-//     int attackPower { get; }
-//     int armor { get; }
-//     bool BasicAttack(ICanBeDamaged target);
-//     void SetAttackPower(int attack);
-// }
-
 public class CombatComponent {
     
     public bool inCombat { get; private set; }
@@ -73,18 +66,6 @@ public class CombatComponent {
         return false;
     }
 
-    // public bool RangedAttack(Vector3 attackDirection, Projectile projectile) {
-        
-    //     Vector3Int gridDirection = grid.WorldToCell(attackDirection);
-    //     Vector3Int actorTile = grid.WorldToCell(actorPosition.position);
-
-    //     Vector3 startPosition = new Vector3Int(gridDirection.x - actorTile.x, gridDirection.y - actorTile.y, 0);
-
-    //     GameObject.Instantiate(projectile, startPosition.normalized, Quaternion.LookRotation(gridDirection, Vector3.up));
-        
-    //     return true;
-    // }
-
     public bool RangedAttack(Vector3 attackDirection, Projectile projectile) {
 
         Vector3 actorPos = actorPosition.position;
@@ -100,7 +81,8 @@ public class CombatComponent {
 
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
 
-        GameObject.Instantiate(projectile, spawnPoint, targetRotation);
+        Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation);
+        EventManager.RaiseCombatSpawn(p);
         
         return true;
     }

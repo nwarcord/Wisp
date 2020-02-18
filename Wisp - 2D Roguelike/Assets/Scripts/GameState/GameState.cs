@@ -6,6 +6,7 @@ public class GameState : MonoBehaviour {
 
     private GameObject player;
     private TurnSystem turnSystem;
+    public static bool combatState = false;
     // private bool turnSystemRunning = false;
     // private bool actorTurnOver = true;
 
@@ -32,6 +33,7 @@ public class GameState : MonoBehaviour {
     private void InitTurnSystem() {
         if (turnSystem != null) return;
         turnSystem = new TurnSystem();
+        combatState = true;
         turnSystem.NextTurn();
         // actorTurnOver = false;
         // turnSystemRunning = true;
@@ -45,6 +47,7 @@ public class GameState : MonoBehaviour {
 
     private void ClearTurnSystem() {
         turnSystem = null;
+        combatState = false;
         // GameObject.Destroy(turnSystem);
         // turnSystemRunning = false;
     }

@@ -40,12 +40,6 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         movement = new MovementComponent(gameObject, this, grid);
     }
 
-    private void Update() {
-
-        // Frame to frame behavior
-
-    }
-
     public CombatComponent Combat() {
         return this.combat;
     }

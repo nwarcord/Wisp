@@ -30,6 +30,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
+        combatActive = GameState.combatState;
     }
 
     void FixedUpdate() {

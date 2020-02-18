@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using System.Threading;
 
 public interface ITurnAct {
     void TakeTurn();
@@ -63,6 +62,7 @@ public class TurnSystem {
     }
 
     private void InsertSpawn(ITurnAct spawn) {
+        Debug.Log("Spawn insert");
         actors.Insert(currentTurn, spawn);
     }
 
