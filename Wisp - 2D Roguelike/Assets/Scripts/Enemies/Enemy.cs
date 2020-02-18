@@ -53,8 +53,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected void AggroPlayer() {
         combat.EnterCombat();
-        // EventManager.RaiseOnCombat();
-        // EventManager.RaisePlayerEntersCombat();
         EventManager.RaiseAggroPlayer();
     }
 
@@ -73,7 +71,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     protected void Die() {
-        // if (combat.inCombat) EventManager.RaiseOnCombatExit();
         if (combat.inCombat) EventManager.RaiseEnemyDeath();
         else EventManager.RaiseEnemyDeath();
         Destroy(gameObject);
@@ -85,26 +82,27 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected abstract void CheckAlive();
 
-    public abstract void TakeTurn();
+    public void TakeTurn() {
+        StartCoroutine(TurnRoutine());
+    }
     
     protected abstract void Patrol();
 
-    // public bool MyTurn() {
-    //     turnComponent.TurnTick();
-    //     if ((Input.GetMouseButtonUp(0) || !combat.inCombat) && turnComponent.CanAct()) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     public bool MyTurn() {
-        // inputDelay.DelayTick();
         inputDelay.DelayTick();
         if (inputDelay.CanAct()) {
             inputDelay.ResetInputDelay(); 
             return true;
         }
         return false;
+    }
+
+    protected abstract void TurnBehavior();
+
+    public IEnumerator TurnRoutine() {
+        TurnBehavior();
+        yield return null;
+        EventManager.RaiseActorTurnOver();
     }
 
     // To be used when out of combat to initiate combat with player
@@ -115,7 +113,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         if (Vector3.Magnitude(playerTransform.position - transform.position) > vision && !combat.inCombat) {
             return false;
         }
-        // return RayLinecastTools.ObjectVisible(boxCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
         return RayLinecastTools.ObjectVisible(boxCollider, circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
     }
 

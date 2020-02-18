@@ -5,8 +5,6 @@
 
 public static class EventManager {
 
-    public static event Action onCombat;
-    public static event Action combatExit;
     public static event Action playerEntersCombat;
     public static event Action playerLeftCombat;
     public static event Action actorTurnOver;
@@ -15,14 +13,26 @@ public static class EventManager {
     public static event Action aggroPlayer;
     public static event Action enemyDeath;
 
-    public static void RaiseOnCombat() => onCombat?.Invoke();
-    public static void RaiseOnCombatExit() => combatExit?.Invoke();
-    public static void RaisePlayerEntersCombat() => playerEntersCombat?.Invoke();
-    public static void RaisePlayerLeftCombat() => playerLeftCombat?.Invoke();
+    // ----------------------------------------------------------------
+    // Turn system events
+    // ----------------------------------------------------------------
+
     public static void RaiseActorTurnOver() => actorTurnOver?.Invoke();
     public static void RaiseCombatOver() => combatOver?.Invoke();
     public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn?.Invoke(spawn);
+
+    // ----------------------------------------------------------------
+    // Enemy combat events
+    // ----------------------------------------------------------------
+
     public static void RaiseAggroPlayer() => aggroPlayer?.Invoke();
     public static void RaiseEnemyDeath() => enemyDeath?.Invoke();
+
+    // ----------------------------------------------------------------
+    // Player combat events
+    // ----------------------------------------------------------------
+
+    public static void RaisePlayerEntersCombat() => playerEntersCombat?.Invoke();
+    public static void RaisePlayerLeftCombat() => playerLeftCombat?.Invoke();
 
 }

@@ -147,8 +147,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void TakeTurn() {
-        EnableInput();
-        StartCoroutine(WaitForAction());
+        StartCoroutine(TurnRoutine());
     }
 
     bool ParseTurn() {
@@ -163,8 +162,12 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
         DisableInput();
 
-        // EventManager.RaiseActorTurnOver();
+    }
 
+    public IEnumerator TurnRoutine() {
+        EnableInput();
+        yield return StartCoroutine(WaitForAction());
+        EventManager.RaiseActorTurnOver();
     }
 
 }

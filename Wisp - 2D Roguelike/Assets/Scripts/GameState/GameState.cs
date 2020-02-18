@@ -6,6 +6,9 @@ public class GameState : MonoBehaviour {
 
     private GameObject player;
     private TurnSystem turnSystem;
+    public static bool combatState = false;
+    // private bool turnSystemRunning = false;
+    // private bool actorTurnOver = true;
 
     private void OnEnable() {
         EventManager.playerEntersCombat += InitTurnSystem;
@@ -23,13 +26,30 @@ public class GameState : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    // private void Update() {
+        // if (actorTurnOver && turnSystemRunning) ProcessTurn();
+    // }
+
     private void InitTurnSystem() {
         if (turnSystem != null) return;
         turnSystem = new TurnSystem();
+        combatState = true;
+        turnSystem.NextTurn();
+        // actorTurnOver = false;
+        // turnSystemRunning = true;
     }
+
+    // private void ProcessTurn() {
+        // actorTurnOver = false;
+        // turnSystem.NextTurn();
+        // actorTurnOver = true;
+    // }
 
     private void ClearTurnSystem() {
         turnSystem = null;
+        combatState = false;
+        // GameObject.Destroy(turnSystem);
+        // turnSystemRunning = false;
     }
 
     private void IgnoreSpawnerColliders() {
