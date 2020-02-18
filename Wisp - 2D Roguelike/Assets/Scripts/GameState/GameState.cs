@@ -7,17 +7,22 @@ public class GameState : MonoBehaviour {
     private GameObject player;
     private TurnSystem turnSystem;
     public static bool combatState = false;
+    private static int combatants = 0;
     // private bool turnSystemRunning = false;
     // private bool actorTurnOver = true;
 
     private void OnEnable() {
-        EventManager.playerEntersCombat += InitTurnSystem;
+        EventManager.aggroPlayer += InitTurnSystem;
+        // EventManager.playerEntersCombat += InitTurnSystem;
         EventManager.combatOver += ClearTurnSystem;
+        EventManager.enemyDeath += EnemyDeath;
     }
 
     private void OnDisable() {
-        EventManager.playerEntersCombat -= InitTurnSystem;
+        EventManager.aggroPlayer -= InitTurnSystem;
+        // EventManager.playerEntersCombat -= InitTurnSystem;
         EventManager.combatOver -= ClearTurnSystem;
+        EventManager.enemyDeath -= EnemyDeath;
     }
 
     void Awake() {
@@ -26,15 +31,22 @@ public class GameState : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    // private void Update() {
+    private void Update() {
         // if (actorTurnOver && turnSystemRunning) ProcessTurn();
-    // }
+        if (combatants == 0) EventManager.RaiseCombatOver();
+    }
 
-    private void InitTurnSystem() {
-        if (turnSystem != null) return;
-        turnSystem = new TurnSystem();
-        combatState = true;
-        turnSystem.NextTurn();
+    private void InitTurnSystem(ITurnAct enemy) {
+        combatants++;
+        // if (turnSystem != null) {
+        if (combatState) {
+            EventManager.RaiseCombatSpawn(enemy);
+        }
+        else {
+            turnSystem = new TurnSystem();
+            combatState = true;
+            turnSystem.NextTurn();
+        }
         // actorTurnOver = false;
         // turnSystemRunning = true;
     }
@@ -46,10 +58,15 @@ public class GameState : MonoBehaviour {
     // }
 
     private void ClearTurnSystem() {
-        turnSystem = null;
+        combatants = 0;
         combatState = false;
+        turnSystem = null;
         // GameObject.Destroy(turnSystem);
         // turnSystemRunning = false;
+    }
+
+    private void EnemyDeath() {
+        if (combatState) combatants--;
     }
 
     private void IgnoreSpawnerColliders() {

@@ -16,13 +16,13 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private bool combatActive = false;
 
     private void OnEnable() {
-        EventManager.playerEntersCombat += EnableCombatFlag;
-        EventManager.playerLeftCombat += DisableCombatFlag;
+        EventManager.combatStart += EnableCombatFlag;
+        EventManager.combatOver += DisableCombatFlag;
     }
 
     private void OnDisable() {
-        EventManager.playerEntersCombat -= EnableCombatFlag;
-        EventManager.playerLeftCombat -= DisableCombatFlag;
+        EventManager.combatStart -= EnableCombatFlag;
+        EventManager.combatOver -= DisableCombatFlag;
         StopAllCoroutines();
     }
 

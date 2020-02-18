@@ -22,7 +22,7 @@ public class TurnSystem {
         actors = new List<ITurnAct>();
 
         // Listeners
-        EventManager.playerLeftCombat += EndCombat;
+        EventManager.combatOver += EndCombat;
         EventManager.combatSpawn += InsertSpawn;
         EventManager.actorTurnOver += NextTurn;
         InitActors();
@@ -42,18 +42,21 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     public void NextTurn() {
-        Debug.Log("Turn " + currentTurn);
+        
         if (combatRunning) {
-
-            if (currentTurn >= actors.Count) {    
-                currentTurn = 0;
-                actors.RemoveAll(item => item == null); // GC for null objects
-            }
-
-            if (actors[currentTurn] != null) {
+            
+            if (actors[currentTurn] as UnityEngine.Object != null) {
                 actors[currentTurn].TakeTurn();
             }
             currentTurn++;
+
+            if (currentTurn >= actors.Count) {    
+                currentTurn = 0;
+                // Debug.Log("Pre-GC");
+                // int removed = actors.RemoveAll(item => item as UnityEngine.Object == null); // GC for null objects
+                // Debug.Log(removed + " items Garbage Collected");
+            }
+
 
         }
 
@@ -77,7 +80,7 @@ public class TurnSystem {
     private void CombatOver() {
 
         // Remove listeners
-        EventManager.playerLeftCombat -= EndCombat;
+        EventManager.combatOver -= EndCombat;
         EventManager.combatSpawn -= InsertSpawn;
         EventManager.actorTurnOver -= NextTurn;
 

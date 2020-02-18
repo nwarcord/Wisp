@@ -31,14 +31,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Add listeners
     private void OnEnable() {
         // Pause constant-enables user input during combat
-        EventManager.playerEntersCombat += DisableInput;
-        EventManager.playerLeftCombat += EnableInput;
+        EventManager.combatStart += DisableInput;
+        EventManager.combatOver += EnableInput;
     }
 
     // Remove listeners
     private void OnDisable() {
-        EventManager.playerEntersCombat -= DisableInput;
-        EventManager.playerLeftCombat -= EnableInput;
+        EventManager.combatStart -= DisableInput;
+        EventManager.combatOver -= EnableInput;
     }
 
     // Using Start instead of Awake to ensure Player is initialized first

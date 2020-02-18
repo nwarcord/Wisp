@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     // public void PlayerEnterCombat() {
-    //     if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
+        // if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
     //     combat.EnterCombat();
     // }
 

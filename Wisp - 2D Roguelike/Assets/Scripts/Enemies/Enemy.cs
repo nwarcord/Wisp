@@ -49,7 +49,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected void AggroPlayer() {
         combat.EnterCombat();
-        EventManager.RaiseAggroPlayer();
+        EventManager.RaiseAggroPlayer(this);
     }
 
     protected Vector3 GetPlayerPosition() {
