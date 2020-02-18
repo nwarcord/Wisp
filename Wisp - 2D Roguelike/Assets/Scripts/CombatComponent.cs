@@ -11,7 +11,7 @@ public interface ICanBeDamaged {
 public class CombatComponent {
     
     public bool inCombat { get; private set; }
-    private int combatants;
+    // private int combatants;
     private int attackPower;
     private Grid grid;
     private BoxCollider2D boxCollider;
@@ -19,7 +19,7 @@ public class CombatComponent {
     private const float oneTileMax = 1.42f; // Rounded root of 2
 
     public CombatComponent(GameObject actor, int attackPower, Grid grid, BoxCollider2D boxCollider) {
-        this.combatants = 0;
+        // this.combatants = 0;
         this.inCombat = false;
         this.attackPower = attackPower;
         this.grid = grid;
@@ -32,16 +32,16 @@ public class CombatComponent {
             this.inCombat = true;
         }
         Debug.Log("COMBAT!!!!!!!!!!");
-        combatants += 1;
+    //     combatants += 1;
     }
 
     public void ExitCombat() {
-        this.combatants -= 1;
-        if (combatants <= 0) {
-            this.combatants = 0;
-            this.inCombat = false;
-            Debug.Log("Combat over.");
-        }
+    //     this.combatants -= 1;
+    //     if (combatants <= 0) {
+    //         this.combatants = 0;
+        this.inCombat = false;
+        Debug.Log("Combat over.");
+    //     }
     }
 
     public bool BasicAttack(ICanBeDamaged target) {

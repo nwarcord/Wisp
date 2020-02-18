@@ -13,7 +13,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected CircleCollider2D circleCollider;
     [SerializeField]
     protected Grid grid;
-    // protected TurnComponent turnComponent;
     protected int vision;
     protected InputDelay inputDelay;
 
@@ -22,7 +21,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // ----------------------------------------------------------------
 
     void Awake() {
-        // position = this.GetComponent<Transform>().position;
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
@@ -33,9 +31,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         movement = new MovementComponent(gameObject, this, grid);
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        // turnComponent = new TurnComponent();
         inputDelay = new InputDelay();
-        // movement.UpdateGrid(grid);
         SetHealth();
         SetCombat();
         SetVision();
@@ -71,8 +67,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     protected void Die() {
-        if (combat.inCombat) EventManager.RaiseEnemyDeath();
-        else EventManager.RaiseEnemyDeath();
+        EventManager.RaiseEnemyDeath();
         Destroy(gameObject);
     }
 

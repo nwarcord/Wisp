@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GooMonsterAI : MonoBehaviour, ITurnAct, ICanBeDamaged {
+public class GooMonsterAI : MonoBehaviour, /*ITurnAct,*/ ICanBeDamaged {
 
     private int health;
     private CombatComponent combat;
