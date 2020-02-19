@@ -16,15 +16,17 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // Event subscribe and unsubscribe
     // ----------------------------------------------------------------
 
-    // private void OnEnable() {
+    private void OnEnable() {
     //     EventManager.enemyDeath += CheckIfCombatOver;
-    //     EventManager.aggroPlayer += PlayerEnterCombat;
-    // }
+        EventManager.combatStart += PlayerEnterCombat;
+        EventManager.combatOver += PlayerLeaveCombat;
+    }
 
-    // private void OnDisable() {
+    private void OnDisable() {
     //     EventManager.enemyDeath -= CheckIfCombatOver;
-    //     EventManager.aggroPlayer -= PlayerEnterCombat;
-    // }
+        EventManager.combatStart -= PlayerEnterCombat;
+        EventManager.combatOver -= PlayerLeaveCombat;
+    }
 
     // ----------------------------------------------------------------
     // Initialization
@@ -46,10 +48,14 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // Combat mechanics
     // ----------------------------------------------------------------
 
-    // public void PlayerEnterCombat() {
+    public void PlayerEnterCombat() {
         // if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
-    //     combat.EnterCombat();
-    // }
+        combat.EnterCombat();
+    }
+
+    public void PlayerLeaveCombat() {
+        combat.ExitCombat();
+    }
 
     // public void CheckIfCombatOver() {
     //     if (!combat.inCombat) return;

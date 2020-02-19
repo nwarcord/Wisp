@@ -7,7 +7,7 @@ public interface ITurnAct {
     IEnumerator TurnRoutine();
 }
 
-public class TurnSystem {
+public class TurnSystem : MonoBehaviour {
 
     private List<ITurnAct> actors;
     private int currentTurn = 0;
@@ -17,16 +17,24 @@ public class TurnSystem {
     // Initialization
     // ----------------------------------------------------------------
 
-    public TurnSystem() {
-        Debug.Log("Turn System Created");
-        actors = new List<ITurnAct>();
-
+    private void OnEnable() {
         // Listeners
         EventManager.combatOver += EndCombat;
         EventManager.combatSpawn += InsertSpawn;
         EventManager.actorTurnOver += NextTurn;
-        InitActors();
+    }
 
+    private void OnDisable() {
+        // Remove listeners
+        EventManager.combatOver -= EndCombat;
+        EventManager.combatSpawn -= InsertSpawn;
+        EventManager.actorTurnOver -= NextTurn;
+    }
+
+    private void Awake() {
+        Debug.Log("Turn System Created");
+        actors = new List<ITurnAct>();
+        InitActors();
     }
 
     private void InitActors() {
@@ -42,25 +50,29 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     public void NextTurn() {
-        
         if (combatRunning) {
-            
-            if (actors[currentTurn] as UnityEngine.Object != null) {
-                actors[currentTurn].TakeTurn();
-            }
-            currentTurn++;
 
             if (currentTurn >= actors.Count) {    
                 currentTurn = 0;
-                // Debug.Log("Pre-GC");
-                // int removed = actors.RemoveAll(item => item as UnityEngine.Object == null); // GC for null objects
-                // Debug.Log(removed + " items Garbage Collected");
+                // actors.RemoveAll(item => (item == null || (item as UnityEngine.Object) == null)); // GC for null objects
+                actors.RemoveAll(item => CustomHelpers.IsNullOrDestroyed(item)); // GC for null objects
+            }
+            Debug.Log("Turn " + currentTurn + " Actor: " + actors[currentTurn]);
+
+            // if (actors[currentTurn] as UnityEngine.Object != null && actors[currentTurn] != null) {
+            if (!CustomHelpers.IsNullOrDestroyed(actors[currentTurn])) {
+                actors[currentTurn].TakeTurn();
+                currentTurn++;
+            }
+            else {
+                currentTurn++;
+                EventManager.RaiseActorTurnOver();
             }
 
 
         }
 
-        else { CombatOver(); }
+        // else { CombatOver(); }
 
     }
 
@@ -77,16 +89,12 @@ public class TurnSystem {
     // Clean up
     // ----------------------------------------------------------------
 
-    private void CombatOver() {
+    // private void CombatOver() {
 
-        // Remove listeners
-        EventManager.combatOver -= EndCombat;
-        EventManager.combatSpawn -= InsertSpawn;
-        EventManager.actorTurnOver -= NextTurn;
 
-        // Broadcast that Combat has ended
-        EventManager.RaiseCombatOver();
+    //     // Broadcast that Combat has ended
+    //     EventManager.RaiseCombatOver();
 
-    }
+    // }
 
 }

@@ -33,7 +33,7 @@ public class GameState : MonoBehaviour {
 
     private void Update() {
         // if (actorTurnOver && turnSystemRunning) ProcessTurn();
-        if (combatants == 0) EventManager.RaiseCombatOver();
+        // if (combatants == 0) EventManager.RaiseCombatOver();
     }
 
     private void InitTurnSystem(ITurnAct enemy) {
@@ -43,7 +43,8 @@ public class GameState : MonoBehaviour {
             EventManager.RaiseCombatSpawn(enemy);
         }
         else {
-            turnSystem = new TurnSystem();
+            turnSystem = gameObject.AddComponent<TurnSystem>() as TurnSystem;
+            // turnSystem = new TurnSystem();
             combatState = true;
             turnSystem.NextTurn();
         }
@@ -60,13 +61,14 @@ public class GameState : MonoBehaviour {
     private void ClearTurnSystem() {
         combatants = 0;
         combatState = false;
-        turnSystem = null;
+        Destroy(turnSystem);
         // GameObject.Destroy(turnSystem);
         // turnSystemRunning = false;
     }
 
     private void EnemyDeath() {
         if (combatState) combatants--;
+        if (combatants <= 0) EventManager.RaiseCombatOver();
     }
 
     private void IgnoreSpawnerColliders() {
