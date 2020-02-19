@@ -58,7 +58,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        Debug.Log("Enemy current health: " + health);
         if (!IsAlive()) Die();
         // return true;
     }

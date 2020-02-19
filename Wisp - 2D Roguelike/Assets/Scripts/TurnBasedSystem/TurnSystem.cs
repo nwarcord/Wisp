@@ -39,10 +39,6 @@ public class TurnSystem : MonoBehaviour {
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
-        Debug.Log(actors.Count);
-        for (int i = 0; i < actors.Count; i++) {
-            Debug.Log("Actor " + i + ": " + actors[i]);
-        }
     }
 
     // ----------------------------------------------------------------
@@ -50,6 +46,7 @@ public class TurnSystem : MonoBehaviour {
     // ----------------------------------------------------------------
 
     public void NextTurn() {
+        if (actors.Count <= 1) EndCombat();
         if (combatRunning) {
 
             if (currentTurn >= actors.Count) {    
@@ -57,7 +54,6 @@ public class TurnSystem : MonoBehaviour {
                 // actors.RemoveAll(item => (item == null || (item as UnityEngine.Object) == null)); // GC for null objects
                 actors.RemoveAll(item => CustomHelpers.IsNullOrDestroyed(item)); // GC for null objects
             }
-            Debug.Log("Turn " + currentTurn + " Actor: " + actors[currentTurn]);
 
             // if (actors[currentTurn] as UnityEngine.Object != null && actors[currentTurn] != null) {
             if (!CustomHelpers.IsNullOrDestroyed(actors[currentTurn])) {
@@ -77,7 +73,6 @@ public class TurnSystem : MonoBehaviour {
     }
 
     private void InsertSpawn(ITurnAct spawn) {
-        Debug.Log("Spawn insert");
         actors.Insert(currentTurn, spawn);
     }
 

@@ -8,13 +8,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private MovementComponent playerMovement;
     private CombatComponent playerCombat;
     // private InputDelay inputDelay;
-    private const float delayDuration = 0.75f;
-    private const float shortDelay = 0.5f;
+    // private const float delayDuration = 0.75f;
+    private const float delayDuration = 0.5f;
+    // private const float shortDelay = 0.5f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
     public Projectile arrows;
-    private int frames = 0;
+    // private int frames = 0;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
@@ -53,11 +54,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void Update() {
-        frames++;
-        if (frames >= 240) {
-            frames = 0;
-            Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
-        }
+        // frames++;
+        // if (frames >= 240) {
+        //     frames = 0;
+        //     Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
+        // }
 
         if (inputEnabled) {
             if (inputDelay > 0) {
@@ -94,15 +95,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
     
     private void ResetInputDelay() {
-        if (playerCombat.inCombat) {
-            inputDelay = delayDuration;
-        }
-        else {
-            inputDelay = shortDelay;
-        }
-        // inputDelay = delayDuration;
+        // if (playerCombat.inCombat) {
+        //     inputDelay = delayDuration;
+        // }
+        // else {
+        //     inputDelay = shortDelay;
+        // }
+        inputDelay = delayDuration;
         actionTaken = true;
-        Debug.Log("Input delay reset");
     }
 
     // ----------------------------------------------------------------
@@ -169,7 +169,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
             yield return null;
         }
 
-        DisableInput();
+        if (playerCombat.inCombat) { DisableInput(); }
 
     }
 

@@ -9,7 +9,8 @@ public enum MoveDirection { Up, Down, Left, Right }
 
 public class MovementComponent {
 
-    private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
+    // private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
+    private float moveTime = 0.05f;       // Time it will take object to move, in seconds.
     private LayerMask obstructionLayer;  // Layer on which collision will be checked.
     private LayerMask characterLayer;
 

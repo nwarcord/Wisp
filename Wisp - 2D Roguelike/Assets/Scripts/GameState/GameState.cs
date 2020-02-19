@@ -34,6 +34,7 @@ public class GameState : MonoBehaviour {
         }
         else {
             turnSystem = gameObject.AddComponent<TurnSystem>() as TurnSystem;
+            EventManager.RaiseCombatStart();
             combatState = true;
             turnSystem.NextTurn();
         }

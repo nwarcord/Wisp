@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private CircleCollider2D circleCollider;
     [SerializeField]
     private Grid grid = default;
-    private int frames = 0;
+    // private int frames = 0;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
@@ -42,11 +42,11 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     }
 
     private void Update() {
-        frames++;
-        if (frames >= 240) {
-            frames = 0;
-            Debug.Log("Hi from Player Controller!");
-        }
+        // frames++;
+        // if (frames >= 240) {
+        //     frames = 0;
+        //     Debug.Log("Hi from Player Controller!");
+        // }
     }
 
     public CombatComponent Combat() {
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public void TakeDamage(int damage) {
         health -= damage;
-        Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
+        // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
         // return true;
     }
 
