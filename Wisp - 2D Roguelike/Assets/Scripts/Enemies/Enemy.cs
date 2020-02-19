@@ -56,10 +56,11 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         return playerTransform.position;
     }
 
-    public bool TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         health -= damage;
         Debug.Log("Enemy current health: " + health);
-        return true;
+        if (!IsAlive()) Die();
+        // return true;
     }
 
     public bool IsAlive() {
@@ -75,7 +76,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // Turn Mechanics
     // ----------------------------------------------------------------
 
-    protected abstract void CheckAlive();
+    // protected abstract void CheckAlive();
 
     public void TakeTurn() {
         StartCoroutine(TurnRoutine());

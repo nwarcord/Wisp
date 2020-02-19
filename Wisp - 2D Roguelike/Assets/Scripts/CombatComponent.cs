@@ -4,7 +4,7 @@ using UnityEngine;
 // using UnityEngine.Tilemaps;
 
 public interface ICanBeDamaged {
-    bool TakeDamage(int damage);
+    void TakeDamage(int damage);
     bool IsAlive();
 }
 
@@ -37,8 +37,8 @@ public class CombatComponent {
         Debug.Log("Combat over.");
     }
 
-    public bool BasicAttack(ICanBeDamaged target) {
-        return target.TakeDamage(attackPower);
+    public void BasicAttack(ICanBeDamaged target) {
+        target.TakeDamage(attackPower);
     }
 
     public bool OneTileAttack(Vector3 tileCoords) {

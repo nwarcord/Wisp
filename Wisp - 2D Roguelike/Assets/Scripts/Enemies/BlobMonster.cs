@@ -32,12 +32,12 @@ public class BlobMonster : Enemy {
     // Turn mechanics
     // ----------------------------------------------------------------
 
-    protected override void CheckAlive() {
-        if (!IsAlive()) Die();
-    }
+    // protected override void CheckAlive() {
+    //     if (!IsAlive()) Die();
+    // }
 
     protected override void Patrol() {
-        CheckAlive();
+        // CheckAlive();
         if (!MyTurn()) return;
         else if (PlayerVisible()) AggroPlayer();
         else {
@@ -82,7 +82,7 @@ public class BlobMonster : Enemy {
     // }
 
     protected override void TurnBehavior() {
-        CheckAlive();
+        // CheckAlive();
         Vector3 playerPosition = GetPlayerPosition();
         playerPosition.y -= 0.5f;
         Vector3 move = myPosition.position;

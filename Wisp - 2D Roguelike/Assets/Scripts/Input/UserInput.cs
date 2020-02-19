@@ -14,6 +14,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
     public Projectile arrows;
+    private int frames = 0;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
@@ -52,32 +53,39 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void Update() {
-        
-        if (inputDelay > 0) {
-            inputDelay -= Time.deltaTime;
+        frames++;
+        if (frames >= 240) {
+            frames = 0;
+            Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
         }
 
-        else if (inputEnabled) {
-                
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
-            if (AttackAction()) {
-                if (playerCombat.OneTileAttack(Input.mousePosition)) {
-                    ResetInputDelay();
-                }
-            }
-            else if (RangedAttackAction()) {
-                if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
-                    ResetInputDelay();
-                }
-            }
-            // else if (Input.GetMouseButtonUp(0)) {
-            // else if (LeftClick()) {
-            else if (MoveAction()) {
-                // playerMovement.AttemptMove(mouseWorldPos);
-                ResetInputDelay();
+        if (inputEnabled) {
+            if (inputDelay > 0) {
+                inputDelay -= Time.deltaTime;
             }
 
+        // else if (inputEnabled) {
+            else {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
+                if (AttackAction()) {
+                    if (playerCombat.OneTileAttack(Input.mousePosition)) {
+                        ResetInputDelay();
+                    }
+                }
+                else if (RangedAttackAction()) {
+                    if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
+                        ResetInputDelay();
+                    }
+                }
+                // else if (Input.GetMouseButtonUp(0)) {
+                // else if (LeftClick()) {
+                else if (MoveAction()) {
+                    // playerMovement.AttemptMove(mouseWorldPos);
+                    ResetInputDelay();
+                }
+            }
+        // }
         }
     }
 
@@ -94,6 +102,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
         }
         // inputDelay = delayDuration;
         actionTaken = true;
+        Debug.Log("Input delay reset");
     }
 
     // ----------------------------------------------------------------
