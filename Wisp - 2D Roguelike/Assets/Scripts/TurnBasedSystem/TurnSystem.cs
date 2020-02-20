@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ITurnAct {
-    bool turnSystemActive { get; }
-    void TurnSystemIsActive();
-    void TurnSystemNotActive();
     void TakeTurn();
     IEnumerator TurnRoutine();
 }

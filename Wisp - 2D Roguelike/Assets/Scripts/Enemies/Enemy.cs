@@ -38,6 +38,10 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         Init();
     }
 
+    protected virtual void Update() {
+        if (!turnSystemActive) NonCombatBehavior();
+    }
+
     protected void Init() {
         myPosition = gameObject.transform;
         movement = new MovementComponent(gameObject, this, grid);
@@ -87,8 +91,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // Turn Mechanics
     // ----------------------------------------------------------------
 
-    // protected abstract void CheckAlive();
-
     public void TakeTurn() {
         StartCoroutine(TurnRoutine());
     }
@@ -104,7 +106,16 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         return false;
     }
 
-    protected abstract void TurnBehavior();
+    protected abstract void CombatBehavior();
+
+    protected virtual void NonCombatBehavior() {
+        if (turnSystemActive || MyTurn()) Patrol();
+    }
+
+    private void TurnBehavior() {
+        if (!combat.inCombat) NonCombatBehavior();
+        else CombatBehavior();
+    }
 
     public IEnumerator TurnRoutine() {
         TurnBehavior();

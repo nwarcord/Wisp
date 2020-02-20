@@ -15,8 +15,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
     public Projectile arrows;
-    public bool turnSystemActive { get; private set; }
-    // private int frames = 0;
+    private int frames = 0;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
@@ -55,11 +54,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void Update() {
-        // frames++;
-        // if (frames >= 240) {
-        //     frames = 0;
-        //     Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
-        // }
+        frames++;
+        if (frames >= 240) {
+            frames = 0;
+            Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
+        }
 
         if (inputEnabled) {
             if (inputDelay > 0) {
@@ -105,9 +104,6 @@ public class UserInput : MonoBehaviour, ITurnAct {
         inputDelay = delayDuration;
         actionTaken = true;
     }
-
-    public void TurnSystemIsActive() {}
-    public void TurnSystemNotActive() {}
 
     // ----------------------------------------------------------------
     // Set input flag
