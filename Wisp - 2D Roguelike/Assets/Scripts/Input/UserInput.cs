@@ -15,6 +15,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
     public Projectile arrows;
+    public bool turnSystemActive { get; private set; }
     // private int frames = 0;
 
     // Keybindings
@@ -104,6 +105,9 @@ public class UserInput : MonoBehaviour, ITurnAct {
         inputDelay = delayDuration;
         actionTaken = true;
     }
+
+    public void TurnSystemIsActive() {}
+    public void TurnSystemNotActive() {}
 
     // ----------------------------------------------------------------
     // Set input flag

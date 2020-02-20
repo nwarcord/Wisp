@@ -13,16 +13,21 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
     private ProjectileMovement movement;
-    private bool combatActive = false;
+    // private bool combatActive = false;
+    public bool turnSystemActive { get; private set; }
 
     private void OnEnable() {
-        EventManager.combatStart += EnableCombatFlag;
-        EventManager.combatOver += DisableCombatFlag;
+        // EventManager.combatStart += EnableCombatFlag;
+        // EventManager.combatOver += DisableCombatFlag;
+        EventManager.combatStart += TurnSystemIsActive;
+        EventManager.combatOver += TurnSystemNotActive;
     }
 
     private void OnDisable() {
-        EventManager.combatStart -= EnableCombatFlag;
-        EventManager.combatOver -= DisableCombatFlag;
+        // EventManager.combatStart -= EnableCombatFlag;
+        // EventManager.combatOver -= DisableCombatFlag;
+        EventManager.combatStart -= TurnSystemIsActive;
+        EventManager.combatOver -= TurnSystemNotActive;
         StopAllCoroutines();
     }
 
@@ -30,11 +35,13 @@ public class Projectile : MonoBehaviour, ITurnAct {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
-        combatActive = GameState.combatState;
+        // combatActive = GameState.combatState;
+        turnSystemActive = GameState.combatState;
     }
 
     void FixedUpdate() {
-        if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
+        // if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
+        if (!turnSystemActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
         else rb.velocity = new Vector2();
     }
 
@@ -47,13 +54,21 @@ public class Projectile : MonoBehaviour, ITurnAct {
         movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
     }
 
-    private void EnableCombatFlag() {
-        combatActive = true;
+    public void TurnSystemIsActive() {
+        turnSystemActive = true;
     }
 
-    private void DisableCombatFlag() {
-        combatActive = false;
+    public void TurnSystemNotActive() {
+        turnSystemActive = false;
     }
+
+    // private void EnableCombatFlag() {
+    //     combatActive = true;
+    // }
+
+    // private void DisableCombatFlag() {
+    //     combatActive = false;
+    // }
 
     private void OnTriggerEnter2D(Collider2D other) {
         ICanBeDamaged victim = other.gameObject.GetComponent<ICanBeDamaged>();

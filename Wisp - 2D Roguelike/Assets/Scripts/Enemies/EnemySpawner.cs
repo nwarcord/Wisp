@@ -38,7 +38,12 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        spawnerBlocked = false;        
+        spawnerBlocked = false;
+        Debug.Log("Hello!");
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        spawnerBlocked = true;
     }
 
 }

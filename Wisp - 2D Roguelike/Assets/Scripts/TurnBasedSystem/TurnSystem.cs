@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ITurnAct {
+    bool turnSystemActive { get; }
+    void TurnSystemIsActive();
+    void TurnSystemNotActive();
     void TakeTurn();
     IEnumerator TurnRoutine();
 }
@@ -39,6 +42,9 @@ public class TurnSystem : MonoBehaviour {
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
+        // foreach (ITurnAct actor in actors) {
+
+        // }
     }
 
     // ----------------------------------------------------------------

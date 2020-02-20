@@ -15,12 +15,24 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected Grid grid;
     protected int vision;
     protected InputDelay inputDelay;
+    public bool turnSystemActive { get; private set; }
 
     // ----------------------------------------------------------------
     // Initialization
     // ----------------------------------------------------------------
 
+    private void OnEnable() {
+        EventManager.combatStart += TurnSystemIsActive;
+        EventManager.combatOver += TurnSystemNotActive;
+    }
+
+    private void OnDisable() {
+        EventManager.combatStart -= TurnSystemIsActive;
+        EventManager.combatOver -= TurnSystemNotActive;
+    }
+
     void Awake() {
+        turnSystemActive = GameState.combatState;
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
@@ -98,6 +110,14 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         TurnBehavior();
         yield return null;
         EventManager.RaiseActorTurnOver();
+    }
+
+    public void TurnSystemIsActive() {
+        turnSystemActive = true;
+    }
+
+    public void TurnSystemNotActive() {
+        turnSystemActive = false;
     }
 
     // To be used when out of combat to initiate combat with player

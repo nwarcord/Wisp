@@ -41,20 +41,24 @@ public class GameState : MonoBehaviour {
     }
 
     private void ClearTurnSystem() {
-        combatants = 0;
-        combatState = false;
-        Destroy(turnSystem);
-        Debug.Log("Turn System deleted.");
+        if (combatState) {
+            combatants = 0;
+            combatState = false;
+            Destroy(turnSystem);
+            Debug.Log("Turn System deleted.");
+        }
     }
 
     private void EnemyDeath() {
-        if (combatState) combatants--;
-        if (combatants <= 0) EventManager.RaiseCombatOver();
+        if (combatState) {
+            combatants--;
+            if (combatants <= 0) EventManager.RaiseCombatOver();
+        }
     }
 
     private void IgnoreSpawnerColliders() {
         Physics2D.IgnoreLayerCollision(11, 8);
-        Physics2D.IgnoreLayerCollision(11, 9);
+        // Physics2D.IgnoreLayerCollision(11, 9);
         Physics2D.IgnoreLayerCollision(11, 10);
     }
 
