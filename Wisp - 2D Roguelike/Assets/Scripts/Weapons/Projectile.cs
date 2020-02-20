@@ -43,7 +43,8 @@ public class Projectile : MonoBehaviour, ITurnAct {
     }
 
     private void ProjectileMove() {
-        movement.AttemptMove((transform.up - transform.right) * tileMovePerTurn);
+        // movement.AttemptMove((transform.up - transform.right) * tileMovePerTurn);
+        movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
     }
 
     private void EnableCombatFlag() {
