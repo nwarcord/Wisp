@@ -12,6 +12,7 @@ public static class EventManager {
     public static event Action<ITurnAct> combatSpawn;
     public static event Action<ITurnAct> aggroPlayer;
     public static event Action enemyDeath;
+    public static event Action<ITurnAct> enemySpawn;
     public static event Action combatStart;
 
     // ----------------------------------------------------------------
@@ -30,6 +31,7 @@ public static class EventManager {
     // public static void RaiseAggroPlayer() => aggroPlayer?.Invoke();
     public static void RaiseAggroPlayer(ITurnAct enemy) => aggroPlayer?.Invoke(enemy);
     public static void RaiseEnemyDeath() => enemyDeath?.Invoke();
+    public static void RaiseEnemySpawn(ITurnAct enemy) => enemySpawn?.Invoke(enemy);
 
     // ----------------------------------------------------------------
     // Player combat events

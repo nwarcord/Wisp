@@ -91,6 +91,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // Turn Mechanics
     // ----------------------------------------------------------------
 
+    // protected abstract void CheckAlive();
+
     public void TakeTurn() {
         StartCoroutine(TurnRoutine());
     }
@@ -106,6 +108,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         return false;
     }
 
+    // protected abstract void TurnBehavior();
+
     protected abstract void CombatBehavior();
 
     protected virtual void NonCombatBehavior() {
@@ -118,8 +122,10 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     public IEnumerator TurnRoutine() {
+        Debug.Log("Blob turn started.");
         TurnBehavior();
         yield return null;
+        Debug.Log("Blob turn ended.");
         EventManager.RaiseActorTurnOver();
     }
 
@@ -130,6 +136,18 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     public void TurnSystemNotActive() {
         turnSystemActive = false;
     }
+
+    /*
+    protected abstract void Patrol();
+    protected abstract void CombatBehavior();
+    protected void NonCombatBehavior() {
+        if (turnSystemActive && MyTurn()) Patrol();
+    }
+    protected void TurnBehavior() {
+        if (!combat.inCombat) NonCombatBehavior();
+        else CombatBehavior();
+    }
+    */
 
     // To be used when out of combat to initiate combat with player
     // Or to determine if there is line of sight to player
