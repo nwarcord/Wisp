@@ -8,9 +8,10 @@ public class BlobMonster : Enemy {
     // Frame to frame behavior
     // ----------------------------------------------------------------
 
-    void Update() {
-        if (!combat.inCombat) Patrol();
-    }
+    // void Update() {
+    //     // if (!combat.inCombat && !turnSystemActive) Patrol();
+    //     if (!turnSystemActive) Patrol();
+    // }
 
     // ----------------------------------------------------------------
     // Initialization overrides
@@ -32,14 +33,10 @@ public class BlobMonster : Enemy {
     // Turn mechanics
     // ----------------------------------------------------------------
 
-    protected override void CheckAlive() {
-        if (!IsAlive()) Die();
-    }
-
     protected override void Patrol() {
-        CheckAlive();
-        if (!MyTurn()) return;
-        else if (PlayerVisible()) AggroPlayer();
+        // if (!turnSystemActive && !MyTurn()) return;
+        // else if (PlayerVisible()) AggroPlayer();
+        if (PlayerVisible()) AggroPlayer();
         else {
             System.Random rand = new System.Random();
             Vector3 move = myPosition.position;
@@ -51,63 +48,51 @@ public class BlobMonster : Enemy {
         }
     }
 
-    // public override void TakeTurn() {
-        // CheckAlive();
-        // Vector3 playerPosition = GetPlayerPosition();
-        // playerPosition.y -= 0.5f;
-        // Vector3 move = myPosition.position;
-        // if (playerPosition.x != move.x) {
-        //     if (playerPosition.x < move.x) {
-        //         move.x -= 1;
-        //     }
-        //     else {
-        //         move.x += 1;
-        //     }
-        // }
-        // if (playerPosition.y != move.y) {
-        //     if (playerPosition.y < move.y) {
-        //         move.y -= 1;
-        //     }
-        //     else {
-        //         move.y += 1;
-        //     }
-        // }
-        // if (playerPosition != move) {
-        //     movement.AttemptMove(move);
-        // }
-        // else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
-        //     combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
-        // }
-        // EventManager.RaiseActorTurnOver();
-    // }
-
-    protected override void TurnBehavior() {
-        CheckAlive();
+    protected override void CombatBehavior() {
         Vector3 playerPosition = GetPlayerPosition();
         playerPosition.y -= 0.5f;
         Vector3 move = myPosition.position;
         if (playerPosition.x != move.x) {
-            if (playerPosition.x < move.x) {
-                move.x -= 1;
-            }
-            else {
-                move.x += 1;
-            }
+            if (playerPosition.x < move.x) { move.x -= 1; }
+            else { move.x += 1; }
         }
+
         if (playerPosition.y != move.y) {
-            if (playerPosition.y < move.y) {
-                move.y -= 1;
-            }
-            else {
-                move.y += 1;
-            }
+            if (playerPosition.y < move.y) { move.y -= 1; }
+            else { move.y += 1; }
         }
-        if (playerPosition != move) {
-            movement.AttemptMove(move);
-        }
+
+        if (playerPosition != move) { movement.AttemptMove(move); }
+
         else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
             combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
         }
     }
+
+    // protected override void TurnBehavior() {
+
+    //     if (!combat.inCombat) { Patrol(); }
+
+    //     else {
+    //         Vector3 playerPosition = GetPlayerPosition();
+    //         playerPosition.y -= 0.5f;
+    //         Vector3 move = myPosition.position;
+    //         if (playerPosition.x != move.x) {
+    //             if (playerPosition.x < move.x) { move.x -= 1; }
+    //             else { move.x += 1; }
+    //         }
+
+    //         if (playerPosition.y != move.y) {
+    //             if (playerPosition.y < move.y) { move.y -= 1; }
+    //             else { move.y += 1; }
+    //         }
+
+    //         if (playerPosition != move) { movement.AttemptMove(move); }
+
+    //         else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
+    //             combat.OneTileAttack(Camera.main.WorldToScreenPoint(playerPosition));
+    //         }
+    //     }
+    // }
 
 }

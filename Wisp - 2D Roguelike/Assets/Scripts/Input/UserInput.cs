@@ -8,12 +8,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private MovementComponent playerMovement;
     private CombatComponent playerCombat;
     // private InputDelay inputDelay;
-    private const float delayDuration = 0.75f;
-    private const float shortDelay = 0.5f;
+    // private const float delayDuration = 0.75f;
+    private const float delayDuration = 0.5f;
+    // private const float shortDelay = 0.5f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
     public Projectile arrows;
+    private int frames = 0;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
@@ -31,14 +33,14 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Add listeners
     private void OnEnable() {
         // Pause constant-enables user input during combat
-        EventManager.playerEntersCombat += DisableInput;
-        EventManager.playerLeftCombat += EnableInput;
+        EventManager.combatStart += DisableInput;
+        EventManager.combatOver += EnableInput;
     }
 
     // Remove listeners
     private void OnDisable() {
-        EventManager.playerEntersCombat -= DisableInput;
-        EventManager.playerLeftCombat -= EnableInput;
+        EventManager.combatStart -= DisableInput;
+        EventManager.combatOver -= EnableInput;
     }
 
     // Using Start instead of Awake to ensure Player is initialized first
@@ -52,32 +54,39 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void Update() {
-        
-        if (inputDelay > 0) {
-            inputDelay -= Time.deltaTime;
+        frames++;
+        if (frames >= 240) {
+            frames = 0;
+            Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
         }
 
-        else if (inputEnabled) {
-                
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
-            if (AttackAction()) {
-                if (playerCombat.OneTileAttack(Input.mousePosition)) {
-                    ResetInputDelay();
-                }
-            }
-            else if (RangedAttackAction()) {
-                if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
-                    ResetInputDelay();
-                }
-            }
-            // else if (Input.GetMouseButtonUp(0)) {
-            // else if (LeftClick()) {
-            else if (MoveAction()) {
-                // playerMovement.AttemptMove(mouseWorldPos);
-                ResetInputDelay();
+        if (inputEnabled) {
+            if (inputDelay > 0) {
+                inputDelay -= Time.deltaTime;
             }
 
+        // else if (inputEnabled) {
+            else {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
+                if (AttackAction()) {
+                    if (playerCombat.OneTileAttack(Input.mousePosition)) {
+                        ResetInputDelay();
+                    }
+                }
+                else if (RangedAttackAction()) {
+                    if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
+                        ResetInputDelay();
+                    }
+                }
+                // else if (Input.GetMouseButtonUp(0)) {
+                // else if (LeftClick()) {
+                else if (MoveAction()) {
+                    // playerMovement.AttemptMove(mouseWorldPos);
+                    ResetInputDelay();
+                }
+            }
+        // }
         }
     }
 
@@ -86,13 +95,13 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
     
     private void ResetInputDelay() {
-        if (playerCombat.inCombat) {
-            inputDelay = delayDuration;
-        }
-        else {
-            inputDelay = shortDelay;
-        }
-        // inputDelay = delayDuration;
+        // if (playerCombat.inCombat) {
+        //     inputDelay = delayDuration;
+        // }
+        // else {
+        //     inputDelay = shortDelay;
+        // }
+        inputDelay = delayDuration;
         actionTaken = true;
     }
 
@@ -160,7 +169,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
             yield return null;
         }
 
-        DisableInput();
+        if (playerCombat.inCombat) { DisableInput(); }
 
     }
 

@@ -9,22 +9,24 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private MovementComponent movement;
     private BoxCollider2D boxCollider;
     private CircleCollider2D circleCollider;
-    private TurnComponent turnComponent;
     [SerializeField]
     private Grid grid = default;
+    // private int frames = 0;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
     // ----------------------------------------------------------------
 
     private void OnEnable() {
-        EventManager.enemyDeath += CheckIfCombatOver;
-        EventManager.aggroPlayer += PlayerEnterCombat;
+    //     EventManager.enemyDeath += CheckIfCombatOver;
+        EventManager.combatStart += PlayerEnterCombat;
+        EventManager.combatOver += PlayerLeaveCombat;
     }
 
     private void OnDisable() {
-        EventManager.enemyDeath -= CheckIfCombatOver;
-        EventManager.aggroPlayer -= PlayerEnterCombat;
+    //     EventManager.enemyDeath -= CheckIfCombatOver;
+        EventManager.combatStart -= PlayerEnterCombat;
+        EventManager.combatOver -= PlayerLeaveCombat;
     }
 
     // ----------------------------------------------------------------
@@ -33,11 +35,18 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     void Awake() {
         health = 3;
-        turnComponent = new TurnComponent();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = new CombatComponent(gameObject, 2, this.grid, this.boxCollider);
         movement = new MovementComponent(gameObject, this, grid);
+    }
+
+    private void Update() {
+        // frames++;
+        // if (frames >= 240) {
+        //     frames = 0;
+        //     Debug.Log("Hi from Player Controller!");
+        // }
     }
 
     public CombatComponent Combat() {
@@ -49,20 +58,25 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     public void PlayerEnterCombat() {
-        if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
+        // if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
         combat.EnterCombat();
     }
 
-    public void CheckIfCombatOver() {
-        if (!combat.inCombat) return;
+    public void PlayerLeaveCombat() {
         combat.ExitCombat();
-        if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
+        Debug.Log("Player left combat");
     }
 
-    public bool TakeDamage(int damage) {
+    // public void CheckIfCombatOver() {
+    //     if (!combat.inCombat) return;
+    //     combat.ExitCombat();
+    //     if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
+    // }
+
+    public void TakeDamage(int damage) {
         health -= damage;
-        Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
-        return true;
+        // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
+        // return true;
     }
 
     public bool IsAlive() {

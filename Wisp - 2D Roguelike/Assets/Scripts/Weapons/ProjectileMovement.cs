@@ -7,7 +7,8 @@ public class ProjectileMovement {
 // Script to attach to objects, allowing movement in a grid-like pattern.
 // When changing scenes (or Grid object) the grid of this component will have to be updated.
 
-    private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
+    // private float moveTime = 0.1f;       // Time it will take object to move, in seconds.
+    private float moveTime = 0.05f;       // Time it will take object to move, in seconds.
     private LayerMask obstructionLayer;  // Layer on which collision will be checked.
     private LayerMask characterLayer;
 
@@ -40,10 +41,10 @@ public class ProjectileMovement {
         
         // Get actor position and end position in cell coordinate form
         Vector3Int coordinate = grid.WorldToCell(moveTo);
-        Vector3Int playerCoordinate = grid.WorldToCell(actorTransform.position);
+        Vector3Int projectileCoordinate = grid.WorldToCell(actorTransform.position);
 
         // Distance between actor and desired end position
-        Vector2Int tileDistance = TileDistance(coordinate, playerCoordinate);
+        Vector2Int tileDistance = TileDistance(coordinate, projectileCoordinate);
         
         // End position in world coordinate form (for when actually moving the object)
         Vector2 endPos = new Vector2(actorTransform.position.x + tileDistance.x, actorTransform.position.y + tileDistance.y);
