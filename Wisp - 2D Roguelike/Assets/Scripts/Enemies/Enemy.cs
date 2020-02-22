@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected int vision;
     protected InputDelay inputDelay;
     public bool turnSystemActive { get; private set; }
+    private bool isCombatTurn = false;
 
     // ----------------------------------------------------------------
     // Initialization
@@ -29,6 +30,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     private void OnDisable() {
         EventManager.combatStart -= TurnSystemIsActive;
         EventManager.combatOver -= TurnSystemNotActive;
+        if (isCombatTurn) EventManager.RaiseActorTurnOver();
     }
 
     void Awake() {
@@ -94,6 +96,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // protected abstract void CheckAlive();
 
     public void TakeTurn() {
+        isCombatTurn = true;
         StartCoroutine(TurnRoutine());
     }
     
@@ -126,6 +129,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         TurnBehavior();
         yield return null;
         Debug.Log("Blob turn ended.");
+        isCombatTurn = false;
         EventManager.RaiseActorTurnOver();
     }
 
