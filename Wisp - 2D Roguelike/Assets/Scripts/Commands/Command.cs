@@ -38,34 +38,34 @@ public static class MoveCommand {
 
 }
 
-public abstract class Attack {
+// public abstract class Attack {
 
-    protected CombatComponent combat;
+//     protected CombatComponent combat;
 
-    public Attack(CombatComponent combat) {
-        this.combat = combat;
-    }
+//     public Attack(CombatComponent combat) {
+//         this.combat = combat;
+//     }
 
-    public abstract void ExecuteAttack(Vector3 target);
+//     public abstract void ExecuteAttack(Vector3 target);
 
-}
+// }
 
-public class MeleeOneTile : Attack {
+// public class MeleeOneTile : Attack {
 
-    public MeleeOneTile(CombatComponent combat) : base(combat){}
+//     public MeleeOneTile(CombatComponent combat) : base(combat){}
 
-    public override void ExecuteAttack(Vector3 target) {
-        combat.OneTileAttack(target);
-    }
+//     public override void ExecuteAttack(Vector3 target) {
+//         combat.OneTileAttack(target);
+//     }
 
-}
+// }
 
-public class ProjectileAttack : Attack {
+// public class ProjectileAttack : Attack {
 
-    public ProjectileAttack(CombatComponent combat) : base(combat){}
+//     public ProjectileAttack(CombatComponent combat) : base(combat){}
 
-    public override void ExecuteAttack(Vector3 target) {
-        return;
-    }
+//     public override void ExecuteAttack(Vector3 target) {
+//         return;
+//     }
 
-}
+// }

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour {
 
     private GameObject player;
     private TurnSystem turnSystem;
+    public static Grid grid;
     public static bool combatState = false;
     private static int combatants = 0;
 
@@ -13,17 +15,20 @@ public class GameState : MonoBehaviour {
         EventManager.aggroPlayer += InitTurnSystem;
         EventManager.combatOver += ClearTurnSystem;
         EventManager.enemyDeath += EnemyDeath;
+        SceneManager.activeSceneChanged += UpdateGrid;
     }
 
     private void OnDisable() {
         EventManager.aggroPlayer -= InitTurnSystem;
         EventManager.combatOver -= ClearTurnSystem;
         EventManager.enemyDeath -= EnemyDeath;
+        SceneManager.activeSceneChanged -= UpdateGrid;
     }
 
     void Awake() {
         player = GameObject.FindWithTag("Player");
         IgnoreSpawnerColliders();
+        InitGrid();
         DontDestroyOnLoad(gameObject);
     }
 
@@ -60,6 +65,14 @@ public class GameState : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(11, 8);
         // Physics2D.IgnoreLayerCollision(11, 9);
         Physics2D.IgnoreLayerCollision(11, 10);
+    }
+
+    private void UpdateGrid(Scene current, Scene next) {
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+    }
+
+    private void InitGrid() {
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
     }
 
 }
