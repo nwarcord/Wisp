@@ -1,0 +1,55 @@
+{
+
+    "Dagger" : {
+        "name" : "Dagger",
+        "type" : "melee",
+        "image" : "null",
+        "damage" : 1,
+        "range" : 1,
+        "attributes" : ["quick"]
+    },
+
+    "Short sword" : {
+        "name" : "Short sword",
+        "type" : "melee",
+        "image" : "null",
+        "damage" : 2,
+        "range" : 1,
+        "attributes" : ["cleave"]
+    },
+
+    "Unarmed" : {
+        "name" : "Unarmed",
+        "type" : "melee",
+        "image" : "null",
+        "damage" : 1,
+        "range" : 1,
+        "attributes" : []
+    },
+
+    "Short bow" : {
+        "name" : "Short bow",
+        "type" : "ranged",
+        "image" : "null",
+        "damage" : 1,
+        "attributes" : ["quick"]
+    },
+
+    "Pistol" : {
+        "name" : "Pistol",
+        "type" : "ranged",
+        "image" : "null",
+        "damage" : 2,
+        "attributes" : ["slow"]
+    },
+
+    "Focus stone" : {
+        "name" : "Focus stone",
+        "type" : "psionic",
+        "image" : "null",
+        "damage" : 1,
+        "range" : 1,
+        "attributes" : []
+    }
+
+ }
