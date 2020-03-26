@@ -14,16 +14,18 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private Rigidbody2D rb;
     private ProjectileMovement movement;
     private bool combatActive = false;
+    private bool isCombatTurn = false;
 
     private void OnEnable() {
-        EventManager.playerEntersCombat += EnableCombatFlag;
-        EventManager.playerLeftCombat += DisableCombatFlag;
+        EventManager.combatStart += EnableCombatFlag;
+        EventManager.combatOver += DisableCombatFlag;
     }
 
     private void OnDisable() {
-        EventManager.playerEntersCombat -= EnableCombatFlag;
-        EventManager.playerLeftCombat -= DisableCombatFlag;
+        EventManager.combatStart -= EnableCombatFlag;
+        EventManager.combatOver -= DisableCombatFlag;
         StopAllCoroutines();
+        if (isCombatTurn) EventManager.RaiseActorTurnOver();
     }
 
     void Awake() {
@@ -39,11 +41,12 @@ public class Projectile : MonoBehaviour, ITurnAct {
     }
 
     public void TakeTurn() {
+        isCombatTurn = true;
         StartCoroutine(TurnRoutine());
     }
 
     private void ProjectileMove() {
-        movement.AttemptMove((transform.up - transform.right) * tileMovePerTurn);
+        movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
     }
 
     private void EnableCombatFlag() {
@@ -68,6 +71,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
         ProjectileMove();
         yield return null;
         EventManager.RaiseActorTurnOver();
+        isCombatTurn = false;
     }
 
 }

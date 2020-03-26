@@ -8,24 +8,40 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected MovementComponent movement;
     protected int health;
     private Transform playerTransform;
-    protected CombatComponent combat;
+    protected BaseCombatComponent combat;
     protected BoxCollider2D boxCollider;
     protected CircleCollider2D circleCollider;
     [SerializeField]
     protected Grid grid;
-    // protected TurnComponent turnComponent;
     protected int vision;
     protected InputDelay inputDelay;
+    public bool turnSystemActive { get; private set; }
+    private bool isCombatTurn = false;
 
     // ----------------------------------------------------------------
     // Initialization
     // ----------------------------------------------------------------
 
+    private void OnEnable() {
+        EventManager.combatStart += TurnSystemIsActive;
+        EventManager.combatOver += TurnSystemNotActive;
+    }
+
+    private void OnDisable() {
+        EventManager.combatStart -= TurnSystemIsActive;
+        EventManager.combatOver -= TurnSystemNotActive;
+        if (isCombatTurn) EventManager.RaiseActorTurnOver();
+    }
+
     void Awake() {
-        // position = this.GetComponent<Transform>().position;
+        turnSystemActive = GameState.combatState;
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
+    }
+
+    protected virtual void Update() {
+        if (!turnSystemActive) NonCombatBehavior();
     }
 
     protected void Init() {
@@ -33,9 +49,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         movement = new MovementComponent(gameObject, this, grid);
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        // turnComponent = new TurnComponent();
         inputDelay = new InputDelay();
-        // movement.UpdateGrid(grid);
         SetHealth();
         SetCombat();
         SetVision();
@@ -53,17 +67,16 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected void AggroPlayer() {
         combat.EnterCombat();
-        EventManager.RaiseAggroPlayer();
+        EventManager.RaiseAggroPlayer(this);
     }
 
     protected Vector3 GetPlayerPosition() {
         return playerTransform.position;
     }
 
-    public bool TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         health -= damage;
-        Debug.Log("Enemy current health: " + health);
-        return true;
+        if (!IsAlive()) Die();
     }
 
     public bool IsAlive() {
@@ -71,8 +84,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     protected void Die() {
-        if (combat.inCombat) EventManager.RaiseEnemyDeath();
-        else EventManager.RaiseEnemyDeath();
+        EventManager.RaiseEnemyDeath();
         Destroy(gameObject);
     }
 
@@ -80,9 +92,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // Turn Mechanics
     // ----------------------------------------------------------------
 
-    protected abstract void CheckAlive();
-
     public void TakeTurn() {
+        isCombatTurn = true;
         StartCoroutine(TurnRoutine());
     }
     
@@ -97,12 +108,32 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         return false;
     }
 
-    protected abstract void TurnBehavior();
+    protected abstract void CombatBehavior();
+
+    protected virtual void NonCombatBehavior() {
+        if (turnSystemActive || MyTurn()) Patrol();
+    }
+
+    private void TurnBehavior() {
+        if (!combat.inCombat) NonCombatBehavior();
+        else CombatBehavior();
+    }
 
     public IEnumerator TurnRoutine() {
+        Debug.Log("Blob turn started.");
         TurnBehavior();
         yield return null;
+        Debug.Log("Blob turn ended.");
+        isCombatTurn = false;
         EventManager.RaiseActorTurnOver();
+    }
+
+    public void TurnSystemIsActive() {
+        turnSystemActive = true;
+    }
+
+    public void TurnSystemNotActive() {
+        turnSystemActive = false;
     }
 
     // To be used when out of combat to initiate combat with player

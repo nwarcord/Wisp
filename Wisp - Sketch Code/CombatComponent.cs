@@ -1,14 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using UnityEngine.Tilemaps;
 
 public interface ICanBeDamaged {
     void TakeDamage(int damage);
     bool IsAlive();
 }
 
-public class CombatComponent {
+public abstract class CombatComponent : MonoBehaviour, ICanBeDamaged {
     
     public bool inCombat { get; private set; }
     private int attackPower;
@@ -17,13 +16,27 @@ public class CombatComponent {
     private Transform actorPosition;
     private const float oneTileMax = 1.42f; // Rounded root of 2
 
-    public CombatComponent(GameObject actor, int attackPower, Grid grid, BoxCollider2D boxCollider) {
-        this.inCombat = false;
-        this.attackPower = attackPower;
-        this.grid = grid;
-        this.boxCollider = boxCollider;
-        this.actorPosition = actor.transform;
+    private void Awake() {
+        inCombat = false;
+        actorPosition = gameObject.transform;
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        SetGrid();
+        SetAttackPower();
     }
+
+    private void SetGrid() {
+        // grid = get grid function
+    }
+
+    protected abstract void SetAttackPower();
+
+    // public CombatComponent(GameObject actor, int attackPower, Grid grid, BoxCollider2D boxCollider) {
+    //     this.inCombat = false;
+    //     this.attackPower = attackPower;
+    //     this.grid = grid;
+    //     this.boxCollider = boxCollider;
+    //     this.actorPosition = actor.transform;
+    // }
 
     public void EnterCombat() {
         if (!this.inCombat) {

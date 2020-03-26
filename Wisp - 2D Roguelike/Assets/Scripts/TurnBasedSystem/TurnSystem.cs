@@ -7,7 +7,7 @@ public interface ITurnAct {
     IEnumerator TurnRoutine();
 }
 
-public class TurnSystem {
+public class TurnSystem : MonoBehaviour {
 
     private List<ITurnAct> actors;
     private int currentTurn = 0;
@@ -17,24 +17,28 @@ public class TurnSystem {
     // Initialization
     // ----------------------------------------------------------------
 
-    public TurnSystem() {
-        Debug.Log("Turn System Created");
-        actors = new List<ITurnAct>();
-
+    private void OnEnable() {
         // Listeners
-        EventManager.playerLeftCombat += EndCombat;
+        EventManager.combatOver += EndCombat;
         EventManager.combatSpawn += InsertSpawn;
         EventManager.actorTurnOver += NextTurn;
-        InitActors();
+    }
 
+    private void OnDisable() {
+        // Remove listeners
+        EventManager.combatOver -= EndCombat;
+        EventManager.combatSpawn -= InsertSpawn;
+        EventManager.actorTurnOver -= NextTurn;
+    }
+
+    private void Awake() {
+        Debug.Log("Turn System Created");
+        actors = new List<ITurnAct>();
+        InitActors();
     }
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
-        Debug.Log(actors.Count);
-        for (int i = 0; i < actors.Count; i++) {
-            Debug.Log("Actor " + i + ": " + actors[i]);
-        }
     }
 
     // ----------------------------------------------------------------
@@ -42,27 +46,31 @@ public class TurnSystem {
     // ----------------------------------------------------------------
 
     public void NextTurn() {
-        Debug.Log("Turn " + currentTurn);
+        if (actors.Count <= 1) EndCombat();
         if (combatRunning) {
 
             if (currentTurn >= actors.Count) {    
                 currentTurn = 0;
-                actors.RemoveAll(item => item == null); // GC for null objects
+                actors.RemoveAll(item => CustomHelpers.IsNullOrDestroyed(item)); // GC for null objects
             }
 
-            if (actors[currentTurn] != null) {
+            Debug.Log("Actor Turn: " + actors[currentTurn] + " at turn num: " + currentTurn + " with total actors: " + actors.Count);
+
+            if (!CustomHelpers.IsNullOrDestroyed(actors[currentTurn])) {
                 actors[currentTurn].TakeTurn();
+                currentTurn++;
             }
-            currentTurn++;
+            else {
+                currentTurn++;
+                EventManager.RaiseActorTurnOver();
+            }
+
 
         }
-
-        else { CombatOver(); }
 
     }
 
     private void InsertSpawn(ITurnAct spawn) {
-        Debug.Log("Spawn insert");
         actors.Insert(currentTurn, spawn);
     }
 
@@ -74,16 +82,9 @@ public class TurnSystem {
     // Clean up
     // ----------------------------------------------------------------
 
-    private void CombatOver() {
-
-        // Remove listeners
-        EventManager.playerLeftCombat -= EndCombat;
-        EventManager.combatSpawn -= InsertSpawn;
-        EventManager.actorTurnOver -= NextTurn;
-
-        // Broadcast that Combat has ended
-        EventManager.RaiseCombatOver();
-
-    }
+    // private void CombatOver() {
+    //     // Broadcast that Combat has ended
+    //     EventManager.RaiseCombatOver();
+    // }
 
 }

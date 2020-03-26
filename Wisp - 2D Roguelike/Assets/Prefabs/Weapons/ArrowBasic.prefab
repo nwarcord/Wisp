@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 1
-  tileMovePerTurn: 3
+  tileMovePerTurn: 2
   isContinuous: 0
 --- !u!61 &8452029368715208540
 BoxCollider2D:

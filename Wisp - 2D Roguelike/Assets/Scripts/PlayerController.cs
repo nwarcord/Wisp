@@ -5,11 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     private int health;
-    private CombatComponent combat;
+    private PlayerCombatComponent combat;
     private MovementComponent movement;
     private BoxCollider2D boxCollider;
     private CircleCollider2D circleCollider;
-    private TurnComponent turnComponent;
     [SerializeField]
     private Grid grid = default;
 
@@ -18,13 +17,13 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     private void OnEnable() {
-        EventManager.enemyDeath += CheckIfCombatOver;
-        EventManager.aggroPlayer += PlayerEnterCombat;
+        EventManager.combatStart += PlayerEnterCombat;
+        EventManager.combatOver += PlayerLeaveCombat;
     }
 
     private void OnDisable() {
-        EventManager.enemyDeath -= CheckIfCombatOver;
-        EventManager.aggroPlayer -= PlayerEnterCombat;
+        EventManager.combatStart -= PlayerEnterCombat;
+        EventManager.combatOver -= PlayerLeaveCombat;
     }
 
     // ----------------------------------------------------------------
@@ -33,14 +32,15 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     void Awake() {
         health = 3;
-        turnComponent = new TurnComponent();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        combat = new CombatComponent(gameObject, 2, this.grid, this.boxCollider);
+        combat = gameObject.GetComponent<PlayerCombatComponent>();
         movement = new MovementComponent(gameObject, this, grid);
     }
 
-    public CombatComponent Combat() {
+    // private void Update() {}
+
+    public PlayerCombatComponent Combat() {
         return this.combat;
     }
 
@@ -49,20 +49,17 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     public void PlayerEnterCombat() {
-        if (!combat.inCombat) EventManager.RaisePlayerEntersCombat();
         combat.EnterCombat();
     }
 
-    public void CheckIfCombatOver() {
-        if (!combat.inCombat) return;
+    public void PlayerLeaveCombat() {
         combat.ExitCombat();
-        if (!combat.inCombat) EventManager.RaisePlayerLeftCombat();
+        Debug.Log("Player left combat");
     }
 
-    public bool TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         health -= damage;
-        Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
-        return true;
+        // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
 
     public bool IsAlive() {

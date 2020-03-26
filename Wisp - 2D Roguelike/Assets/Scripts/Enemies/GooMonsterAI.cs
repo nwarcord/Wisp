@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GooMonsterAI : MonoBehaviour, ITurnAct, ICanBeDamaged {
+public class GooMonsterAI : MonoBehaviour, /*ITurnAct,*/ ICanBeDamaged {
 
     private int health;
     private CombatComponent combat;
@@ -28,9 +28,9 @@ public class GooMonsterAI : MonoBehaviour, ITurnAct, ICanBeDamaged {
     //     return false;
     // }
 
-    public bool TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         health -= damage;
-        return true;
+        // return true;
     }
 
     public bool IsAlive() {
