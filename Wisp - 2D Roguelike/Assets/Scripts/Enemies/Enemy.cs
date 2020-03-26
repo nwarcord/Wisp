@@ -8,7 +8,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected MovementComponent movement;
     protected int health;
     private Transform playerTransform;
-    protected CombatComponent combat;
+    protected BaseCombatComponent combat;
     protected BoxCollider2D boxCollider;
     protected CircleCollider2D circleCollider;
     [SerializeField]
@@ -77,7 +77,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     public void TakeDamage(int damage) {
         health -= damage;
         if (!IsAlive()) Die();
-        // return true;
     }
 
     public bool IsAlive() {
@@ -92,8 +91,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // ----------------------------------------------------------------
     // Turn Mechanics
     // ----------------------------------------------------------------
-
-    // protected abstract void CheckAlive();
 
     public void TakeTurn() {
         isCombatTurn = true;
@@ -110,8 +107,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         }
         return false;
     }
-
-    // protected abstract void TurnBehavior();
 
     protected abstract void CombatBehavior();
 
@@ -140,18 +135,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     public void TurnSystemNotActive() {
         turnSystemActive = false;
     }
-
-    /*
-    protected abstract void Patrol();
-    protected abstract void CombatBehavior();
-    protected void NonCombatBehavior() {
-        if (turnSystemActive && MyTurn()) Patrol();
-    }
-    protected void TurnBehavior() {
-        if (!combat.inCombat) NonCombatBehavior();
-        else CombatBehavior();
-    }
-    */
 
     // To be used when out of combat to initiate combat with player
     // Or to determine if there is line of sight to player

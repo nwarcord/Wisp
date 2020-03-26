@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MeleeAttack : IAttack {
+
+    // private const int damage = 1;
+    // private const int range = 1;
+    private int damage = 1;
+    private Transform actorPosition;
+    private MeleeRangeAugment rangeAugment;
+    private DamageAugment damageAugment;
+    private MeleeCleaveAugment cleaveAugment;
+
+    public MeleeAttack(Transform actorPosition) {
+        this.actorPosition = actorPosition;
+        rangeAugment = new MeleeRangeAugment();
+        damageAugment = new DamageAugment();
+        cleaveAugment = new MeleeCleaveAugment();
+    }
+
+    public MeleeAttack(int damage, Transform actorPosition, MeleeRangeAugment rangeAugment, DamageAugment damageAugment, MeleeCleaveAugment cleaveAugment) {
+        this.damage = damage;
+        this.actorPosition = actorPosition;
+        this.rangeAugment = new MeleeRangeAugment(rangeAugment);
+        this.damageAugment = new DamageAugment(damageAugment);
+        this.cleaveAugment = new MeleeCleaveAugment(cleaveAugment);
+    }
+
+    public bool ExecuteAttack(Vector3 tileCoords) {
+    
+        Transform target = TileSystem.ObjectAtTile(tileCoords);
+        if (target != null && rangeAugment.InRange(TileSystem.TileDistance(target.position, actorPosition.position))) {
+            ICanBeDamaged victim = target.GetComponent<ICanBeDamaged>();
+            if (victim != null) {
+                victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+}

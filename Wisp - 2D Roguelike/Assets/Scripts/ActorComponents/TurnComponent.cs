@@ -24,7 +24,7 @@ public abstract class TurnComponent : MonoBehaviour {
         InitVariables();
     }
 
-    protected abstract void InitVariables();
+    protected virtual void InitVariables() {}
 
     private void TurnSystemIsActive() {
         turnSystemActive = true;

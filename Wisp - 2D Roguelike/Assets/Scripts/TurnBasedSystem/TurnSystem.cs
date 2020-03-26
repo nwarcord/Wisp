@@ -39,9 +39,6 @@ public class TurnSystem : MonoBehaviour {
 
     private void InitActors() {
         actors = FindInterfaces.Find<ITurnAct>();
-        // foreach (ITurnAct actor in actors) {
-
-        // }
     }
 
     // ----------------------------------------------------------------
@@ -54,13 +51,11 @@ public class TurnSystem : MonoBehaviour {
 
             if (currentTurn >= actors.Count) {    
                 currentTurn = 0;
-                // actors.RemoveAll(item => (item == null || (item as UnityEngine.Object) == null)); // GC for null objects
                 actors.RemoveAll(item => CustomHelpers.IsNullOrDestroyed(item)); // GC for null objects
             }
 
             Debug.Log("Actor Turn: " + actors[currentTurn] + " at turn num: " + currentTurn + " with total actors: " + actors.Count);
 
-            // if (actors[currentTurn] as UnityEngine.Object != null && actors[currentTurn] != null) {
             if (!CustomHelpers.IsNullOrDestroyed(actors[currentTurn])) {
                 actors[currentTurn].TakeTurn();
                 currentTurn++;
@@ -72,8 +67,6 @@ public class TurnSystem : MonoBehaviour {
 
 
         }
-
-        // else { CombatOver(); }
 
     }
 
@@ -90,11 +83,8 @@ public class TurnSystem : MonoBehaviour {
     // ----------------------------------------------------------------
 
     // private void CombatOver() {
-
-
     //     // Broadcast that Combat has ended
     //     EventManager.RaiseCombatOver();
-
     // }
 
 }
