@@ -10,7 +10,7 @@ public class BlobCombatComponent : BaseCombatComponent {
         melee = new MeleeAttack(actorPosition);
     }
 
-    public bool PerformAttack(Vector3 target) {
+    public override bool PerformAttack(Vector3 target, AttackType attackType) {
         return melee.ExecuteAttack(target);
     }
 

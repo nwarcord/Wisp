@@ -7,7 +7,7 @@ public class PlayerCombatComponent : BaseCombatComponent {
     private MeleeAttack melee;
     private RangedAttack ranged;
     [SerializeField]
-    private Projectile projectile;
+    private Projectile projectile = default;
 
     protected override void SetAttacks() {
 
@@ -16,7 +16,7 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
     }
 
-    public bool PerformAttack(Vector3 target, AttackType attackType) {
+    public override bool PerformAttack(Vector3 target, AttackType attackType) {
         
         if (attackType == AttackType.Melee) { melee.ExecuteAttack(target); return true; }
 

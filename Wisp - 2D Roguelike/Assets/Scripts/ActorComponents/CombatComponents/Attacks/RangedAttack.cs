@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RangedAttack : IAttack {
 
-    private int damage = 1;
     private Transform actorPosition;
     private Projectile projectile;
     private Grid grid;

@@ -6,11 +6,8 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     public GameObject player; // User controlled GameObject
     private MovementComponent playerMovement;
-    private CombatComponent playerCombat;
-    // private InputDelay inputDelay;
-    // private const float delayDuration = 0.75f;
+    private PlayerCombatComponent playerCombat;
     private const float delayDuration = 0.5f;
-    // private const float shortDelay = 0.5f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
@@ -65,28 +62,22 @@ public class UserInput : MonoBehaviour, ITurnAct {
                 inputDelay -= Time.deltaTime;
             }
 
-        // else if (inputEnabled) {
-            else {
+        else {
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                // if (Input.GetKey(attack) && Input.GetMouseButtonUp(0)) {
                 if (AttackAction()) {
-                    if (playerCombat.OneTileAttack(Input.mousePosition)) {
+                    if (playerCombat.PerformAttack(Input.mousePosition, AttackType.Melee)) {
                         ResetInputDelay();
                     }
                 }
                 else if (RangedAttackAction()) {
-                    if (playerCombat.RangedAttack(mouseWorldPos, arrows)) {
+                    if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
                         ResetInputDelay();
                     }
                 }
-                // else if (Input.GetMouseButtonUp(0)) {
-                // else if (LeftClick()) {
                 else if (MoveAction()) {
-                    // playerMovement.AttemptMove(mouseWorldPos);
                     ResetInputDelay();
                 }
             }
-        // }
         }
     }
 
@@ -95,12 +86,6 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
     
     private void ResetInputDelay() {
-        // if (playerCombat.inCombat) {
-        //     inputDelay = delayDuration;
-        // }
-        // else {
-        //     inputDelay = shortDelay;
-        // }
         inputDelay = delayDuration;
         actionTaken = true;
     }
