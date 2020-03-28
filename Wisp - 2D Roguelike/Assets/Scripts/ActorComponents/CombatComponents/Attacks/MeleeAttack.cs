@@ -8,6 +8,7 @@ public class MeleeAttack : IAttack {
     // private const int range = 1;
     private int damage = 1;
     private Transform actorPosition;
+    // TODO: Use augments and make ability to update them
     private MeleeRangeAugment rangeAugment;
     private DamageAugment damageAugment;
     private MeleeCleaveAugment cleaveAugment;
