@@ -11,17 +11,18 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine
-    public Projectile arrows;
-    private int frames = 0;
+    // private int frames = 0;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
     private KeyCode attack = KeyCode.Q;
+    private KeyCode aoe = KeyCode.LeftControl; // TODO: Add functionality
     private KeyCode up = KeyCode.W;
     private KeyCode down = KeyCode.S;
     private KeyCode left = KeyCode.A;
     private KeyCode right = KeyCode.D;
     private KeyCode ranged = KeyCode.LeftShift;
+    private KeyCode dodge = KeyCode.Space; // TODO: Add functionality
 
     // ----------------------------------------------------------------
     // Initialization    
@@ -51,11 +52,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // ----------------------------------------------------------------
 
     public void Update() {
-        frames++;
-        if (frames >= 240) {
-            frames = 0;
-            Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
-        }
+        // frames++;
+        // if (frames >= 240) {
+        //     frames = 0;
+        //     Debug.Log("Hello from User Input! - Input enabled: " + inputEnabled);
+        // }
 
         if (inputEnabled) {
             if (inputDelay > 0) {
