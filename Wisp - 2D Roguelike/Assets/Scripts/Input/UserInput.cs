@@ -75,6 +75,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
                         ResetInputDelay();
                     }
                 }
+                else if (AoeAttackAction()) {
+                    // if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
+                        // ResetInputDelay();
+                    //}
+                }
                 else if (MoveAction()) {
                     ResetInputDelay();
                 }
@@ -135,6 +140,10 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     private bool RangedAttackAction() {
         return Input.GetKey(ranged) && LeftClick();
+    }
+
+    private bool AoeAttackAction() {
+        return Input.GetKey(aoe) && LeftClick();
     }
 
     // ----------------------------------------------------------------
