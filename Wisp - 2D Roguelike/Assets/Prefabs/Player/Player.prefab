@@ -192,3 +192,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 3008140684224628789, guid: 9123627d92f1a5d47bf2fa2415293a4b,
     type: 3}
+  thrownProjectile: {fileID: -4292080122767565525, guid: dd0115ecf524d284c95ee7a88315be61,
+    type: 3}

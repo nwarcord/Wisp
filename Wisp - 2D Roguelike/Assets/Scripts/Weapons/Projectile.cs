@@ -66,7 +66,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
 
     private void CheckFlightDistance() {
         // if (Vector3.Magnitude(transform.position - startingPoint) >= tileRange) {
-        if (Vector3.Magnitude(transform.position - startingPoint) >= tileRange) {
+        if (CurrentFlightDistance() >= tileRange) {
             Destroy(gameObject);
         }
     }

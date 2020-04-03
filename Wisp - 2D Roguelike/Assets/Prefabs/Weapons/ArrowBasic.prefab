@@ -99,6 +99,7 @@ MonoBehaviour:
   baseDamage: 1
   tileMovePerTurn: 2
   isContinuous: 0
+  tileRange: 12
 --- !u!61 &8452029368715208540
 BoxCollider2D:
   m_ObjectHideFlags: 0

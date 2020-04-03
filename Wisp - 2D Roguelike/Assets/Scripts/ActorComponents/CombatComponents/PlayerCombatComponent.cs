@@ -6,17 +6,20 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
     private MeleeAttack melee;
     private RangedAttack ranged;
-    private AoeAttack aoe;
+    // private AoeAttack aoe;
+    private RangedAttack thrown;
     [SerializeField]
     private Projectile projectile = default;
     [SerializeField]
-    private ThrownDestructable thrown = default;
+    // private ThrownDestructable thrown = default;
+    private Projectile thrownProjectile = default;
 
     protected override void SetAttacks() {
 
         melee = new MeleeAttack(this.actorPosition);
         ranged = new RangedAttack(this.actorPosition, projectile, this.grid);
-        aoe = new AoeAttack(this.actorPosition, thrown, this.grid);
+        // aoe = new AoeAttack(this.actorPosition, thrown, this.grid);
+        thrown = new RangedAttack(this.actorPosition, thrownProjectile, this.grid);
     }
 
     public override bool PerformAttack(Vector3 target, AttackType attackType) {
@@ -25,7 +28,7 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
         else if (attackType == AttackType.Ranged) { ranged.ExecuteAttack(target); return true; }
 
-        else if (attackType == AttackType.Aoe) { aoe.ExecuteAttack(target); return true; }
+        else if (attackType == AttackType.Aoe) { thrown.ExecuteAttack(target); return true; }
 
         else return false;
 
