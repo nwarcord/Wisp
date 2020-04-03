@@ -11,7 +11,6 @@ public class PlayerCombatComponent : BaseCombatComponent {
     [SerializeField]
     private Projectile projectile = default;
     [SerializeField]
-    // private ThrownDestructable thrown = default;
     private Projectile thrownProjectile = default;
 
     protected override void SetAttacks() {
@@ -28,7 +27,7 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
         else if (attackType == AttackType.Ranged) { ranged.ExecuteAttack(target); return true; }
 
-        else if (attackType == AttackType.Aoe) { thrown.ExecuteAttack(target); return true; }
+        else if (attackType == AttackType.Thrown) { thrown.ExecuteAttack(target); return true; }
 
         else return false;
 

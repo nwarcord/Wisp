@@ -55,17 +55,10 @@ public class Projectile : MonoBehaviour, ITurnAct {
     }
 
     private void ProjectileMove() {
-        // Vector3 moveTo = transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn);
-        // float futureDistance = Vector3.Magnitude(moveTo - startingPoint);
-        // if (futureDistance >= tileRange) {
-        //     moveTo = transform.position + ((transform.up - transform.right).normalized * (futureDistance - tileRange));
-        // }
         movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
-        // movement.AttemptMove(moveTo);
     }
 
     private void CheckFlightDistance() {
-        // if (Vector3.Magnitude(transform.position - startingPoint) >= tileRange) {
         if (CurrentFlightDistance() >= tileRange) {
             Destroy(gameObject);
         }

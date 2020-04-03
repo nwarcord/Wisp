@@ -16,7 +16,8 @@ public class UserInput : MonoBehaviour, ITurnAct {
     // Keybindings
     private KeyCode activate = KeyCode.E;
     private KeyCode attack = KeyCode.Q;
-    private KeyCode aoe = KeyCode.LeftControl; // TODO: Add functionality
+    private KeyCode thrown = KeyCode.LeftControl;
+    private KeyCode aoe = KeyCode.Z; // TODO: Add functionality
     private KeyCode up = KeyCode.W;
     private KeyCode down = KeyCode.S;
     private KeyCode left = KeyCode.A;
@@ -72,6 +73,11 @@ public class UserInput : MonoBehaviour, ITurnAct {
                 }
                 else if (RangedAttackAction()) {
                     if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
+                        ResetInputDelay();
+                    }
+                }
+                else if (ThrownAttackAction()) {
+                    if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
                         ResetInputDelay();
                     }
                 }
@@ -140,6 +146,10 @@ public class UserInput : MonoBehaviour, ITurnAct {
 
     private bool RangedAttackAction() {
         return Input.GetKey(ranged) && LeftClick();
+    }
+
+    private bool ThrownAttackAction() {
+        return Input.GetKey(thrown) && LeftClick();
     }
 
     private bool AoeAttackAction() {
