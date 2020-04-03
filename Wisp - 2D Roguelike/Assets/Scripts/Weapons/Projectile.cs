@@ -10,11 +10,14 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private int tileMovePerTurn = 0;
     [SerializeField]
     private bool isContinuous = false;
+    [SerializeField]
+    private int tileRange = 50;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
     private ProjectileMovement movement;
     private bool combatActive = false;
     private bool isCombatTurn = false;
+    private Vector3 startingPoint;
 
     private void OnEnable() {
         EventManager.combatStart += EnableCombatFlag;
@@ -33,11 +36,17 @@ public class Projectile : MonoBehaviour, ITurnAct {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
         combatActive = GameState.combatState;
+        startingPoint = transform.position;
+        if (tileRange > 50) {
+            Debug.LogError("Projectile range cannot exceed 50 tiles");
+            tileRange = 50;
+        }
     }
 
     void FixedUpdate() {
         if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
         else rb.velocity = new Vector2();
+        CheckFlightDistance();
     }
 
     public void TakeTurn() {
@@ -46,7 +55,24 @@ public class Projectile : MonoBehaviour, ITurnAct {
     }
 
     private void ProjectileMove() {
+        // Vector3 moveTo = transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn);
+        // float futureDistance = Vector3.Magnitude(moveTo - startingPoint);
+        // if (futureDistance >= tileRange) {
+        //     moveTo = transform.position + ((transform.up - transform.right).normalized * (futureDistance - tileRange));
+        // }
         movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
+        // movement.AttemptMove(moveTo);
+    }
+
+    private void CheckFlightDistance() {
+        // if (Vector3.Magnitude(transform.position - startingPoint) >= tileRange) {
+        if (Vector3.Magnitude(transform.position - startingPoint) >= tileRange) {
+            Destroy(gameObject);
+        }
+    }
+
+    private float CurrentFlightDistance() {
+        return Vector3.Magnitude(transform.position - startingPoint);
     }
 
     private void EnableCombatFlag() {
