@@ -26,7 +26,8 @@ public abstract class Attack : MonoBehaviour {
 public enum AttackType {
     Melee,
     Ranged,
-    Aoe
+    Aoe,
+    Thrown
 }
 
 public interface IAttack {
