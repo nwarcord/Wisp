@@ -35,7 +35,7 @@ public class AoeAttack : IAttack {
         spawnPoint.y -= 0.5f;
 
         ThrownDestructable t = GameObject.Instantiate(thrownDestructable, spawnPoint, new Quaternion());
-        t.SetTargetPoint(new Vector3());
+        // t.SetTargetPoint(new Vector3());
         
         return true;
     }
