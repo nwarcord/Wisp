@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ThrownDestructable : MonoBehaviour, ITurnAct {
     
-    // [SerializeField]
-    // private AreaOfEffect aoeSpawn;
+    [SerializeField]
+    private AreaOfEffect aoeSpawn;
     [SerializeField]
     private float moveSpeed;
     [SerializeField]
@@ -26,6 +26,7 @@ public class ThrownDestructable : MonoBehaviour, ITurnAct {
         EventManager.combatOver -= DisableCombatFlag;
         StopAllCoroutines();
         if (isCombatTurn) EventManager.RaiseActorTurnOver();
+        GameObject.Instantiate(aoeSpawn, targetPoint, new Quaternion());
     }
 
     private void Awake() {
@@ -35,18 +36,20 @@ public class ThrownDestructable : MonoBehaviour, ITurnAct {
 
     private void Start() {
         combatActive = GameState.combatState;
-        if (!combatActive) MoveToTarget(transform.position, targetPoint);
+        // if (!combatActive) StartCoroutine(MoveToTarget(transform.position, targetPoint));
+        if (!combatActive) movement.AttemptMove(targetPoint);
     }
 
-    // private void Update() {
+    private void Update() {
         // if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
         // else rb.velocity = new Vector2();
         // if (Vector3.Magnitude(targetPoint - transform.position) <= .001f) Destroy(gameObject);
         // if (!combatActive) transform.position *= Time.deltaTime;
-    // }
+        if (TargetDistance() <= .001f) Destroy(gameObject);
+    }
 
-    private void OnDestroy() {
-        // GameObject.Instantiate(aoeSpawn, targetPoint, new Quaternion());
+    private float TargetDistance() {
+        return Vector3.Magnitude(targetPoint - transform.position);
     }
 
     public void TakeTurn() {
@@ -59,8 +62,13 @@ public class ThrownDestructable : MonoBehaviour, ITurnAct {
     }
 
     private void DestructableMove() {
-        Vector3 endPoint = CloserVector(DirectionVector() * tileMovePerTurn, targetPoint);
-        StartCoroutine(MoveToTarget(transform.position, endPoint));
+        Vector3 tileMove = (DirectionVector() * tileMovePerTurn);
+        tileMove.x += transform.position.x;
+        tileMove.y += transform.position.y;
+        // Vector3 endPoint = CloserVector(DirectionVector() * tileMovePerTurn, targetPoint);
+        Vector3 endPoint = CloserVector(tileMove, targetPoint);
+        // StartCoroutine(MoveToTarget(transform.position, endPoint));
+        movement.AttemptMove(endPoint);
     }
 
     private void EnableCombatFlag() {
@@ -70,7 +78,9 @@ public class ThrownDestructable : MonoBehaviour, ITurnAct {
 
     private void DisableCombatFlag() {
         combatActive = false;
-        MoveToTarget(transform.position, targetPoint);
+        StopAllCoroutines();
+        // StartCoroutine(MoveToTarget(transform.position, targetPoint));
+        movement.AttemptMove(targetPoint);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -109,5 +119,7 @@ public class ThrownDestructable : MonoBehaviour, ITurnAct {
             t += Time.deltaTime * moveSpeed; // if you have a movespeed
             yield return null;
         }
+
+        Destroy(gameObject);
     }
 }

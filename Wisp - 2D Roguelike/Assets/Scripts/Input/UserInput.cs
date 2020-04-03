@@ -76,9 +76,9 @@ public class UserInput : MonoBehaviour, ITurnAct {
                     }
                 }
                 else if (AoeAttackAction()) {
-                    // if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
-                        // ResetInputDelay();
-                    //}
+                    if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
+                        ResetInputDelay();
+                    }
                 }
                 else if (MoveAction()) {
                     ResetInputDelay();

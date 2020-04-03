@@ -64,6 +64,7 @@ public class AreaOfEffect : MonoBehaviour, ITurnAct {
     private void DisableCombatFlag() {
         combatActive = false;
         StopAllCoroutines();
+        StartCoroutine(NonCombatBehavior()); // Could casuse problems????
     }
 
     private void TickDuration() {
