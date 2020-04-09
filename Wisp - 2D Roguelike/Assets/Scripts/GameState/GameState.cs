@@ -50,7 +50,7 @@ public class GameState : MonoBehaviour {
             combatants = 0;
             combatState = false;
             Destroy(turnSystem);
-            Debug.Log("Turn System deleted.");
+            // Debug.Log("Turn System deleted.");
         }
     }
 

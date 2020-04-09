@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     }
 
     public void TakeDamage(int damage) {
+        Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
         // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
