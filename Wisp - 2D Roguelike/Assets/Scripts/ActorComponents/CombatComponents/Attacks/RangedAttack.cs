@@ -25,6 +25,8 @@ public class RangedAttack : IAttack {
         Vector3 spawnPoint = TileSystem.AdjacentTile(gridDirection, actorTile, actorPosition.position);
         spawnPoint.y -= 0.5f;
 
+        if (spawnPoint == actorPos) return false;
+
         Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, -45) * (spawnPoint - actorPos);
 
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);

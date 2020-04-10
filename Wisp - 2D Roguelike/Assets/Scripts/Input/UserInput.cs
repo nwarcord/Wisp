@@ -23,7 +23,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     private KeyCode left = KeyCode.A;
     private KeyCode right = KeyCode.D;
     private KeyCode ranged = KeyCode.LeftShift;
-    private KeyCode dodge = KeyCode.Space; // TODO: Add functionality
+    // private KeyCode dodge = KeyCode.Space; // TODO: Add functionality
 
     // ----------------------------------------------------------------
     // Initialization    

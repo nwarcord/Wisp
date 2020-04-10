@@ -5,11 +5,12 @@ using UnityEngine;
 public class ThrownDestructable : MonoBehaviour {
     
     [SerializeField]
-    private AreaOfEffect aoeSpawn;
+    private AreaOfEffect aoeSpawn = default;
     
 
     private void OnDisable() {
-        GameObject.Instantiate(aoeSpawn, transform.position, new Quaternion());
+        AreaOfEffect aoe = GameObject.Instantiate(aoeSpawn, transform.position, new Quaternion());
+        EventManager.RaiseCombatSpawn(aoe);
     }
 
 }

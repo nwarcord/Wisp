@@ -75,6 +75,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     public void TakeDamage(int damage) {
+        Debug.Log("ENEMY DAMAGED");
         health -= damage;
         if (!IsAlive()) Die();
     }
@@ -120,10 +121,10 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     }
 
     public IEnumerator TurnRoutine() {
-        Debug.Log("Blob turn started.");
+        // Debug.Log("Blob turn started.");
         TurnBehavior();
         yield return null;
-        Debug.Log("Blob turn ended.");
+        // Debug.Log("Blob turn ended.");
         isCombatTurn = false;
         EventManager.RaiseActorTurnOver();
     }

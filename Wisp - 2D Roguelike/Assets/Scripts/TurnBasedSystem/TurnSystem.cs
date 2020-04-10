@@ -54,7 +54,7 @@ public class TurnSystem : MonoBehaviour {
                 actors.RemoveAll(item => CustomHelpers.IsNullOrDestroyed(item)); // GC for null objects
             }
 
-            Debug.Log("Actor Turn: " + actors[currentTurn] + " at turn num: " + currentTurn + " with total actors: " + actors.Count);
+            // Debug.Log("Actor Turn: " + actors[currentTurn] + " at turn num: " + currentTurn + " with total actors: " + actors.Count);
 
             if (!CustomHelpers.IsNullOrDestroyed(actors[currentTurn])) {
                 actors[currentTurn].TakeTurn();
