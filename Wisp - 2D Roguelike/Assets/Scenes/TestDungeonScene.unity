@@ -128,12 +128,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7391228347081971065, guid: bee1bdaa9c50754469a1d0ccf233ab12,
-        type: 3}
-      propertyPath: enemyType
-      value: 
-      objectReference: {fileID: 3037920999354613407, guid: 0638b667f33f2a1499a4acfe361a2bb2,
-        type: 3}
     - target: {fileID: 7391228347081971070, guid: bee1bdaa9c50754469a1d0ccf233ab12,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -667,12 +661,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7391228347081971065, guid: bee1bdaa9c50754469a1d0ccf233ab12,
-        type: 3}
-      propertyPath: enemyType
-      value: 
-      objectReference: {fileID: 3037920999354613407, guid: 0638b667f33f2a1499a4acfe361a2bb2,
-        type: 3}
     - target: {fileID: 7391228347081971070, guid: bee1bdaa9c50754469a1d0ccf233ab12,
         type: 3}
       propertyPath: m_LocalPosition.x

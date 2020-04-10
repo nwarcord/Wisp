@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
     private bool combatActive = false;
     private bool isCombatTurn = false;
     private Vector3 startingPoint;
+    private bool isColliding = false;
 
     private void OnEnable() {
         EventManager.combatStart += EnableCombatFlag;
@@ -47,6 +48,7 @@ public class Projectile : MonoBehaviour, ITurnAct {
         if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
         else rb.velocity = new Vector2();
         CheckFlightDistance();
+        isColliding = false;
     }
 
     public void TakeTurn() {
@@ -78,7 +80,8 @@ public class Projectile : MonoBehaviour, ITurnAct {
 
     private void OnTriggerEnter2D(Collider2D other) {
         ICanBeDamaged victim = other.gameObject.GetComponent<ICanBeDamaged>();
-        if (victim != null) {
+        if (victim != null && !isColliding) {
+            isColliding = true;
             victim.TakeDamage(baseDamage);
         }
         if (!isContinuous) {
