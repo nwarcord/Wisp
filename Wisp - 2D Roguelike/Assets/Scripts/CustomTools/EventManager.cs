@@ -14,6 +14,7 @@ public static class EventManager {
     public static event Action enemyDeath;
     public static event Action<ITurnAct> enemySpawn;
     public static event Action combatStart;
+    public static event Action playerDamaged;
 
     // ----------------------------------------------------------------
     // Turn system events
@@ -36,6 +37,8 @@ public static class EventManager {
     // ----------------------------------------------------------------
     // Player combat events
     // ----------------------------------------------------------------
+
+    public static void RaisePlayerDamaged() => playerDamaged?.Invoke();
 
     // public static void RaisePlayerEntersCombat() => playerEntersCombat?.Invoke();
     // public static void RaisePlayerLeftCombat() => playerLeftCombat?.Invoke();

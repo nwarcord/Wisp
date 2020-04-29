@@ -8,10 +8,10 @@ public class CameraFollow : MonoBehaviour {
 	private Transform targetTransform;
 
 	[SerializeField]
-	private Camera thisCamera;
+	private Camera thisCamera = default;
 
 	[SerializeField]
-	private Collider2D minBoundaryX, maxBoundaryX, minBoundaryY, maxBoundaryY;
+	private Collider2D minBoundaryX = default, maxBoundaryX = default, minBoundaryY = default, maxBoundaryY = default;
 
 	private float xMin, xMax, yMin, yMax;
 
