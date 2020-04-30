@@ -794,6 +794,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5321446982349620603, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321446982349620603, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5321446982992686446, guid: 90f923a702aa2f546ad5a5a65a4654a4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -904,10 +914,30 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1604787871}
+    - target: {fileID: 5321446982992686448, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321446982992686448, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 5321446982992686450, guid: 90f923a702aa2f546ad5a5a65a4654a4,
         type: 3}
       propertyPath: m_Name
       value: PlayerHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321446983852174128, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321446983852174128, guid: 90f923a702aa2f546ad5a5a65a4654a4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90f923a702aa2f546ad5a5a65a4654a4, type: 3}
