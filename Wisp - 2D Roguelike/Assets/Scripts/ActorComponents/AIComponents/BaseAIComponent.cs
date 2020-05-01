@@ -9,9 +9,14 @@ public abstract class BaseAIComponent : MonoBehaviour {
     protected Transform position;
     protected Transform target;
     protected Grid grid;
+    protected List<AttackType> attacks;
+    protected MovementComponent movement;
+    protected BaseCombatComponent combat;
 
     private void Awake() {
         position = gameObject.transform;
+        movement = gameObject.GetComponent<MovementComponent>();
+        combat = gameObject.GetComponent<BaseCombatComponent>();
     }
 
     private void Start() {
@@ -21,16 +26,25 @@ public abstract class BaseAIComponent : MonoBehaviour {
 
     protected abstract void SetTarget();
 
+    public void Think(bool inCombat) {
+        if (!inCombat) Patrol();
+        else Engage();
+    }
+
+    public void UpdateTarget(Transform target) {
+        this.target = target;
+    }
+
     // Non-combat behavior
+    private void Patrol() { movement.AttemptMove(DecideMove(false)); }
 
     // Combat behavior
+    protected abstract void Engage();
 
-    // Choosing which state to move into
-
-    // If Patrol, decide number of tiles and direction
-
-    // If Move, decide number of tiles and direction (using target)
+    // Choosing where to move to
+    protected abstract Vector3 DecideMove(bool inCombat);
 
     // If Attack, decide attack type
+    protected abstract void DecideAttack();
 
 }
