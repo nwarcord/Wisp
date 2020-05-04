@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ManorTileAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+    - {fileID: 2800000, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+    totalSpriteSurfaceArea: 13312
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -8716637135119652708, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 8192591785678182490, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 5464331671032860621, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -7321208044956451140, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 5628409940135563239, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -5728520119938556942, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 9022157603017592017, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -2574656496017586790, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -3612402251982093156, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 4578351949560655213, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -6766844503710601228, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: -7180693874224072798, guid: c6efe17001cb0f940bea20a0a4816eed, type: 3}
+  - {fileID: 6748787109197217987, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -2147972174582140603, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -2215585646171648754, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 2939632435204287173, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 8415965039402293740, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 1363542740917187470, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 3790600150061101623, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -411606503103080117, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 313492313916937209, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -2786910696580651755, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 2085283666044762583, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 7038337469871541802, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 7161513069046188504, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 2294734683485593273, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -4576103770339878581, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 4752146123927237447, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 6554442901168080390, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 5032639067963261636, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -3260660728795750420, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -5723004702874419131, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -8310189349877971457, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 5780618111400621201, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -6393459125047852325, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 9128578621102688574, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 6016330743114366935, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 6261891315679073017, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -67768171650339476, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 5539629436371415880, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 4163525924472676452, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -7246844434755301177, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 8239945900254660581, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 8291820222724284568, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -7320129861101992124, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -6645647432828223899, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -1534209709121437362, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -6713319932660165914, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 2993859099341159876, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -5229521938983858324, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: -8823735521781869456, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  - {fileID: 2722947268972772696, guid: 4904dc1ffe6d25d45aa0a23723bbc142, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - double_door_bottom_left
+  - window_top_left
+  - double_door_bottom_right
+  - closed_door_bottom
+  - window_bottom_left
+  - window_bottom_right
+  - single_door_top
+  - single_door_bottom
+  - closed_door_top
+  - window_top_right
+  - double_door_top_right
+  - double_door_top_left
+  - wall_rune_ora
+  - right_exterior_wall_bottom
+  - right_interior_wall_corner_bottom
+  - left_exterior_wall_corner_bottom
+  - right_interior_wall_corner
+  - wall_stain
+  - left_interior_wall_corner_bottom
+  - right_interior_wall2
+  - right_interior_wall1
+  - left_exterior_wall_bottom
+  - right_exterior_wall_corner
+  - wall_rune_night
+  - left_interior_wall2
+  - manor_blank5
+  - manor_blank4
+  - left_interior_wall1
+  - manor_blank3
+  - manor_blank2
+  - manor_blank1
+  - bottom_interior_wall1
+  - bottom_interior_wall2
+  - right_exterior_wall
+  - interior_wall_top2
+  - left_exterior_wall
+  - interior_wall_top1
+  - interior_wall_bottom1
+  - interior_wall_bottom2
+  - bottom_wall_hole
+  - wall_torn3
+  - wall_torn2
+  - wall_torn1
+  - wall_rune_kill
+  - left_interior_wall_corner
+  - wall_rune_oath
+  - wood_floor_scuff
+  - wood_floor1
+  - wood_floor2
+  - wood_floor_hole
+  - right_exterior_wall_corner_bottom
+  - left_exterior_wall_corner
+  m_Tag: ManorTileAtlas
+  m_IsVariant: 0
