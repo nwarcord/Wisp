@@ -25,6 +25,9 @@ public class Phantom : Enemy {
         Vector3 playerPosition = GetPlayerPosition();
         playerPosition.y -= 0.5f;
         Vector3 move = myPosition.position;
+        move.y -= 0.5f;
+        Vector3 currentPos = myPosition.position;
+        currentPos.y -= 0.5f;
         if (playerPosition.x != move.x) {
             if (playerPosition.x < move.x) { move.x -= 1; }
             else { move.x += 1; }
@@ -36,7 +39,7 @@ public class Phantom : Enemy {
         }
 
         if (playerPosition != move) {
-            combat.PerformAttack(myPosition.position, AttackType.Aoe);
+            combat.PerformAttack(currentPos, AttackType.Aoe);
             movement.AttemptMove(move);
         }
 
@@ -52,6 +55,7 @@ public class Phantom : Enemy {
             System.Random rand = new System.Random();
             Vector3 move = myPosition.position;
             Vector3 currentPos = myPosition.position;
+            currentPos.y -= 0.5f;
             int randX = rand.Next(3) - 1;
             int randY = rand.Next(3) - 1;
             move.x += randX;

@@ -128,6 +128,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7391228347081971065, guid: bee1bdaa9c50754469a1d0ccf233ab12,
+        type: 3}
+      propertyPath: enemyType
+      value: 
+      objectReference: {fileID: 3037920999354613407, guid: 0638b667f33f2a1499a4acfe361a2bb2,
+        type: 3}
     - target: {fileID: 7391228347081971070, guid: bee1bdaa9c50754469a1d0ccf233ab12,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -282,31 +288,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 544234508}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &626017440 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5321446982375052703, guid: 90f923a702aa2f546ad5a5a65a4654a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5321446982967513407}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &626017444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626017440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccad2b89e4abc9d42add13753b513434, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  images:
-  - {fileID: 5747829960151562647, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
-  - {fileID: 5315739339471669387, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
-  - {fileID: -8999246948310012954, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
-  - {fileID: -5245222803213954980, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
-  - {fileID: 4287060987378387658, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
-  - {fileID: 1372387140688626834, guid: 4568093c1110b8540854a71422f6d9c6, type: 3}
 --- !u!1 &789062779
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +903,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7391228347081971065, guid: bee1bdaa9c50754469a1d0ccf233ab12,
+        type: 3}
+      propertyPath: enemyType
+      value: 
+      objectReference: {fileID: 3037920999354613407, guid: 0638b667f33f2a1499a4acfe361a2bb2,
+        type: 3}
     - target: {fileID: 7391228347081971070, guid: bee1bdaa9c50754469a1d0ccf233ab12,
         type: 3}
       propertyPath: m_LocalPosition.x

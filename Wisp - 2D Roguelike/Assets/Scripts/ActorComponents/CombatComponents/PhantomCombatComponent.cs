@@ -20,7 +20,8 @@ public class PhantomCombatComponent : BaseCombatComponent {
 
     public override bool PerformAttack(Vector3 target, AttackType attack) {
         if (attack == AttackType.Aoe) {
-            GameObject.Instantiate(poisonTrail, transform.position, new Quaternion());
+            GameObject.Instantiate(poisonTrail, target, new Quaternion());
+            return true;
         }
         return melee.ExecuteAttack(target);
     }
