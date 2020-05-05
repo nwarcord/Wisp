@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour {
     private BoxCollider2D spawnCollider;
     private Vector3 position;
     private bool spawnerBlocked;
+    private bool heightOfOne = true;
 
     private void OnEnable() {
         EventManager.enemyDeath += SpawnEnemy;
@@ -22,6 +23,7 @@ public class EnemySpawner : MonoBehaviour {
         spawnCollider = this.GetComponent<BoxCollider2D>();
         position = this.transform.position;
         spawnerBlocked = false;
+        heightOfOne = enemyType.GetComponent<BoxCollider2D>().offset.y == 0;
         SpawnEnemy();
     }
 
@@ -31,7 +33,10 @@ public class EnemySpawner : MonoBehaviour {
 
     public void SpawnEnemy() {
         if (!spawnerBlocked) {
-            Enemy spawn = GameObject.Instantiate(enemyType, position, new Quaternion());
+            Vector3 spawnLocation = position;
+            if (!heightOfOne) spawnLocation.y -= 0.5f;
+            // Enemy spawn = GameObject.Instantiate(enemyType, position, new Quaternion());
+            Enemy spawn = GameObject.Instantiate(enemyType, spawnLocation, new Quaternion());
             if (GameState.combatState) EventManager.RaiseCombatSpawn(spawn);
         }
         spawnerBlocked = true;
