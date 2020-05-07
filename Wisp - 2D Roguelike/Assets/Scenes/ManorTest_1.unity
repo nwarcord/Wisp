@@ -292,7 +292,7 @@ PrefabInstance:
     - target: {fileID: 7391228347081971071, guid: bee1bdaa9c50754469a1d0ccf233ab12,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bee1bdaa9c50754469a1d0ccf233ab12, type: 3}
@@ -19092,6 +19092,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WispSpawner (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6071674199150464770, guid: 1944bb1b0c7babb47bfae4d90578be8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6071674199150464771, guid: 1944bb1b0c7babb47bfae4d90578be8d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19469,6 +19474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WispSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071674199150464770, guid: 1944bb1b0c7babb47bfae4d90578be8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6071674199150464771, guid: 1944bb1b0c7babb47bfae4d90578be8d,
         type: 3}
