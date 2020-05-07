@@ -1,0 +1,331 @@
+fileFormatVersion: 2
+guid: 4568093c1110b8540854a71422f6d9c6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1372387140688626834
+    second: health_bar_sheet_0
+  - first:
+      213: 4287060987378387658
+    second: health_bar_sheet_1
+  - first:
+      213: -5245222803213954980
+    second: health_bar_sheet_2
+  - first:
+      213: -8999246948310012954
+    second: health_bar_sheet_3
+  - first:
+      213: 5315739339471669387
+    second: health_bar_sheet_4
+  - first:
+      213: 5747829960151562647
+    second: health_bar_sheet_5
+  - first:
+      213: -6438437304573421079
+    second: health_bar_sheet_6
+  - first:
+      213: -4469760819724435054
+    second: health_bar_sheet_7
+  - first:
+      213: 7997804967858933998
+    second: health_bar_sheet_8
+  - first:
+      213: 2810034001093795036
+    second: health_bar_sheet_9
+  - first:
+      213: 6728424631141196908
+    second: health_bar_sheet_10
+  - first:
+      213: -6527918544051858118
+    second: health_bar_sheet_11
+  - first:
+      213: 2780039853859003484
+    second: health_bar_sheet_12
+  - first:
+      213: 8309669410410781446
+    second: health_bar_sheet_13
+  - first:
+      213: -7599096690864197686
+    second: health_bar_sheet_14
+  - first:
+      213: -3207774480149477054
+    second: health_bar_sheet_15
+  - first:
+      213: -4103498526799798357
+    second: health_bar_sheet_16
+  - first:
+      213: -1103648975019441206
+    second: health_bar_sheet_17
+  - first:
+      213: -237292668376452382
+    second: health_bar_sheet_18
+  - first:
+      213: 6107207883130503484
+    second: health_bar_sheet_19
+  - first:
+      213: 4299091557753053769
+    second: health_bar_sheet_20
+  - first:
+      213: 139620468115453124
+    second: health_bar_sheet_21
+  - first:
+      213: -3388406178071030563
+    second: health_bar_sheet_22
+  - first:
+      213: 7625993130157346167
+    second: health_bar_sheet_23
+  - first:
+      213: -6172137229646022257
+    second: health_bar_sheet_24
+  - first:
+      213: 4992630659296855155
+    second: health_bar_sheet_25
+  - first:
+      213: 5344382587798686413
+    second: health_bar_sheet_26
+  - first:
+      213: 8725525379563531055
+    second: health_bar_sheet_27
+  - first:
+      213: 6494614199480684056
+    second: health_bar_sheet_28
+  - first:
+      213: 5853740544733469966
+    second: health_bar_sheet_29
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: health_bar_sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2944f0f45d2bb0310800000000000000
+      internalID: 1372387140688626834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_bar_sheet_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acacf131143be7b30800000000000000
+      internalID: 4287060987378387658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_bar_sheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5057ae96a93537b0800000000000000
+      internalID: -5245222803213954980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_bar_sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eba6ff94904c1380800000000000000
+      internalID: -8999246948310012954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_bar_sheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8847c7e3cc45c940800000000000000
+      internalID: 5315739339471669387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_bar_sheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7997e2c35e464cf40800000000000000
+      internalID: 5747829960151562647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -27,6 +27,10 @@ public class BlobMonster : Enemy {
         this.vision = 4;
     }
 
+    protected override void SetAI() {
+        // Set AI here
+    }
+
     // ----------------------------------------------------------------
     // Turn mechanics
     // ----------------------------------------------------------------

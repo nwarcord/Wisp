@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     void Awake() {
-        health = 3;
+        health = 5;
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = gameObject.GetComponent<PlayerCombatComponent>();
@@ -42,6 +42,10 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public PlayerCombatComponent Combat() {
         return this.combat;
+    }
+
+    public int GetPlayerHealth() {
+        return this.health;
     }
 
     // ----------------------------------------------------------------
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
+        EventManager.RaisePlayerDamaged();
         // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
 

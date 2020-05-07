@@ -17,6 +17,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected InputDelay inputDelay;
     public bool turnSystemActive { get; private set; }
     private bool isCombatTurn = false;
+    protected BaseAIComponent ai;
 
     // ----------------------------------------------------------------
     // Initialization
@@ -53,6 +54,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         SetHealth();
         SetCombat();
         SetVision();
+        SetAI();
     }
 
     protected abstract void SetHealth();
@@ -60,6 +62,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected abstract void SetCombat();
 
     protected abstract void SetVision();
+
+    protected abstract void SetAI();
 
     // ----------------------------------------------------------------
     // Combat mechanics
