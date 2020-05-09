@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
+public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected Transform myPosition;
     protected MovementComponent movement;
@@ -11,38 +11,42 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     protected BaseCombatComponent combat;
     protected BoxCollider2D boxCollider;
     protected CircleCollider2D circleCollider;
+    protected Rigidbody2D rb2D;
     [SerializeField]
     protected Grid grid;
     protected int vision;
     protected InputDelay inputDelay;
-    public bool turnSystemActive { get; private set; }
-    private bool isCombatTurn = false;
+    public bool combatActive { get; private set; }
     protected BaseAIComponent ai;
+    private bool movementStopped = false;
 
     // ----------------------------------------------------------------
     // Initialization
     // ----------------------------------------------------------------
 
     private void OnEnable() {
-        EventManager.combatStart += TurnSystemIsActive;
-        EventManager.combatOver += TurnSystemNotActive;
+        EventManager.combatStart += CombatIsActive;
+        EventManager.combatOver += CombatNotActive;
+        EventManager.playerMoving += EnableMovement;
+        EventManager.playerStopped += DisableMovement;
     }
 
     private void OnDisable() {
-        EventManager.combatStart -= TurnSystemIsActive;
-        EventManager.combatOver -= TurnSystemNotActive;
-        if (isCombatTurn) EventManager.RaiseActorTurnOver();
+        EventManager.combatStart -= CombatIsActive;
+        EventManager.combatOver -= CombatNotActive;
+        EventManager.playerMoving -= EnableMovement;
+        EventManager.playerStopped -= DisableMovement;
     }
 
     void Awake() {
-        turnSystemActive = GameState.combatState;
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
     }
 
     protected virtual void Update() {
-        if (!turnSystemActive) NonCombatBehavior();
+        if (!movementStopped) Patrol();
+        else rb2D.velocity = Vector2.zero;
     }
 
     protected void Init() {
@@ -50,7 +54,10 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
         movement = new MovementComponent(gameObject, this, grid);
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
+        rb2D = gameObject.GetComponent<Rigidbody2D>();
         inputDelay = new InputDelay();
+        combatActive = GameState.combatState;
+        if (combatActive) movementStopped = true; // FIXME: Still has bug if player is moving when combat starts
         SetHealth();
         SetCombat();
         SetVision();
@@ -71,7 +78,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected void AggroPlayer() {
         combat.EnterCombat();
-        EventManager.RaiseAggroPlayer(this);
+        EventManager.RaiseAggroPlayer();
     }
 
     protected Vector3 GetPlayerPosition() {
@@ -96,11 +103,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
     // ----------------------------------------------------------------
     // Turn Mechanics
     // ----------------------------------------------------------------
-
-    public void TakeTurn() {
-        isCombatTurn = true;
-        StartCoroutine(TurnRoutine());
-    }
     
     protected abstract void Patrol();
 
@@ -115,30 +117,22 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged, ITurnAct {
 
     protected abstract void CombatBehavior();
 
-    protected virtual void NonCombatBehavior() {
-        if (turnSystemActive || MyTurn()) Patrol();
+    protected virtual void NonCombatBehavior() {}
+
+    public void CombatIsActive() {
+        combatActive = true;
     }
 
-    private void TurnBehavior() {
-        if (!combat.inCombat) NonCombatBehavior();
-        else CombatBehavior();
+    public void CombatNotActive() {
+        combatActive = false;
     }
 
-    public IEnumerator TurnRoutine() {
-        // Debug.Log("Blob turn started.");
-        TurnBehavior();
-        yield return null;
-        // Debug.Log("Blob turn ended.");
-        isCombatTurn = false;
-        EventManager.RaiseActorTurnOver();
+    public void EnableMovement() {
+        movementStopped = false;
     }
 
-    public void TurnSystemIsActive() {
-        turnSystemActive = true;
-    }
-
-    public void TurnSystemNotActive() {
-        turnSystemActive = false;
+    public void DisableMovement() {
+        movementStopped = true;
     }
 
     // To be used when out of combat to initiate combat with player

@@ -34,7 +34,7 @@ public class Phantom : Enemy {
             else { move.x += 1; }
         }
 
-        if (playerPosition.y != move.y) {
+        else if (playerPosition.y != move.y) {
             if (playerPosition.y < move.y) { move.y -= 1; }
             else { move.y += 1; }
         }
@@ -63,6 +63,7 @@ public class Phantom : Enemy {
             // currentPos.y -= 0.5f;
             int randX = rand.Next(3) - 1;
             int randY = rand.Next(3) - 1;
+            if (randX != 0) randY = 0;
             move.x += randX;
             move.y += randY;
             // if (movement.AttemptMove(move)) {

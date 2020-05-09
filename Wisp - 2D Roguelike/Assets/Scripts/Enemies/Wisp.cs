@@ -15,6 +15,8 @@ public class Wisp : Enemy {
     // Initialization overrides
     // ----------------------------------------------------------------
 
+    private Vector2 direction = Vector2.zero;
+
     protected override void SetHealth() {
         this.health = 1;
     }
@@ -36,16 +38,26 @@ public class Wisp : Enemy {
     // ----------------------------------------------------------------
 
     protected override void Patrol() {
-        if (PlayerVisible()) AggroPlayer();
-        else {
-            System.Random rand = new System.Random();
-            Vector3 move = myPosition.position;
-            int randX = rand.Next(3) - 1;
-            int randY = rand.Next(3) - 1;
-            move.x += randX;
-            move.y += randY;
-            movement.AttemptMove(move);
-        }
+        if (PlayerVisible() && !combat.inCombat) AggroPlayer();
+        // else {
+        //     System.Random rand = new System.Random();
+        //     Vector3 move = myPosition.position;
+        //     int randX = rand.Next(3) - 1;
+        //     int randY = rand.Next(3) - 1;
+        //     if (randX != 0) randY = 0;
+        //     move.x += randX;
+        //     move.y += randY;
+        //     movement.AttemptMove(move);
+        // }
+        // else {
+            if (MyTurn()) {
+                System.Random rand = new System.Random();
+                direction.x = rand.Next(3) - 1;
+                direction.y = rand.Next(3) - 1;
+                direction.Normalize();
+            }
+            rb2D.velocity = direction * 2f;
+        // }
     }
 
     protected override void CombatBehavior() {
@@ -57,7 +69,7 @@ public class Wisp : Enemy {
             else { move.x += 1; }
         }
 
-        if (playerPosition.y != move.y) {
+        else if (playerPosition.y != move.y) {
             if (playerPosition.y < move.y) { move.y -= 1; }
             else { move.y += 1; }
         }
