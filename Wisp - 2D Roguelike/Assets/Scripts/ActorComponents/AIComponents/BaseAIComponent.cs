@@ -53,6 +53,14 @@ public abstract class BaseAIComponent : MonoBehaviour {
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb2D.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
+        rb2D.AddForce(force);
+
+        float distance = Vector2.Distance(rb2D.position, path.vectorPath[currentWaypoint]);
+
+        if (distance < nextWaypointDistance) {
+            currentWaypoint++;
+        }
+
     }
 
     protected abstract void SetCombat();
