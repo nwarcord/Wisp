@@ -12,14 +12,16 @@ public class GameState : MonoBehaviour {
     private static int combatants = 0;
 
     private void OnEnable() {
-        EventManager.aggroPlayer += InitTurnSystem;
+        // EventManager.aggroPlayer += InitTurnSystem;
+        EventManager.aggroPlayer += CombatEnabled;
         EventManager.combatOver += ClearTurnSystem;
         EventManager.enemyDeath += EnemyDeath;
         SceneManager.activeSceneChanged += UpdateGrid;
     }
 
     private void OnDisable() {
-        EventManager.aggroPlayer -= InitTurnSystem;
+        // EventManager.aggroPlayer -= InitTurnSystem;
+        EventManager.aggroPlayer -= CombatEnabled;
         EventManager.combatOver -= ClearTurnSystem;
         EventManager.enemyDeath -= EnemyDeath;
         SceneManager.activeSceneChanged -= UpdateGrid;
@@ -43,6 +45,12 @@ public class GameState : MonoBehaviour {
             combatState = true;
             turnSystem.NextTurn();
         }
+    }
+
+    private void CombatEnabled() {
+        if (!combatState) EventManager.RaiseCombatStart();
+        combatState = true;
+        combatants++;
     }
 
     private void ClearTurnSystem() {

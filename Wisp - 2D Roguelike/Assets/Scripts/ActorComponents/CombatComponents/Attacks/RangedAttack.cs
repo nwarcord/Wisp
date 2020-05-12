@@ -32,7 +32,6 @@ public class RangedAttack : IAttack {
         Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
 
         Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation);
-        EventManager.RaiseCombatSpawn(p);
         
         return true;
 

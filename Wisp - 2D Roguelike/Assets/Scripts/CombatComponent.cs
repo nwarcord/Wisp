@@ -37,47 +37,47 @@ public class CombatComponent {
         Debug.Log("Combat over.");
     }
 
-    public void BasicAttack(ICanBeDamaged target) {
-        target.TakeDamage(attackPower);
-    }
+    // public void BasicAttack(ICanBeDamaged target) {
+    //     target.TakeDamage(attackPower);
+    // }
 
-    public bool OneTileAttack(Vector3 tileCoords) {
-        return OneTileAttack(tileCoords, attackPower);
-    }
+    // public bool OneTileAttack(Vector3 tileCoords) {
+    //     return OneTileAttack(tileCoords, attackPower);
+    // }
 
-    public bool OneTileAttack(Vector3 tileCoords, int damage) {
+    // public bool OneTileAttack(Vector3 tileCoords, int damage) {
 
-        Transform target = TileSystem.ObjectAtTile(tileCoords);
-        if (target != null && TileSystem.TileDistance(target.position, actorPosition.position) <= 1) {
-            ICanBeDamaged victim = target.GetComponent<ICanBeDamaged>();
-            if (victim != null) {
-                victim.TakeDamage(damage);
-                return true;
-            }   
+    //     Transform target = TileSystem.ObjectAtTile(tileCoords);
+    //     if (target != null && TileSystem.TileDistance(target.position, actorPosition.position) <= 1) {
+    //         ICanBeDamaged victim = target.GetComponent<ICanBeDamaged>();
+    //         if (victim != null) {
+    //             victim.TakeDamage(damage);
+    //             return true;
+    //         }   
 
-        }
-        return false;
-    }
+    //     }
+    //     return false;
+    // }
 
-    public bool RangedAttack(Vector3 attackDirection, Projectile projectile) {
+    // public bool RangedAttack(Vector3 attackDirection, Projectile projectile) {
 
-        Vector3 actorPos = actorPosition.position;
-        actorPos.y -= 0.5f;
-        Vector3Int gridDirection = grid.WorldToCell(attackDirection);
-        Vector3Int actorTile = grid.WorldToCell(actorPosition.position);
-        actorTile.y -= 1;
-        gridDirection.z = actorTile.z;
-        Vector3 spawnPoint = TileSystem.AdjacentTile(gridDirection, actorTile, actorPosition.position);
-        spawnPoint.y -= 0.5f;
+    //     Vector3 actorPos = actorPosition.position;
+    //     actorPos.y -= 0.5f;
+    //     Vector3Int gridDirection = grid.WorldToCell(attackDirection);
+    //     Vector3Int actorTile = grid.WorldToCell(actorPosition.position);
+    //     actorTile.y -= 1;
+    //     gridDirection.z = actorTile.z;
+    //     Vector3 spawnPoint = TileSystem.AdjacentTile(gridDirection, actorTile, actorPosition.position);
+    //     spawnPoint.y -= 0.5f;
 
-        Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, -45) * (spawnPoint - actorPos);
+    //     Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, -45) * (spawnPoint - actorPos);
 
-        Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
+    //     Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
 
-        Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation);
-        EventManager.RaiseCombatSpawn(p);
+    //     Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation);
+    //     // EventManager.RaiseCombatSpawn(p);
         
-        return true;
-    }
+    //     return true;
+    // }
 
 }
