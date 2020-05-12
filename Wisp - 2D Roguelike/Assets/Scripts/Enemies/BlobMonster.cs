@@ -44,7 +44,7 @@ public class BlobMonster : Enemy {
             int randY = rand.Next(3) - 1;
             move.x += randX;
             move.y += randY;
-            movement.AttemptMove(move);
+            // movement.AttemptMove(move);
         }
     }
 
@@ -62,11 +62,11 @@ public class BlobMonster : Enemy {
             else { move.y += 1; }
         }
 
-        if (playerPosition != move) { movement.AttemptMove(move); }
+        // if (playerPosition != move) { movement.AttemptMove(move); }
 
-        else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
-            combat.PerformAttack(Camera.main.WorldToScreenPoint(playerPosition), AttackType.Melee);
-        }
+        // else if (Vector3.Magnitude(myPosition.position - playerPosition) <= 1.42f) {
+        //     combat.PerformAttack(Camera.main.WorldToScreenPoint(playerPosition), AttackType.Melee);
+        // }
     }
 
 }

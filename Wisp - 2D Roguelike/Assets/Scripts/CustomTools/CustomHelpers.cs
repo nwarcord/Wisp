@@ -5,6 +5,8 @@ using UnityEditor;
 
 public static class CustomHelpers {
 
+	private static System.Random rand = new System.Random();
+
     /// <summary>
 	/// Helper function for testing if Unity Object is destroyed or marked for destruction
 	/// </summary>
@@ -88,6 +90,14 @@ public static class CustomHelpers {
 	// 	return moveTo;
 
 	// }
+
+	public static float GetRandomValue(int to) {
+		return rand.Next(to + 1);
+	}
+
+	public static float GetRandomValue(int from, int to) {
+		return rand.Next(from, to + 1);
+	}
 
 
 }

@@ -37,7 +37,7 @@ public class EnemySpawner : MonoBehaviour {
             if (!heightOfOne) spawnLocation.y -= 0.5f;
             // Enemy spawn = GameObject.Instantiate(enemyType, position, new Quaternion());
             Enemy spawn = GameObject.Instantiate(enemyType, spawnLocation, new Quaternion());
-            if (GameState.combatState) EventManager.RaiseCombatSpawn(spawn);
+            // if (GameState.combatState) EventManager.RaiseCombatSpawn(spawn);
         }
         spawnerBlocked = true;
     }

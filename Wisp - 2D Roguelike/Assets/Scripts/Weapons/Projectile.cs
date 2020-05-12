@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour, ITurnAct {
+public class Projectile : MonoBehaviour/*, ITurnAct*/ {
 
     [SerializeField]
     private int baseDamage = 0;
-    [SerializeField]
-    private int tileMovePerTurn = 0;
+    // [SerializeField]
+    // private int tileMovePerTurn = 0;
     [SerializeField]
     private bool isContinuous = false;
     [SerializeField]
     private int tileRange = 50;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
-    private ProjectileMovement movement;
+    // private ProjectileMovement movement;
     private bool combatActive = false;
     private bool isCombatTurn = false;
     private Vector3 startingPoint;
     private bool isColliding = false;
+    private bool movementStopped = false;
 
     private void OnEnable() {
         EventManager.combatStart += EnableCombatFlag;
         EventManager.combatOver += DisableCombatFlag;
+        EventManager.playerMoving += EnableMovement;
+        EventManager.playerStopped += DisableMovement;
     }
 
     private void OnDisable() {
         EventManager.combatStart -= EnableCombatFlag;
         EventManager.combatOver -= DisableCombatFlag;
+        EventManager.playerMoving -= EnableMovement;
+        EventManager.playerStopped -= DisableMovement;
         StopAllCoroutines();
         if (isCombatTurn) EventManager.RaiseActorTurnOver();
     }
@@ -35,9 +40,10 @@ public class Projectile : MonoBehaviour, ITurnAct {
     void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
-        movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
+        // movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
         combatActive = GameState.combatState;
         startingPoint = transform.position;
+        if (combatActive) movementStopped = true; // FIXME: Still has bug where combat started while player moving
         if (tileRange > 50) {
             Debug.LogError("Projectile range cannot exceed 50 tiles");
             tileRange = 50;
@@ -45,20 +51,20 @@ public class Projectile : MonoBehaviour, ITurnAct {
     }
 
     void FixedUpdate() {
-        if (!combatActive) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
+        if (!combatActive || !movementStopped) rb.velocity = (transform.up - transform.right) * 250.0f * Time.deltaTime;
         else rb.velocity = new Vector2();
         CheckFlightDistance();
         isColliding = false;
     }
 
-    public void TakeTurn() {
-        isCombatTurn = true;
-        StartCoroutine(TurnRoutine());
-    }
+    // public void TakeTurn() {
+    //     isCombatTurn = true;
+    //     StartCoroutine(TurnRoutine());
+    // }
 
-    private void ProjectileMove() {
-        movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
-    }
+    // private void ProjectileMove() {
+    //     movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
+    // }
 
     private void CheckFlightDistance() {
         if (CurrentFlightDistance() >= tileRange) {
@@ -89,11 +95,19 @@ public class Projectile : MonoBehaviour, ITurnAct {
         }
     }
 
-    public IEnumerator TurnRoutine() {
-        ProjectileMove();
-        yield return null;
-        EventManager.RaiseActorTurnOver();
-        isCombatTurn = false;
+    private void EnableMovement() {
+        movementStopped = false;
     }
+
+    private void DisableMovement() {
+        movementStopped = true;
+    }
+
+    // public IEnumerator TurnRoutine() {
+    //     ProjectileMove();
+    //     yield return null;
+    //     EventManager.RaiseActorTurnOver();
+    //     isCombatTurn = false;
+    // }
 
 }
