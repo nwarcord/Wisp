@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected Transform myPosition;
-    protected MovementComponent movement;
+    // protected MovementComponent movement;
     protected int health;
     private Transform playerTransform;
     protected BaseCombatComponent combat;
@@ -13,12 +14,27 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected CircleCollider2D circleCollider;
     protected Rigidbody2D rb2D;
     [SerializeField]
-    protected Grid grid;
+    // protected Grid grid;
     protected int vision;
     protected InputDelay inputDelay;
     public bool combatActive { get; private set; }
     protected BaseAIComponent ai;
     private bool movementStopped = false;
+
+    protected AIDestinationSetter destinationSetter;
+    protected Transform target;
+    protected AIPath aIPath;
+    
+    // protected Vector3 target;
+
+    // public float speed = 2f;
+    // public float nextWaypointDistance = 3f;
+
+    // protected Path path;
+    // protected int currentWaypoint = 0;
+    // protected bool reachedEndOfPath = false;
+
+    // protected Seeker seeker;
 
     // ----------------------------------------------------------------
     // Initialization
@@ -39,25 +55,36 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     }
 
     void Awake() {
-        grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
+        // grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
     }
 
+    private void Start() {
+        // UpdatePath();
+        destinationSetter.target = playerTransform;
+        destinationSetter.enabled = false;
+    }
+
     protected virtual void Update() {
-        if (!movementStopped) Patrol();
-        else rb2D.velocity = Vector2.zero;
+        if (!combat.inCombat && PlayerVisible()) AggroPlayer();
+        if (!movementStopped) aIPath.canMove = true;
+        else aIPath.canMove = false;
+        TakeAction();
     }
 
     protected void Init() {
         myPosition = gameObject.transform;
-        movement = new MovementComponent(gameObject, this, grid);
+        // movement = new MovementComponent(gameObject, this, grid);
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
+        // seeker = gameObject.GetComponent<Seeker>();
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         inputDelay = new InputDelay();
         combatActive = GameState.combatState;
         if (combatActive) movementStopped = true; // FIXME: Still has bug if player is moving when combat starts
+        destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
+        aIPath = gameObject.GetComponent<AIPath>();
         SetHealth();
         SetCombat();
         SetVision();
@@ -79,6 +106,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected void AggroPlayer() {
         combat.EnterCombat();
         EventManager.RaiseAggroPlayer();
+        aIPath.destination = Vector3.zero;
+        destinationSetter.enabled = true;
     }
 
     protected Vector3 GetPlayerPosition() {
@@ -89,6 +118,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         Debug.Log("ENEMY DAMAGED");
         health -= damage;
         if (!IsAlive()) Die();
+        if (!combat.inCombat) AggroPlayer();
     }
 
     public bool IsAlive() {
@@ -103,7 +133,14 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
     // Turn Mechanics
     // ----------------------------------------------------------------
-    
+
+    private void TakeAction() {
+        if (MyTurn()) {
+            if (combat.inCombat) CombatBehavior();
+            else NonCombatBehavior();
+        }
+    }
+
     protected abstract void Patrol();
 
     public bool MyTurn() {
@@ -117,7 +154,11 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected abstract void CombatBehavior();
 
-    protected virtual void NonCombatBehavior() {}
+    protected virtual void NonCombatBehavior() {
+        // if (PlayerVisible()) AggroPlayer();
+        // else Patrol();
+        Patrol();
+    }
 
     public void CombatIsActive() {
         combatActive = true;
@@ -146,4 +187,17 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         return RayLinecastTools.ObjectVisible(boxCollider, circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (!combat.inCombat) aIPath.destination = this.transform.position;
+        // Debug.Log("Collision!");
+    }
+
 }
+
+// say this thing
+
+// This is relevant
+
+// That brings up this
+
+// Wrap it up with this

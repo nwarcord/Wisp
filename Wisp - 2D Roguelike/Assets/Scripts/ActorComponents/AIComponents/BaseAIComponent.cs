@@ -11,8 +11,6 @@ public abstract class BaseAIComponent : MonoBehaviour {
     protected Transform target;
     protected List<AttackType> attacks;
     protected BaseCombatComponent combat;
-    // protected Grid grid;
-    // protected MovementComponent movement;
 
     public float speed = 200f;
     public float nextWaypointDistance = 3f;
@@ -28,18 +26,45 @@ public abstract class BaseAIComponent : MonoBehaviour {
         position = gameObject.transform;
         seeker = gameObject.GetComponent<Seeker>();
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        // movement = gameObject.GetComponent<MovementComponent>();
-        // combat = gameObject.GetComponent<BaseCombatComponent>();
     }
 
     private void Start() {
-        // grid = GameState.grid;
         SetTarget();
         SetCombat();
         seeker.StartPath(rb2D.position, target.position, OnPathComplete);
     }
 
+    protected void UpdatePath() {
+        if (seeker.IsDone()) {
+            seeker.StartPath(rb2D.position, target.position, OnPathComplete);
+        }
+    }
+
     private void FixedUpdate() {
+        // if (path == null) return;
+
+        // if (currentWaypoint >= path.vectorPath.Count) {
+        //     reachedEndOfPath = true;
+        //     return;
+        // }
+        // else {
+        //     reachedEndOfPath = false;
+        // }
+
+        // Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb2D.position).normalized;
+        // Vector2 force = direction * speed * Time.deltaTime;
+
+        // rb2D.AddForce(force);
+
+        // float distance = Vector2.Distance(rb2D.position, path.vectorPath[currentWaypoint]);
+
+        // if (distance < nextWaypointDistance) {
+        //     currentWaypoint++;
+        // }
+
+    }
+
+    protected void MoveOnPath() {
         if (path == null) return;
 
         if (currentWaypoint >= path.vectorPath.Count) {
@@ -60,7 +85,9 @@ public abstract class BaseAIComponent : MonoBehaviour {
         if (distance < nextWaypointDistance) {
             currentWaypoint++;
         }
-
+        if (reachedEndOfPath) {
+            return;
+        }
     }
 
     protected abstract void SetCombat();
@@ -101,3 +128,14 @@ public abstract class BaseAIComponent : MonoBehaviour {
     protected abstract void DecideAttack();
 
 }
+
+/*
+
+If not in combat, move along path with arbitrary target
+    If player in sight, aggro
+
+If in combat, check if should attack player
+    If shouldn't attack, check if should move toward player
+    If shouldn't move toward player, pick appropriate target
+
+*/
