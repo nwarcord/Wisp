@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameState : MonoBehaviour {
 
     private GameObject player;
-    private TurnSystem turnSystem;
+    // private TurnSystem turnSystem;
     public static Grid grid;
     public static bool combatState = false;
     private static int combatants = 0;
@@ -14,7 +14,7 @@ public class GameState : MonoBehaviour {
     private void OnEnable() {
         // EventManager.aggroPlayer += InitTurnSystem;
         EventManager.aggroPlayer += CombatEnabled;
-        EventManager.combatOver += ClearTurnSystem;
+        // EventManager.combatOver += ClearTurnSystem;
         EventManager.enemyDeath += EnemyDeath;
         SceneManager.activeSceneChanged += UpdateGrid;
     }
@@ -22,7 +22,7 @@ public class GameState : MonoBehaviour {
     private void OnDisable() {
         // EventManager.aggroPlayer -= InitTurnSystem;
         EventManager.aggroPlayer -= CombatEnabled;
-        EventManager.combatOver -= ClearTurnSystem;
+        // EventManager.combatOver -= ClearTurnSystem;
         EventManager.enemyDeath -= EnemyDeath;
         SceneManager.activeSceneChanged -= UpdateGrid;
     }
@@ -40,10 +40,10 @@ public class GameState : MonoBehaviour {
             EventManager.RaiseCombatSpawn(enemy);
         }
         else {
-            turnSystem = gameObject.AddComponent<TurnSystem>() as TurnSystem;
+            // turnSystem = gameObject.AddComponent<TurnSystem>() as TurnSystem;
             EventManager.RaiseCombatStart();
             combatState = true;
-            turnSystem.NextTurn();
+            // turnSystem.NextTurn();
         }
     }
 
@@ -53,19 +53,23 @@ public class GameState : MonoBehaviour {
         combatants++;
     }
 
-    private void ClearTurnSystem() {
-        if (combatState) {
-            combatants = 0;
-            combatState = false;
-            Destroy(turnSystem);
-            // Debug.Log("Turn System deleted.");
-        }
-    }
+    // private void ClearTurnSystem() {
+    //     if (combatState) {
+    //         combatants = 0;
+    //         combatState = false;
+    //         // Destroy(turnSystem);
+    //         // Debug.Log("Turn System deleted.");
+    //     }
+    // }
 
     private void EnemyDeath() {
         if (combatState) {
             combatants--;
-            if (combatants <= 0) EventManager.RaiseCombatOver();
+            if (combatants <= 0) {
+                EventManager.RaiseCombatOver();
+                combatState = false;
+                combatants = 0;
+            }
         }
     }
 
@@ -81,6 +85,10 @@ public class GameState : MonoBehaviour {
 
     private void InitGrid() {
         grid = GameObject.Find("Grid").GetComponent<Grid>();
+    }
+
+    public static bool GameMovementStopped() {
+        return combatState && Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0;
     }
 
 }

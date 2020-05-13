@@ -98,3 +98,4 @@ MonoBehaviour:
   areaSquare: 3
   duration: 3
   damagePerTick: 1
+  ticksPerSecond: 1

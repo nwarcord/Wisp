@@ -72,18 +72,21 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
         // Red Light. Green Light.
         if (movement != Vector2.zero) { // If user pressing move input
+            // if (playerCombat.inCombat) Time.timeScale = 1.0f;
             if (!playerMoving && playerCombat.inCombat) { // If player wasn't moving previously and they're in combat
                 Debug.Log("GREEN LIGHT!");
                 EventManager.RaisePlayerMoving(); // Let everyone know player is now moving
-                playerMoving = true; // Flag player as moving
+                // playerMoving = true; // Flag player as moving
             }
             direction = movement; // Move player
+            playerMoving = true; // Flag player as moving
         }
         else { // If user isn't pressing move input
+            // if (playerCombat.inCombat) Time.timeScale = 0f;
             if (playerMoving && playerCombat.inCombat) { // If player was moving previously and they're in combat
                 Debug.Log("RED LIGHT!");
                 EventManager.RaisePlayerStopped(); // Let everyone know player stopped
-                playerMoving = false; // Flag player as stopped
+                // playerMoving = false; // Flag player as stopped
             }
             else if (playerCombat.inCombat && isAttacking && !playerMoving) {
                 EventManager.RaisePlayerMoving();
@@ -91,6 +94,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
             else if (playerCombat.inCombat && !isAttacking && !playerMoving) {
                 EventManager.RaisePlayerStopped();
             }
+            playerMoving = false; // Flag player as stopped
         }
 
         // If player is in combat, is attacking, and wasn't previously moving = Signal player moving
@@ -108,6 +112,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         if (AttackAction()) {
             if (playerCombat.PerformAttack(Input.mousePosition, AttackType.Melee)) {
                 isAttacking = true;
+                // Time.timeScale = 1.0f;
                 StartCoroutine(Attacking());
                 // ResetInputDelay();
             }
@@ -115,6 +120,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         else if (RangedAttackAction()) {
             if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
                 isAttacking = true;
+                // Time.timeScale = 1.0f;
                 StartCoroutine(Attacking());
                 // ResetInputDelay();
             }
@@ -122,6 +128,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         else if (ThrownAttackAction()) {
             if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
                 isAttacking = true;
+                // Time.timeScale = 1.0f;
                 StartCoroutine(Attacking());
                 // ResetInputDelay();
             }
@@ -129,6 +136,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         else if (AoeAttackAction()) {
             if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
                 isAttacking = true;
+                // Time.timeScale = 1.0f;
                 StartCoroutine(Attacking());
                 // ResetInputDelay();
             }
@@ -215,6 +223,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     private IEnumerator Attacking() {
         yield return new WaitForSeconds(.2f);
         isAttacking = false;
+        // if (playerCombat.inCombat) Time.timeScale = 0f;
+    }
+
+    public bool PlayerIsMoving() {
+        return playerMoving;
     }
 
 }

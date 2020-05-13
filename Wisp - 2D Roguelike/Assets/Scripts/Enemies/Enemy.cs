@@ -82,7 +82,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         inputDelay = new InputDelay();
         combatActive = GameState.combatState;
-        if (combatActive) movementStopped = true; // FIXME: Still has bug if player is moving when combat starts
+        // if (combatActive) movementStopped = true; // FIXME: Still has bug if player is moving when combat starts
+        if (GameState.GameMovementStopped()) movementStopped = true;
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aIPath = gameObject.GetComponent<AIPath>();
         SetHealth();
@@ -117,8 +118,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("ENEMY DAMAGED");
         health -= damage;
-        if (!IsAlive()) Die();
         if (!combat.inCombat) AggroPlayer();
+        if (!IsAlive()) Die();
     }
 
     public bool IsAlive() {
