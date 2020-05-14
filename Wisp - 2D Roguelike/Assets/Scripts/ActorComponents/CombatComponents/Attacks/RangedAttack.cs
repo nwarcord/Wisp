@@ -6,16 +6,22 @@ public class RangedAttack : IAttack {
 
     private Transform actorPosition;
     private Projectile projectile;
-    private Grid grid;
 
-    public RangedAttack(Transform actorPosition, Projectile projectile, Grid grid) {
+    // public RangedAttack(Transform actorPosition, Projectile projectile, Grid grid) {
+    //     this.actorPosition = actorPosition;
+    //     this.projectile = projectile;
+    //     this.grid = grid;
+    // }
+
+    public RangedAttack(Transform actorPosition, Projectile projectile) {
         this.actorPosition = actorPosition;
         this.projectile = projectile;
-        this.grid = grid;
     }
 
     public bool ExecuteAttack(Vector3 attackDirection) {
         
+        Debug.Log("Attack direction: " + attackDirection);
+
         Vector3 mousePosition = attackDirection;
         mousePosition.z = 0;
         Vector3 actorPos = actorPosition.position;

@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     void Awake() {
-        health = 5;
+        health = 10;
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = gameObject.GetComponent<PlayerCombatComponent>();
