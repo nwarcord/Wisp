@@ -70,7 +70,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (!combat.inCombat && PlayerVisible()) AggroPlayer();
         if (!movementStopped) aIPath.canMove = true;
         else aIPath.canMove = false;
-        TakeAction();
+        if (aIPath.canMove) TakeAction();
     }
 
     protected void Init() {
