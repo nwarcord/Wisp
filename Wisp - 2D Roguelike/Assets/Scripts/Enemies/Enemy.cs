@@ -105,6 +105,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     protected void AggroPlayer() {
+        gameObject.GetComponentInChildren<AggroIndicator>().ShowAggro();
         combat.EnterCombat();
         EventManager.RaiseAggroPlayer();
         aIPath.destination = Vector3.zero;

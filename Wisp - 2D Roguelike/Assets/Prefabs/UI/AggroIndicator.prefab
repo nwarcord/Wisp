@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8170722926554775989}
   - component: {fileID: 7707819192374719104}
-  m_Layer: 9
-  m_Name: CombatIndicator
+  - component: {fileID: 7938059871702578548}
+  m_Layer: 5
+  m_Name: AggroIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1365452325
-  m_SortingLayer: 5
+  m_SortingLayerID: 1478730069
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -2857877104476849402, guid: 51adff19dbfd97541a5c71469d5219e8,
     type: 3}
@@ -82,3 +83,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7938059871702578548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5636246360972493427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c165fee17f311f47baf35480e700f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
