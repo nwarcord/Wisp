@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8633195654970787600}
   - component: {fileID: 5053873360352705717}
+  - component: {fileID: 3275633387060599701}
+  - component: {fileID: 4274972855242595786}
   m_Layer: 10
   m_Name: VoidseerMelee
   m_TagString: Untagged
@@ -82,3 +84,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3275633387060599701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692905188385366339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e24e6f4490eaf48a3906c7135c706a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4274972855242595786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692905188385366339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e782c1b46e1f34d9ad21a14a5ca661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: -0.75
+  runOnlyOnce: 0

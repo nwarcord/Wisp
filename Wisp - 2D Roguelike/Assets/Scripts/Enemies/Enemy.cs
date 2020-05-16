@@ -24,6 +24,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected AIDestinationSetter destinationSetter;
     protected Transform target;
     protected AIPath aIPath;
+
+    protected MeleeAttackSprite meleeAttack;
     
     // protected Vector3 target;
 
@@ -86,6 +88,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (GameState.GameMovementStopped()) movementStopped = true;
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aIPath = gameObject.GetComponent<AIPath>();
+        meleeAttack = gameObject.GetComponentInChildren<MeleeAttackSprite>();
         SetHealth();
         SetCombat();
         SetVision();

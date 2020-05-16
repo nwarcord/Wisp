@@ -19,7 +19,7 @@ public class MeleeAttackSprite : MonoBehaviour {
         // attack += actorCoords;
         Vector3 difference = (attackModified - actorCoords).normalized;
         if (difference.y > 0 && (difference.x <= midPoint && difference.x >= -midPoint)) {
-            transform.localPosition = new Vector3(0, 0.5f, 0);
+            transform.localPosition = new Vector3(0, 0.75f, 0);
             transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         else if (difference.y < 0 && ((difference.x <= midPoint && difference.x >= -midPoint))) {
@@ -28,12 +28,12 @@ public class MeleeAttackSprite : MonoBehaviour {
             // transform.SetPositionAndRotation(new Vector3(0, -1, 0), Quaternion.Euler(0, 0, 180));
         }
         else if (difference.x > 0 && (difference.y <= midPoint && difference.y >= -midPoint)) {
-            transform.localPosition = new Vector3(0.5f, 0, 0);
+            transform.localPosition = new Vector3(0.75f, 0, 0);
             transform.localRotation = Quaternion.Euler(0, 0, 270);
             // transform.SetPositionAndRotation(new Vector3(1, 0, 0), Quaternion.Euler(0, 0, 270));
         }
         else {
-            transform.localPosition = new Vector3(-0.5f, 0, 0);
+            transform.localPosition = new Vector3(-0.75f, 0, 0);
             transform.localRotation = Quaternion.Euler(0, 0, 90);
             // transform.SetPositionAndRotation(new Vector3(-1, 0, 0), Quaternion.Euler(0, 0, 90));
         }

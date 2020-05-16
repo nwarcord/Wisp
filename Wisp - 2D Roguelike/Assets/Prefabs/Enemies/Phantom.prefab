@@ -38,6 +38,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3851378209091203772}
+  - {fileID: 3880087385811042136}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -273,6 +274,81 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!1001 &2550327569568537751
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2060021067733892914}
+    m_Modifications:
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5582341508234252868, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+        type: 3}
+      propertyPath: m_Name
+      value: PhantomMelee
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b98ba9afef36a3a42887cf1a8f58fd7b, type: 3}
+--- !u!4 &3880087385811042136 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1638258594203378639, guid: b98ba9afef36a3a42887cf1a8f58fd7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2550327569568537751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4906360793223639817
 PrefabInstance:
   m_ObjectHideFlags: 0

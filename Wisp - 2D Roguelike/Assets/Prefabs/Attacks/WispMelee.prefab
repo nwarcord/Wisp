@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4730793985916501805}
   - component: {fileID: 1838965513677505990}
+  - component: {fileID: 3821835768932197567}
+  - component: {fileID: 7913513577585630662}
   m_Layer: 10
   m_Name: WispMelee
   m_TagString: Untagged
@@ -82,3 +84,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3821835768932197567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705289730819485340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e24e6f4490eaf48a3906c7135c706a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7913513577585630662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705289730819485340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e782c1b46e1f34d9ad21a14a5ca661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOrderBase: 5000
+  offset: -0.75
+  runOnlyOnce: 0
