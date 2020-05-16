@@ -43,4 +43,16 @@ public class MeleeAttack : IAttack {
 
     }
 
+    // public bool ExecuteAttack(Vector3 target) {
+    //     // if (Vector2.SqrMagnitude(target - actorPosition.position) <= Mathf.Pow(rangeAugment.totalRange, 2)) {
+    //     if (rangeAugment.InRangeSqr(Vector2.SqrMagnitude(target - actorPosition.position))) {
+    //         ICanBeDamaged victim = RayLinecastTools.ObjectAtCoords(target).GetComponent<ICanBeDamaged>();
+    //         if (victim != null) {
+    //             victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
 }

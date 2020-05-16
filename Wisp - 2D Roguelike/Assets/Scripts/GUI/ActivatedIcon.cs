@@ -23,7 +23,9 @@ public class ActivatedIcon : MonoBehaviour {
 
     void Update() {
         if (Input.GetKey(key)) {
-            imageComponent.sprite = activeIcon;
+            if (key == KeyCode.Mouse0 ^ (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftShift))) {
+                imageComponent.sprite = activeIcon;
+            }
         }
         else {
             imageComponent.sprite = defaultIcon;

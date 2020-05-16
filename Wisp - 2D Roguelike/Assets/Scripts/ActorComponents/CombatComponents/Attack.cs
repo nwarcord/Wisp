@@ -65,6 +65,10 @@ public class MeleeRangeAugment {
         return this.totalRange >= distance;
     }
 
+    public bool InRangeSqr(float sqrDistance) {
+        return Mathf.Pow(this.totalRange, 2) >= sqrDistance;
+    }
+
 }
 
 public class DamageAugment {
