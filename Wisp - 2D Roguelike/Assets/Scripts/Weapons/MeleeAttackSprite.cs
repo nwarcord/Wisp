@@ -38,7 +38,7 @@ public class MeleeAttackSprite : MonoBehaviour {
             // transform.SetPositionAndRotation(new Vector3(-1, 0, 0), Quaternion.Euler(0, 0, 90));
         }
         sprite.enabled = true;
-        Debug.Log("Direction vector: " + difference + " | Actor coords: " + actorCoords + " | Attack coords: " + attackModified);
+        // Debug.Log("Direction vector: " + difference + " | Actor coords: " + actorCoords + " | Attack coords: " + attackModified);
         StartCoroutine(MeleeAnimation());
     }
 

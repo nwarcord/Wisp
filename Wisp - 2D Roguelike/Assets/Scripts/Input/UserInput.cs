@@ -131,7 +131,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         }
         else if (AttackAction()) {
             meleeSprite.SpawnOrientation(player.transform.position, mouseWorldPos);
-            if (playerCombat.PerformAttack(Input.mousePosition, AttackType.Melee)) {
+            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Melee)) {
                 isAttacking = true;
                 StartCoroutine(Attacking());
             }
