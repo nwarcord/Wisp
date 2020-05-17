@@ -27,7 +27,8 @@ public class Phantom : Enemy {
     protected override void CombatBehavior() {
         if (Vector3.Magnitude(myPosition.position - GetPlayerPosition()) <= 1.42f) {
             meleeAttack.SpawnOrientation(myPosition.position, GetPlayerPosition());
-            combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);
+            combat.PerformAttack(GetPlayerPosition(), AttackType.Melee);
+            // combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);
         }
     }
 

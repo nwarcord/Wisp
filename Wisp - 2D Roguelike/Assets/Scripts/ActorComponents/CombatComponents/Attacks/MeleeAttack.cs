@@ -58,34 +58,34 @@ public class MeleeAttack : IAttack {
         // If pointing up
         if (difference.y > 0 && (difference.x <= midPoint && difference.x >= -midPoint)) {
             Debug.Log("UP melee attack");
-            overlapSpawn = new Vector2(actorPos.x, actorPos.y + 1);
+            overlapSpawn = new Vector2(actorPos.x, actorPos.y + 0.5f);
             // victims = Physics2D.OverlapBoxAll(new Vector2(actorPos.x, actorPos.y + 1), new Vector2(1.5f, 1f), 0, LayerMask.GetMask("Characters")).OfType<Collider2D>().ToList();
         }
         // If pointing down
         else if (difference.y < 0 && ((difference.x <= midPoint && difference.x >= -midPoint))) {
             Debug.Log("DOWN melee attack");
-            overlapSpawn = new Vector2(actorPos.x, actorPos.y - 1.6f);
+            overlapSpawn = new Vector2(actorPos.x, actorPos.y - 1f);
             // victims = Physics2D.OverlapBoxAll(new Vector2(actorPos.x, actorPos.y - 1.6f), new Vector2(1.5f, 1f), 0, LayerMask.GetMask("Characters")).OfType<Collider2D>().ToList();
         }
         // If pointing right
         else if (difference.x > 0 && (difference.y <= midPoint && difference.y >= -midPoint)) {
             Debug.Log("RIGHT melee attack");
             overlapDegrees = 90;
-            overlapSpawn = new Vector2(actorPos.x + 1.1f, actorPos.y);
+            overlapSpawn = new Vector2(actorPos.x + 0.5f, actorPos.y);
             // victims = Physics2D.OverlapBoxAll(new Vector2(actorPos.x + 1.1f, actorPos.y), new Vector2(1.5f, 1f), 90, LayerMask.GetMask("Characters")).OfType<Collider2D>().ToList();
         }
         // If pointing left
         else {
             Debug.Log("LEFT melee attack");
             overlapDegrees = 90;
-            overlapSpawn = new Vector2(actorPos.x - 1.1f, actorPos.y);
+            overlapSpawn = new Vector2(actorPos.x - 0.5f, actorPos.y);
             // victims = Physics2D.OverlapBoxAll(new Vector2(actorPos.x - 1.1f, actorPos.y), new Vector2(1.5f, 1f), 90, LayerMask.GetMask("Characters")).OfType<Collider2D>().ToList();
         }
         bool gottaHit = false;
         Collider2D[] victims = Physics2D.OverlapBoxAll(overlapSpawn, overlapSize, overlapDegrees, LayerMask.GetMask("Characters"));
         foreach(Collider2D collider in victims) {
             ICanBeDamaged victim = collider.GetComponent<ICanBeDamaged>();
-            if (victim != null) {
+            if (victim != null && collider.gameObject.tag != actorPosition.gameObject.tag) {
                 victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
                 gottaHit = true;
             }

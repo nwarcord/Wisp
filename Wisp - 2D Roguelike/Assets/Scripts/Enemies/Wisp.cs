@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Wisp : Enemy {
-    
+
     // ----------------------------------------------------------------
     // Initialization overrides
     // ----------------------------------------------------------------
@@ -44,7 +44,8 @@ public class Wisp : Enemy {
     protected override void CombatBehavior() {
         if (Vector3.Magnitude(myPosition.position - GetPlayerPosition()) <= 1.42f) {
             meleeAttack.SpawnOrientation(myPosition.position, GetPlayerPosition());
-            combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);
+            combat.PerformAttack(GetPlayerPosition(), AttackType.Melee);
+            // combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);
         }
     }
 

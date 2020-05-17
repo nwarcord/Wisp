@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grid
   - Spawner
+  - Enemy
   layers:
   - Default
   - TransparentFX
