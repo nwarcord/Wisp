@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameState : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class GameState : MonoBehaviour {
     public static Grid grid;
     public static bool combatState = false;
     private static int combatants = 0;
+    [SerializeField]
+    private GameObject objectivePrompt =  default;
 
     private void OnEnable() {
         // EventManager.aggroPlayer += InitTurnSystem;
@@ -29,9 +32,14 @@ public class GameState : MonoBehaviour {
 
     void Awake() {
         player = GameObject.FindWithTag("Player");
+        objectivePrompt.GetComponent<Image>().enabled = false;
         IgnoreSpawnerColliders();
         InitGrid();
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start() {
+        StartCoroutine(ImageDelayAndShow(objectivePrompt));
     }
 
     private void InitTurnSystem(ITurnAct enemy) {
@@ -89,6 +97,17 @@ public class GameState : MonoBehaviour {
 
     public static bool GameMovementStopped() {
         return combatState && Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0;
+    }
+
+    private void ShowObjective() {
+
+    }
+
+    private IEnumerator ImageDelayAndShow(GameObject imageObject) {
+        yield return new WaitForSecondsRealtime(1.5f);
+        imageObject.GetComponent<Image>().enabled = true;
+        yield return new WaitForSecondsRealtime(2.5f);
+        imageObject.GetComponent<Image>().enabled = false;
     }
 
 }
