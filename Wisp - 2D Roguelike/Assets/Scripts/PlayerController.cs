@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private CircleCollider2D circleCollider;
     [SerializeField]
     private Grid grid = default;
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip meleeSound = default;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = gameObject.GetComponent<PlayerCombatComponent>();
         movement = new MovementComponent(gameObject, this, grid);
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // private void Update() {}
@@ -85,6 +89,14 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public MovementComponent GetMovement() {
         return movement;
+    }
+
+    public AudioSource GetAudioSource() {
+        return audioSource;
+    }
+
+    public void PlayMeleeAttack() {
+        audioSource.PlayOneShot(meleeSound, 0.7f);
     }
 
 }

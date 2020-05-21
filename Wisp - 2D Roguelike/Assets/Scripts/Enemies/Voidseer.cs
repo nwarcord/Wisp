@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Voidseer : Enemy {
 
+    [SerializeField]
+    protected AudioClip gunshot = default;
+
     protected override void SetHealth() {
         this.health = 5;
     }
@@ -45,6 +48,7 @@ public class Voidseer : Enemy {
             // combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);
         }
         else {
+            audioSource.PlayOneShot(gunshot);
             combat.PerformAttack(GetPlayerPosition(), AttackType.Ranged);
         }
     }

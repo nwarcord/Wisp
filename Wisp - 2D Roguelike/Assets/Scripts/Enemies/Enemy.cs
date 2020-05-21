@@ -24,6 +24,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected MeleeAttackSprite meleeAttack;
 
+    protected AudioSource audioSource;
+
     // ----------------------------------------------------------------
     // Initialization
     // ----------------------------------------------------------------
@@ -71,6 +73,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aIPath = gameObject.GetComponent<AIPath>();
         meleeAttack = gameObject.GetComponentInChildren<MeleeAttackSprite>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         SetHealth();
         SetCombat();
         SetVision();

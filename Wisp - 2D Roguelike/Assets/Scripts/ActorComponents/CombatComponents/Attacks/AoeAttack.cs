@@ -8,13 +8,15 @@ public class AoeAttack : IAttack {
     // private AoeAugment augment;
     private ThrownDestructable thrownDestructable;
     private Grid grid;
+    private AudioSource attackSound;
 
-    public AoeAttack(Transform actorPosition, ThrownDestructable thrownDestructable, /*AoeAugment augment,*/ Grid grid) {
+    public AoeAttack(Transform actorPosition, ThrownDestructable thrownDestructable, /*AoeAugment augment,*/ Grid grid, AudioSource attackSound) {
 
         this.actorPosition = actorPosition;
         // this.augment = augment;
         this.thrownDestructable = thrownDestructable;
         this.grid = grid;
+        this.attackSound = attackSound;
 
     }
 

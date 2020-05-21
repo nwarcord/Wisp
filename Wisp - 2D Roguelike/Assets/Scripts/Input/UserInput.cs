@@ -5,6 +5,7 @@ using UnityEngine;
 public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     public GameObject player; // User controlled GameObject
+    private PlayerController playerController;
     private MovementComponent playerMovement;
     private PlayerCombatComponent playerCombat;
     private const float delayDuration = 0.5f;
@@ -50,8 +51,9 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     // Using Start instead of Awake to ensure Player is initialized first
     public void Start() {
-        playerMovement = player.GetComponent<PlayerController>().GetMovement();
-        playerCombat = player.GetComponent<PlayerController>().Combat();
+        playerController = player.GetComponent<PlayerController>();
+        playerMovement = playerController.GetMovement();
+        playerCombat = playerController.Combat();
         rb2D = player.GetComponent<Rigidbody2D>();
         meleeSprite = player.transform.GetChild(0).GetComponent<MeleeAttackSprite>();
     }
@@ -131,6 +133,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         }
         else if (AttackAction()) {
             meleeSprite.SpawnOrientation(player.transform.position, mouseWorldPos);
+            playerController.PlayMeleeAttack();
             if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Melee)) {
                 isAttacking = true;
                 StartCoroutine(Attacking());
