@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private AudioSource audioSource;
     [SerializeField]
     private AudioClip meleeSound = default;
+    [SerializeField]
+    private AudioClip hitSound = default;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
+        audioSource.PlayOneShot(hitSound, 0.7f);
         if (health < 0) health = 0;
         EventManager.RaisePlayerHealthUpdate();
         // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
@@ -96,7 +99,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     }
 
     public void PlayMeleeAttack() {
-        audioSource.PlayOneShot(meleeSound, 0.7f);
+        audioSource.PlayOneShot(meleeSound, 0.5f);
     }
 
 }
