@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vision: 5
-  gunshot: {fileID: 8300000, guid: e68b7feb625a4754dba5f61617672c53, type: 3}
+  gunshot: {fileID: 8300000, guid: 63fa92799126ac249a3da95c489bce8d, type: 3}
 --- !u!114 &2839664175107802461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0

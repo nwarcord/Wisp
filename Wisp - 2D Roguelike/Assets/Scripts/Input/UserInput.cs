@@ -115,6 +115,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         // }
         if (RangedAttackAction()) {
             if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
+                playerController.PlayRangedAttack();
                 isAttacking = true;
                 StartCoroutine(Attacking());
             }
