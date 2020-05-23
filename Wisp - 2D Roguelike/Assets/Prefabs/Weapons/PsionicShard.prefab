@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1475754787
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -565865603115265406, guid: 00ca5a0f205424f4b9c725a538c9dad0,
     type: 3}
@@ -98,10 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 1
-  tileMovePerTurn: 2
   isContinuous: 0
   tileRange: 12
-  damageType: 2
 --- !u!61 &9076371195411742207
 BoxCollider2D:
   m_ObjectHideFlags: 0

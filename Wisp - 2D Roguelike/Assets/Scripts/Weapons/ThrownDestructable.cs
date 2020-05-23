@@ -10,7 +10,7 @@ public class ThrownDestructable : MonoBehaviour {
 
     private void OnDisable() {
         AreaOfEffect aoe = GameObject.Instantiate(aoeSpawn, transform.position, new Quaternion());
-        EventManager.RaiseCombatSpawn(aoe);
+        // EventManager.RaiseCombatSpawn(aoe);
     }
 
 }

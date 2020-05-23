@@ -6,35 +6,26 @@ using Pathfinding;
 public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected Transform myPosition;
-    // protected MovementComponent movement;
     protected int health;
     private Transform playerTransform;
     protected BaseCombatComponent combat;
-    protected BoxCollider2D boxCollider;
     protected CircleCollider2D circleCollider;
     protected Rigidbody2D rb2D;
     [SerializeField]
-    // protected Grid grid;
     protected int vision;
     protected InputDelay inputDelay;
     public bool combatActive { get; private set; }
     protected BaseAIComponent ai;
     private bool movementStopped = false;
+    private SpriteRenderer sprite;
 
     protected AIDestinationSetter destinationSetter;
     protected Transform target;
     protected AIPath aIPath;
-    
-    // protected Vector3 target;
 
-    // public float speed = 2f;
-    // public float nextWaypointDistance = 3f;
+    protected MeleeAttackSprite meleeAttack;
 
-    // protected Path path;
-    // protected int currentWaypoint = 0;
-    // protected bool reachedEndOfPath = false;
-
-    // protected Seeker seeker;
+    protected AudioSource audioSource;
 
     // ----------------------------------------------------------------
     // Initialization
@@ -70,21 +61,21 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (!combat.inCombat && PlayerVisible()) AggroPlayer();
         if (!movementStopped) aIPath.canMove = true;
         else aIPath.canMove = false;
-        TakeAction();
+        if (aIPath.canMove) TakeAction();
     }
 
     protected void Init() {
         myPosition = gameObject.transform;
-        // movement = new MovementComponent(gameObject, this, grid);
-        boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        // seeker = gameObject.GetComponent<Seeker>();
         rb2D = gameObject.GetComponent<Rigidbody2D>();
         inputDelay = new InputDelay();
         combatActive = GameState.combatState;
-        if (combatActive) movementStopped = true; // FIXME: Still has bug if player is moving when combat starts
+        if (GameState.GameMovementStopped()) movementStopped = true;
         destinationSetter = gameObject.GetComponent<AIDestinationSetter>();
         aIPath = gameObject.GetComponent<AIPath>();
+        meleeAttack = gameObject.GetComponentInChildren<MeleeAttackSprite>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        sprite = gameObject.GetComponent<SpriteRenderer>();
         SetHealth();
         SetCombat();
         SetVision();
@@ -104,6 +95,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     protected void AggroPlayer() {
+        gameObject.GetComponentInChildren<AggroIndicator>().ShowAggro();
         combat.EnterCombat();
         EventManager.RaiseAggroPlayer();
         aIPath.destination = Vector3.zero;
@@ -117,8 +109,9 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("ENEMY DAMAGED");
         health -= damage;
-        if (!IsAlive()) Die();
+        StartCoroutine(TakeDamageAnim());
         if (!combat.inCombat) AggroPlayer();
+        if (!IsAlive()) Die();
     }
 
     public bool IsAlive() {
@@ -155,8 +148,6 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected abstract void CombatBehavior();
 
     protected virtual void NonCombatBehavior() {
-        // if (PlayerVisible()) AggroPlayer();
-        // else Patrol();
         Patrol();
     }
 
@@ -184,20 +175,18 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (Vector3.Magnitude(playerTransform.position - transform.position) > vision && !combat.inCombat) {
             return false;
         }
-        return RayLinecastTools.ObjectVisible(boxCollider, circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
+        return RayLinecastTools.ObjectVisible(circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions", "Player"));
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (!combat.inCombat) aIPath.destination = this.transform.position;
-        // Debug.Log("Collision!");
+    }
+
+    private IEnumerator TakeDamageAnim() {
+        SpriteRenderer rend = GetComponent<SpriteRenderer>();
+        rend.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        rend.color = Color.white;
     }
 
 }
-
-// say this thing
-
-// This is relevant
-
-// That brings up this
-
-// Wrap it up with this

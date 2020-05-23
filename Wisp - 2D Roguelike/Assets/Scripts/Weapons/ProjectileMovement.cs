@@ -11,6 +11,7 @@ public class ProjectileMovement {
     private float moveTime = 0.05f;       // Time it will take object to move, in seconds.
     private LayerMask obstructionLayer;  // Layer on which collision will be checked.
     private LayerMask characterLayer;
+    private LayerMask playerLayer;
 
     private GameObject actor;
     private BoxCollider2D boxCollider;  // The BoxCollider2D component attached to this object.
@@ -28,6 +29,7 @@ public class ProjectileMovement {
         inverseMoveTime = 1f / moveTime;
         obstructionLayer = LayerMask.GetMask("Obstructions");
         characterLayer = LayerMask.GetMask("Characters");
+        playerLayer = LayerMask.GetMask("Player");
         boxCollider = actor.GetComponent<BoxCollider2D>();
         rb2D = actor.GetComponent<Rigidbody2D>();
         actorTransform = actor.transform;

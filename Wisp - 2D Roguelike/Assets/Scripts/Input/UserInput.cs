@@ -5,10 +5,12 @@ using UnityEngine;
 public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     public GameObject player; // User controlled GameObject
+    private PlayerController playerController;
     private MovementComponent playerMovement;
     private PlayerCombatComponent playerCombat;
-    private const float delayDuration = 0.5f;
-    // private float inputDelay = delayDuration;
+    private const float delayDuration = 25f;
+    private float inputDelay = delayDuration;
+    private bool attackEnabled = true;
     // private bool inputEnabled = true; // User input flag
     // private bool actionTaken = false; // For turn coroutine
     // private int frames = 0;
@@ -17,10 +19,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     private Rigidbody2D rb2D;
     private bool playerMoving = false;
     private bool isAttacking = false;
+    private MeleeAttackSprite meleeSprite;
 
     // Keybindings
     private KeyCode activate = KeyCode.E;
-    private KeyCode attack = KeyCode.Q;
+    // private KeyCode attack = KeyCode.Q;
     private KeyCode thrown = KeyCode.LeftControl;
     private KeyCode aoe = KeyCode.Z; // TODO: Add functionality
     // private KeyCode up = KeyCode.W;
@@ -49,9 +52,16 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     // Using Start instead of Awake to ensure Player is initialized first
     public void Start() {
-        playerMovement = player.GetComponent<PlayerController>().GetMovement();
-        playerCombat = player.GetComponent<PlayerController>().Combat();
+        playerController = player.GetComponent<PlayerController>();
+        playerMovement = playerController.GetMovement();
+        playerCombat = playerController.Combat();
         rb2D = player.GetComponent<Rigidbody2D>();
+        meleeSprite = player.transform.GetChild(0).GetComponent<MeleeAttackSprite>();
+    }
+
+    private void FixedUpdate() {
+        if (!attackEnabled) inputDelay--;
+        if (inputDelay <= 0) attackEnabled = true;
     }
 
     // ----------------------------------------------------------------
@@ -72,18 +82,21 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
         // Red Light. Green Light.
         if (movement != Vector2.zero) { // If user pressing move input
+            // if (playerCombat.inCombat) Time.timeScale = 1.0f;
             if (!playerMoving && playerCombat.inCombat) { // If player wasn't moving previously and they're in combat
                 Debug.Log("GREEN LIGHT!");
                 EventManager.RaisePlayerMoving(); // Let everyone know player is now moving
-                playerMoving = true; // Flag player as moving
+                // playerMoving = true; // Flag player as moving
             }
             direction = movement; // Move player
+            playerMoving = true; // Flag player as moving
         }
         else { // If user isn't pressing move input
+            // if (playerCombat.inCombat) Time.timeScale = 0f;
             if (playerMoving && playerCombat.inCombat) { // If player was moving previously and they're in combat
                 Debug.Log("RED LIGHT!");
                 EventManager.RaisePlayerStopped(); // Let everyone know player stopped
-                playerMoving = false; // Flag player as stopped
+                // playerMoving = false; // Flag player as stopped
             }
             else if (playerCombat.inCombat && isAttacking && !playerMoving) {
                 EventManager.RaisePlayerMoving();
@@ -91,6 +104,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
             else if (playerCombat.inCombat && !isAttacking && !playerMoving) {
                 EventManager.RaisePlayerStopped();
             }
+            playerMoving = false; // Flag player as stopped
         }
 
         // If player is in combat, is attacking, and wasn't previously moving = Signal player moving
@@ -98,46 +112,47 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
         rb2D.velocity = movement * speed;        
 
-        // if (inputEnabled) {
-            // if (inputDelay > 0) {
-            //     inputDelay -= Time.deltaTime;
-            // }
-
-            // else {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (AttackAction()) {
-            if (playerCombat.PerformAttack(Input.mousePosition, AttackType.Melee)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
-                // ResetInputDelay();
-            }
-        }
-        else if (RangedAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
-                // ResetInputDelay();
-            }
-        }
-        else if (ThrownAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
-                // ResetInputDelay();
-            }
-        }
-        else if (AoeAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
-                // ResetInputDelay();
-            }
-        }
-                // else if (MoveAction()) {
-                    // ResetInputDelay();
-                // }
-            // }
+        // if (AttackAction()) {
+        //     if (playerCombat.PerformAttack(Input.mousePosition, AttackType.Melee)) {
+        //         isAttacking = true;
+        //         StartCoroutine(Attacking());
+        //     }
         // }
+        if (attackEnabled) {
+            if (RangedAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
+                    playerController.PlayRangedAttack();
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
+            }
+            else if (ThrownAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
+            }
+            else if (AoeAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
+            }
+            else if (AttackAction()) {
+                meleeSprite.SpawnOrientation(player.transform.position, mouseWorldPos);
+                playerController.PlayMeleeAttack();
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Melee)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
+            }
+        }
+
     }
 
     // ----------------------------------------------------------------
@@ -148,6 +163,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     //     inputDelay = delayDuration;
     //     actionTaken = true;
     // }
+
+    private void ResetAttackDelay() {
+        inputDelay = delayDuration;
+        attackEnabled = false;
+    }
 
     // ----------------------------------------------------------------
     // Set input flag
@@ -168,7 +188,8 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     // ----------------------------------------------------------------
 
     private bool AttackAction() {
-        return Input.GetKey(attack) && LeftClick();
+        // return Input.GetKey(attack) && LeftClick();
+        return LeftClick();
     }
 
     private bool LeftClick() {
@@ -215,6 +236,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     private IEnumerator Attacking() {
         yield return new WaitForSeconds(.2f);
         isAttacking = false;
+        // if (playerCombat.inCombat) Time.timeScale = 0f;
+    }
+
+    public bool PlayerIsMoving() {
+        return playerMoving;
     }
 
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grid
   - Spawner
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Characters
   - Items
   - Spawner
-  - 
+  - Player
   - 
   - 
   - 
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 89115237
+    locked: 0
+  - name: AreaOfEffects
+    uniqueID: 2000493497
     locked: 0
   - name: Walls
     uniqueID: 2013355519

@@ -43,7 +43,8 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         // movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
         combatActive = GameState.combatState;
         startingPoint = transform.position;
-        if (combatActive) movementStopped = true; // FIXME: Still has bug where combat started while player moving
+        // if (combatActive) movementStopped = true; // FIXME: Still has bug where combat started while player moving
+        if (GameState.GameMovementStopped()) movementStopped = true;
         if (tileRange > 50) {
             Debug.LogError("Projectile range cannot exceed 50 tiles");
             tileRange = 50;

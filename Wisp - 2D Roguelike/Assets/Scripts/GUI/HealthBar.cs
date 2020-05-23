@@ -13,11 +13,11 @@ public class HealthBar : MonoBehaviour {
     private int currentHealth = 0;
 
     private void OnEnable() {
-        EventManager.playerDamaged += UpdateHealth;
+        EventManager.playerHealthUpdate += UpdateHealth;
     }
 
     private void OnDisable() {
-        EventManager.playerDamaged -= UpdateHealth;
+        EventManager.playerHealthUpdate -= UpdateHealth;
     }
 
     private void Awake() {

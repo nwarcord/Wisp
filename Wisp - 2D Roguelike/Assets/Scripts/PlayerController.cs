@@ -11,6 +11,13 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private CircleCollider2D circleCollider;
     [SerializeField]
     private Grid grid = default;
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip meleeSound = default;
+    [SerializeField]
+    private AudioClip hitSound = default;
+    [SerializeField]
+    private AudioClip rangedSound = default;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
@@ -31,11 +38,12 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     void Awake() {
-        health = 5;
+        health = 10;
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = gameObject.GetComponent<PlayerCombatComponent>();
         movement = new MovementComponent(gameObject, this, grid);
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // private void Update() {}
@@ -64,12 +72,20 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
-        EventManager.RaisePlayerDamaged();
+        audioSource.PlayOneShot(hitSound);
+        if (health < 0) health = 0;
+        EventManager.RaisePlayerHealthUpdate();
         // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
 
     public bool IsAlive() {
         return health > 0;
+    }
+
+    public void Heal(int amount) {
+        this.health += amount;
+        if (this.health > 10) this.health = 10;
+        EventManager.RaisePlayerHealthUpdate();
     }
 
     // ----------------------------------------------------------------
@@ -78,6 +94,18 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public MovementComponent GetMovement() {
         return movement;
+    }
+
+    public AudioSource GetAudioSource() {
+        return audioSource;
+    }
+
+    public void PlayMeleeAttack() {
+        audioSource.PlayOneShot(meleeSound, 0.4f);
+    }
+
+    public void PlayRangedAttack() {
+        audioSource.PlayOneShot(rangedSound);
     }
 
 }
