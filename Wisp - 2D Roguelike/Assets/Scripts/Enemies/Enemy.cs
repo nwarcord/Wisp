@@ -17,6 +17,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     public bool combatActive { get; private set; }
     protected BaseAIComponent ai;
     private bool movementStopped = false;
+    private SpriteRenderer sprite;
 
     protected AIDestinationSetter destinationSetter;
     protected Transform target;
@@ -74,6 +75,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         aIPath = gameObject.GetComponent<AIPath>();
         meleeAttack = gameObject.GetComponentInChildren<MeleeAttackSprite>();
         audioSource = gameObject.GetComponent<AudioSource>();
+        sprite = gameObject.GetComponent<SpriteRenderer>();
         SetHealth();
         SetCombat();
         SetVision();
@@ -107,6 +109,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("ENEMY DAMAGED");
         health -= damage;
+        StartCoroutine(TakeDamageAnim());
         if (!combat.inCombat) AggroPlayer();
         if (!IsAlive()) Die();
     }
@@ -172,11 +175,18 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (Vector3.Magnitude(playerTransform.position - transform.position) > vision && !combat.inCombat) {
             return false;
         }
-        return RayLinecastTools.ObjectVisible(circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions"));
+        return RayLinecastTools.ObjectVisible(circleCollider, transform.position, playerTransform, LayerMask.GetMask("Characters", "Obstructions", "Player"));
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (!combat.inCombat) aIPath.destination = this.transform.position;
+    }
+
+    private IEnumerator TakeDamageAnim() {
+        SpriteRenderer rend = GetComponent<SpriteRenderer>();
+        rend.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        rend.color = Color.white;
     }
 
 }

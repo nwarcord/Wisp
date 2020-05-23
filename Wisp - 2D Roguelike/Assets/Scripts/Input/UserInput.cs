@@ -8,8 +8,9 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     private PlayerController playerController;
     private MovementComponent playerMovement;
     private PlayerCombatComponent playerCombat;
-    private const float delayDuration = 0.5f;
-    // private float inputDelay = delayDuration;
+    private const float delayDuration = 25f;
+    private float inputDelay = delayDuration;
+    private bool attackEnabled = true;
     // private bool inputEnabled = true; // User input flag
     // private bool actionTaken = false; // For turn coroutine
     // private int frames = 0;
@@ -56,6 +57,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         playerCombat = playerController.Combat();
         rb2D = player.GetComponent<Rigidbody2D>();
         meleeSprite = player.transform.GetChild(0).GetComponent<MeleeAttackSprite>();
+    }
+
+    private void FixedUpdate() {
+        if (!attackEnabled) inputDelay--;
+        if (inputDelay <= 0) attackEnabled = true;
     }
 
     // ----------------------------------------------------------------
@@ -113,31 +119,37 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         //         StartCoroutine(Attacking());
         //     }
         // }
-        if (RangedAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
-                playerController.PlayRangedAttack();
-                isAttacking = true;
-                StartCoroutine(Attacking());
+        if (attackEnabled) {
+            if (RangedAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Ranged)) {
+                    playerController.PlayRangedAttack();
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
             }
-        }
-        else if (ThrownAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
+            else if (ThrownAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Thrown)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
             }
-        }
-        else if (AoeAttackAction()) {
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
+            else if (AoeAttackAction()) {
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Aoe)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
             }
-        }
-        else if (AttackAction()) {
-            meleeSprite.SpawnOrientation(player.transform.position, mouseWorldPos);
-            playerController.PlayMeleeAttack();
-            if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Melee)) {
-                isAttacking = true;
-                StartCoroutine(Attacking());
+            else if (AttackAction()) {
+                meleeSprite.SpawnOrientation(player.transform.position, mouseWorldPos);
+                playerController.PlayMeleeAttack();
+                if (playerCombat.PerformAttack(mouseWorldPos, AttackType.Melee)) {
+                    ResetAttackDelay();
+                    isAttacking = true;
+                    StartCoroutine(Attacking());
+                }
             }
         }
 
@@ -151,6 +163,11 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     //     inputDelay = delayDuration;
     //     actionTaken = true;
     // }
+
+    private void ResetAttackDelay() {
+        inputDelay = delayDuration;
+        attackEnabled = false;
+    }
 
     // ----------------------------------------------------------------
     // Set input flag
