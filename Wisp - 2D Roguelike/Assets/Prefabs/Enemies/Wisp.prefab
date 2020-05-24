@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6945995022725510952}
   - component: {fileID: 211182186025239814}
   - component: {fileID: 425454142946390744}
+  - component: {fileID: 5083265607127317238}
   m_Layer: 9
   m_Name: Wisp
   m_TagString: Enemy
@@ -345,6 +346,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5083265607127317238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6403043758388874316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7256e882d34091646b4e3e88fd6bbd5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commonDrop: {fileID: 3090197995210141252, guid: 9e344495a3eee5747998002b05662cfa,
+    type: 3}
+  uncommonDrop: {fileID: 7755817615106971973, guid: e0bcd5c50c1a6bc4da27bcc1006b0616,
+    type: 3}
 --- !u!1001 &4238660193882826107
 PrefabInstance:
   m_ObjectHideFlags: 0

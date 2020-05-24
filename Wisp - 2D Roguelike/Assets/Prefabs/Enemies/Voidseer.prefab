@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8733244580275070918}
   - component: {fileID: 2688381030386578380}
   - component: {fileID: 1979225446960459228}
+  - component: {fileID: 4370930098837358687}
   m_Layer: 9
   m_Name: Voidseer
   m_TagString: Enemy
@@ -347,6 +348,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4370930098837358687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668849292055167920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7256e882d34091646b4e3e88fd6bbd5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commonDrop: {fileID: 3090197995210141252, guid: 9e344495a3eee5747998002b05662cfa,
+    type: 3}
+  uncommonDrop: {fileID: 7755817615106971973, guid: e0bcd5c50c1a6bc4da27bcc1006b0616,
+    type: 3}
 --- !u!1001 &4615413697282278348
 PrefabInstance:
   m_ObjectHideFlags: 0
