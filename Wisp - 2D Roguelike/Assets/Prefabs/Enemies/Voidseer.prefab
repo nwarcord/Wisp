@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2688381030386578380}
   - component: {fileID: 1979225446960459228}
   - component: {fileID: 4370930098837358687}
+  - component: {fileID: 2958124516065908744}
   m_Layer: 9
   m_Name: Voidseer
   m_TagString: Enemy
@@ -159,7 +160,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vision: 5
+  damagedSound: {fileID: 8300000, guid: 180971390aa95134d9558d6fe1da4233, type: 3}
   gunshot: {fileID: 8300000, guid: 63fa92799126ac249a3da95c489bce8d, type: 3}
+  meleeSound: {fileID: 8300000, guid: 32f7577d9f61aa34cadd291abdd83f8e, type: 3}
 --- !u!114 &2839664175107802461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +367,19 @@ MonoBehaviour:
     type: 3}
   uncommonDrop: {fileID: 7755817615106971973, guid: e0bcd5c50c1a6bc4da27bcc1006b0616,
     type: 3}
+--- !u!114 &2958124516065908744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668849292055167920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9783bef9a230822428ba370446df512f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: 180971390aa95134d9558d6fe1da4233, type: 3}
 --- !u!1001 &4615413697282278348
 PrefabInstance:
   m_ObjectHideFlags: 0

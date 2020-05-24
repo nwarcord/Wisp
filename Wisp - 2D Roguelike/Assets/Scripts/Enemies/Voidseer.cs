@@ -6,6 +6,8 @@ public class Voidseer : Enemy {
 
     [SerializeField]
     protected AudioClip gunshot = default;
+    [SerializeField]
+    protected AudioClip meleeSound = default;
 
     protected override void SetHealth() {
         this.health = 5;
@@ -43,6 +45,7 @@ public class Voidseer : Enemy {
         }
 
         if (Vector3.Magnitude(myPosition.position - GetPlayerPosition()) <= 1.42f) {
+            audioSource.PlayOneShot(meleeSound);
             meleeAttack.SpawnOrientation(myPosition.position, GetPlayerPosition());
             combat.PerformAttack(GetPlayerPosition(), AttackType.Melee);
             // combat.PerformAttack(Camera.main.WorldToScreenPoint(GetPlayerPosition()), AttackType.Melee);

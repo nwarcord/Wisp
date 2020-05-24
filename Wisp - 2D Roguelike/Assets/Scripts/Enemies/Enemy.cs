@@ -26,6 +26,12 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected MeleeAttackSprite meleeAttack;
 
     protected AudioSource audioSource;
+    [SerializeField]
+    protected AudioClip damagedSound = default;
+
+    protected DyingBreath dyingBreath;
+
+    private LootPool loot;
 
     // ----------------------------------------------------------------
     // Initialization
@@ -76,6 +82,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         meleeAttack = gameObject.GetComponentInChildren<MeleeAttackSprite>();
         audioSource = gameObject.GetComponent<AudioSource>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
+        dyingBreath = gameObject.GetComponent<DyingBreath>();
+        loot = gameObject.GetComponent<LootPool>();
         SetHealth();
         SetCombat();
         SetVision();
@@ -110,8 +118,9 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         Debug.Log("ENEMY DAMAGED");
         health -= damage;
         StartCoroutine(TakeDamageAnim());
-        if (!combat.inCombat) AggroPlayer();
         if (!IsAlive()) Die();
+        if (!combat.inCombat) AggroPlayer();
+        PlayDamagedSound();
     }
 
     public bool IsAlive() {
@@ -120,7 +129,16 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     protected void Die() {
         EventManager.RaiseEnemyDeath();
-        Destroy(gameObject);
+        gameObject.GetComponentInChildren<AggroIndicator>().gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        // Destroy(gameObject);
+        circleCollider.enabled = false;
+        sprite.enabled = false;
+        loot.DropLoot();
+        dyingBreath.StartDeathBreath();
+    }
+
+    private void PlayDamagedSound() {
+        audioSource.PlayOneShot(damagedSound);
     }
 
     // ----------------------------------------------------------------
@@ -128,7 +146,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     // ----------------------------------------------------------------
 
     private void TakeAction() {
-        if (MyTurn()) {
+        if (MyTurn() && IsAlive()) {
             if (combat.inCombat) CombatBehavior();
             else NonCombatBehavior();
         }
