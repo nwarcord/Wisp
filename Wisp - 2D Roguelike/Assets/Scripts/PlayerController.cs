@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     private AudioClip hitSound = default;
     [SerializeField]
     private AudioClip rangedSound = default;
+    [SerializeField]
+    private AudioClip healSound = default;
 
     // ----------------------------------------------------------------
     // Event subscribe and unsubscribe
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public void Heal(int amount) {
         this.health += amount;
+        PlayPlayerHeal();
         if (this.health > 10) this.health = 10;
         EventManager.RaisePlayerHealthUpdate();
     }
@@ -106,6 +109,10 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     public void PlayRangedAttack() {
         audioSource.PlayOneShot(rangedSound);
+    }
+
+    private void PlayPlayerHeal() {
+        audioSource.PlayOneShot(healSound, 0.7f);
     }
 
 }
