@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PathBlock : MonoBehaviour {
 
-    [SerializeField]
-    private List<GameObject> blocks = default;
+    private SpriteRenderer sprite;
+    private Collider2D coll;
+    private PathBlockSound pathBlockSound;
 
-    private void BlockPath(bool state) {
-        foreach(GameObject block in blocks) {
-            block.SetActive(state);
-        }
+    private void Awake() {
+        sprite = GetComponent<SpriteRenderer>();
+        coll = GetComponent<Collider2D>();
+        pathBlockSound = GetComponent<PathBlockSound>();
+    }
+
+    private void OnDisable() {
+        sprite.enabled = false;
+        coll.enabled = false;
+        pathBlockSound.DoorDisable();
     }
 
 
