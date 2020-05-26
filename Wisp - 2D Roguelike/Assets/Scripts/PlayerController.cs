@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         audioSource.PlayOneShot(hitSound);
         if (health < 0) health = 0;
         EventManager.RaisePlayerHealthUpdate();
+        if (health == 0) EventManager.RaisePlayerDied();
         // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
 

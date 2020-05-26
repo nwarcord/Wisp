@@ -220,6 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39552184ea22d0418f9b53cae3ea39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeSound: {fileID: 8300000, guid: 59e35b2f09847704a9b3dce011e9e861, type: 3}
+  openSound: {fileID: 8300000, guid: 4d0260ecc22f46a4fb4959dda6523d0f, type: 3}
 --- !u!114 &8421990057705502159
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class ActivatedRoom : MonoBehaviour {
         else if (endTriggerType == RoomTriggers.Switch) endTriggers = 0;
         if (endTriggers <= 0) {
             foreach (Collider2D block in pathBlocks) {
-                block.GetComponent<PathBlock>().enabled = false;
+                if (block != null) block.GetComponent<PathBlock>().enabled = false;
             }
         }
     }

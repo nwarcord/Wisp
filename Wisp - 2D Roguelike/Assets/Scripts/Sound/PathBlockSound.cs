@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PathBlockSound : MonoBehaviour {
 
+    [SerializeField]
+    private AudioClip closeSound = default;
+    [SerializeField]
+    private AudioClip openSound = default;
     private AudioSource audioSource;
 
     private void Awake() {
@@ -11,7 +15,7 @@ public class PathBlockSound : MonoBehaviour {
     }
 
     private void OnEnable() {
-        audioSource.Play();
+        audioSource.PlayOneShot(closeSound);
     }
 
     public void DoorDisable() {
@@ -19,7 +23,7 @@ public class PathBlockSound : MonoBehaviour {
     }
 
     IEnumerator WaitForSound() {
-        audioSource.Play();
+        audioSource.PlayOneShot(openSound);
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
     }
