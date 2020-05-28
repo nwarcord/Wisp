@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 5321446983779407613}
   - component: {fileID: 5321446983779407614}
   - component: {fileID: 5321446983779407612}
+  - component: {fileID: 1991334450150360153}
   m_Layer: 5
   m_Name: ShardAbility
   m_TagString: Untagged
@@ -367,6 +368,18 @@ MonoBehaviour:
   activeIcon: {fileID: -3509809923507537528, guid: db25df524a2e8c546865f2ddadc48ed2,
     type: 3}
   key: 304
+--- !u!114 &1991334450150360153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321446983779407488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a05c0dc05c4d98468245391402468a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5321446983852174129
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +467,7 @@ GameObject:
   - component: {fileID: 5321446983853619678}
   - component: {fileID: 5321446983853619679}
   - component: {fileID: 5321446983853619677}
+  - component: {fileID: 2872955561987144648}
   m_Layer: 5
   m_Name: ThrownAbility
   m_TagString: Untagged
@@ -534,6 +548,18 @@ MonoBehaviour:
   activeIcon: {fileID: 28113098084518366, guid: 1c957698181729745b3662445023aee0,
     type: 3}
   key: 306
+--- !u!114 &2872955561987144648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321446983853619681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0af6c2b99825d46be836893237061f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5321446983921837366
 GameObject:
   m_ObjectHideFlags: 0

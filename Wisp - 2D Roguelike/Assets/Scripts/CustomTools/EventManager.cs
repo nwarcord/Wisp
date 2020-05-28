@@ -18,6 +18,8 @@ public static class EventManager {
     public static event Action playerHealthUpdate;
     public static event Action playerMoving;
     public static event Action playerStopped;
+    public static event Action thrownOnCooldown;
+    public static event Action thrownOffCooldown;
 
     public static event Action playerDied;
     public static event Action levelComplete;
@@ -37,6 +39,8 @@ public static class EventManager {
     public static void RaiseCombatOver() => combatOver?.Invoke();
     public static void RaiseCombatSpawn(ITurnAct spawn) => combatSpawn?.Invoke(spawn);
     public static void RaiseCombatStart() => combatStart?.Invoke();
+    public static void RaiseThrownOnCooldown() => thrownOnCooldown?.Invoke();
+    public static void RaiseThrownOffCooldown() => thrownOffCooldown?.Invoke();
 
     // ----------------------------------------------------------------
     // Enemy combat events

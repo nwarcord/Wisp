@@ -21,6 +21,8 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     private bool isAttacking = false;
     private MeleeAttackSprite meleeSprite;
 
+    private bool thrownAvailable = true;
+
     // Keybindings
     private KeyCode activate = KeyCode.E;
     // private KeyCode attack = KeyCode.Q;
@@ -42,10 +44,14 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         // Pause constant-enables user input during combat
         // EventManager.combatStart += DisableInput;
         // EventManager.combatOver += EnableInput;
+        EventManager.thrownOffCooldown += ThrownIsAvailable;
+        EventManager.thrownOnCooldown += ThrownIsUnavailable;
     }
 
     // Remove listeners
     private void OnDisable() {
+        EventManager.thrownOffCooldown -= ThrownIsAvailable;
+        EventManager.thrownOnCooldown -= ThrownIsUnavailable;
         // EventManager.combatStart -= DisableInput;
         // EventManager.combatOver -= EnableInput;
     }
@@ -217,7 +223,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     }
 
     private bool ThrownAttackAction() {
-        return Input.GetKey(thrown) && LeftClick();
+        return Input.GetKey(thrown) && LeftClick() && thrownAvailable;
     }
 
     private bool AoeAttackAction() {
@@ -241,6 +247,14 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     public bool PlayerIsMoving() {
         return playerMoving;
+    }
+
+    private void ThrownIsAvailable() {
+        thrownAvailable = true;
+    }
+
+    private void ThrownIsUnavailable() {
+        thrownAvailable = false;
     }
 
 }
