@@ -169,6 +169,7 @@ MonoBehaviour:
   meleeSound: {fileID: 8300000, guid: 8fa8ba18686b943429202cf675c77afb, type: 3}
   hitSound: {fileID: 8300000, guid: 518c7f611327efd41909fb6852d3c3f5, type: 3}
   rangedSound: {fileID: 8300000, guid: 8e2ab0107dc98234396ecbae5af58b73, type: 3}
+  healSound: {fileID: 8300000, guid: 86cd70ed761c1524bb6638a4fae89ebb, type: 3}
 --- !u!114 &3232527227474442206
 MonoBehaviour:
   m_ObjectHideFlags: 0

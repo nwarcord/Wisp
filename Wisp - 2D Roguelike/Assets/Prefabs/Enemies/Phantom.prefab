@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 5456777467559166574}
   - component: {fileID: 1937298758610769950}
   - component: {fileID: 5902137099031145858}
+  - component: {fileID: 7657471350856093256}
+  - component: {fileID: 5432920365839194276}
   m_Layer: 9
   m_Name: Phantom
   m_TagString: Enemy
@@ -158,6 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vision: 0
+  damagedSound: {fileID: 8300000, guid: 712584eaca627494ca8eb011e9fb9ada, type: 3}
+  meleeSound: {fileID: 8300000, guid: 227ff6d8f3d41054f8b865bd614aead7, type: 3}
 --- !u!114 &654278982531365154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +308,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -344,6 +348,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7657471350856093256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060021067733893071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7256e882d34091646b4e3e88fd6bbd5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commonDrop: {fileID: 3090197995210141252, guid: 9e344495a3eee5747998002b05662cfa,
+    type: 3}
+  uncommonDrop: {fileID: 7755817615106971973, guid: e0bcd5c50c1a6bc4da27bcc1006b0616,
+    type: 3}
+--- !u!114 &5432920365839194276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060021067733893071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9783bef9a230822428ba370446df512f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: 712584eaca627494ca8eb011e9fb9ada, type: 3}
 --- !u!1001 &2550327569568537751
 PrefabInstance:
   m_ObjectHideFlags: 0

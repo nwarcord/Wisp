@@ -19,6 +19,9 @@ public static class EventManager {
     public static event Action playerMoving;
     public static event Action playerStopped;
 
+    public static event Action playerDied;
+    public static event Action levelComplete;
+
     // ----------------------------------------------------------------
     // Combat system events
     // ----------------------------------------------------------------
@@ -53,5 +56,8 @@ public static class EventManager {
 
     // public static void RaisePlayerEntersCombat() => playerEntersCombat?.Invoke();
     // public static void RaisePlayerLeftCombat() => playerLeftCombat?.Invoke();
+
+    public static void RaisePlayerDied() => playerDied?.Invoke();
+    public static void RaiseLevelComplete() => levelComplete?.Invoke();
 
 }

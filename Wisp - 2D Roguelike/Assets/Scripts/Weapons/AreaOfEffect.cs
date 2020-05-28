@@ -78,7 +78,7 @@ public class AreaOfEffect : MonoBehaviour/*, ITurnAct*/ {
         // Collider[] hitColliders = Physics.OverlapBox(transform.position, halfArea, Quaternion.identity, LayerMask.GetMask("Characters"));
         Debug.Log("Actors on puddle = " + victims);
         // foreach (Collider2D actor in hitColliders2d) {
-        victims++; // To account for player
+        // victims++; // To account for player
         for (int i = 0; i < victims; i++) {
             ICanBeDamaged victim = hitColliders2d[i].gameObject.GetComponent<ICanBeDamaged>();
             if (victim != null) victim.TakeDamage(damagePerTick);

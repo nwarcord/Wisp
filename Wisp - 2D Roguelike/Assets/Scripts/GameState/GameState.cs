@@ -12,7 +12,11 @@ public class GameState : MonoBehaviour {
     public static bool combatState = false;
     private static int combatants = 0;
     [SerializeField]
-    private GameObject objectivePrompt =  default;
+    private GameObject objectivePrompt = default;
+    [SerializeField]
+    private GameObject winPrompt = default;
+    [SerializeField]
+    private GameObject gameOverPrompt = default;
 
     private void OnEnable() {
         // EventManager.aggroPlayer += InitTurnSystem;
@@ -20,6 +24,8 @@ public class GameState : MonoBehaviour {
         // EventManager.combatOver += ClearTurnSystem;
         EventManager.enemyDeath += EnemyDeath;
         SceneManager.activeSceneChanged += UpdateGrid;
+        EventManager.playerDied += GameOver;
+        EventManager.levelComplete += LevelComplete;
     }
 
     private void OnDisable() {
@@ -28,11 +34,15 @@ public class GameState : MonoBehaviour {
         // EventManager.combatOver -= ClearTurnSystem;
         EventManager.enemyDeath -= EnemyDeath;
         SceneManager.activeSceneChanged -= UpdateGrid;
+        EventManager.playerDied -= GameOver;
+        EventManager.levelComplete -= LevelComplete;
     }
 
     void Awake() {
         player = GameObject.FindWithTag("Player");
         objectivePrompt.GetComponent<Image>().enabled = false;
+        winPrompt.GetComponent<Image>().enabled = false;
+        gameOverPrompt.GetComponent<Image>().enabled = false;
         IgnoreSpawnerColliders();
         InitGrid();
         DontDestroyOnLoad(gameObject);
@@ -99,8 +109,13 @@ public class GameState : MonoBehaviour {
         return combatState && Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0;
     }
 
-    private void ShowObjective() {
+    private void LevelComplete() {
+        StartCoroutine(ImageDelayAndEnd(winPrompt));
+    }
 
+    private void GameOver() {
+        StartCoroutine(ImageDelayAndEnd(gameOverPrompt));
+        // GameObject.Find("UserInput").SetActive(false);
     }
 
     private IEnumerator ImageDelayAndShow(GameObject imageObject) {
@@ -108,6 +123,14 @@ public class GameState : MonoBehaviour {
         imageObject.GetComponent<Image>().enabled = true;
         yield return new WaitForSecondsRealtime(2.5f);
         imageObject.GetComponent<Image>().enabled = false;
+    }
+
+    private IEnumerator ImageDelayAndEnd(GameObject imageObject) {
+        yield return new WaitForSecondsRealtime(1.5f);
+        imageObject.GetComponent<Image>().enabled = true;
+        yield return new WaitForSecondsRealtime(2.5f);
+        // imageObject.GetComponent<Image>().enabled = false;
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
 }

@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05da002fb4c3b1f4192fbbd562508760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectivePrompt: {fileID: 0}
+  winPrompt: {fileID: 0}
+  gameOverPrompt: {fileID: 0}

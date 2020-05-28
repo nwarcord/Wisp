@@ -20,7 +20,7 @@ public class RangedAttack : IAttack {
 
     public bool ExecuteAttack(Vector3 attackDirection) {
         
-        Debug.Log("Attack direction: " + attackDirection);
+        // Debug.Log("Attack direction: " + attackDirection);
 
         Vector3 mousePosition = attackDirection;
         mousePosition.z = 0;
