@@ -7,19 +7,26 @@ public enum RoomTriggers {
     Switch
 }
 
+public enum RoomTriggerType {
+    StartTrigger,
+    EndTrigger
+}
+
 public class RoomTrigger : MonoBehaviour {
 
     [SerializeField]
-    private RoomTriggers triggerType = default;
+    private RoomTriggers trigger = default;
+    [SerializeField]
+    private RoomTriggerType triggerType = default;
     [SerializeField]
     private ActivatedRoom activatedRoom = default;
 
     private void OnEnable() {
-        activatedRoom.RegisterTrigger(triggerType);
+        activatedRoom.RegisterTrigger(trigger, triggerType);
     }
 
     private void OnDisable() {
-        activatedRoom.TriggerActivated(triggerType);
+        activatedRoom.TriggerActivated(trigger, triggerType);
     }
 
 }

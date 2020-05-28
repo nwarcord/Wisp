@@ -15,8 +15,8 @@ public class PathBlock : MonoBehaviour {
     }
 
     private void OnDisable() {
-        sprite.enabled = false;
-        coll.enabled = false;
+        // sprite.enabled = false;
+        // coll.enabled = false;
         if (pathBlockSound.gameObject.activeSelf) pathBlockSound.DoorDisable();
     }
 

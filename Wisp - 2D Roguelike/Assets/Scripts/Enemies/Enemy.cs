@@ -115,7 +115,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     }
 
     public void TakeDamage(int damage) {
-        Debug.Log("ENEMY DAMAGED");
+        // Debug.Log("ENEMY DAMAGED");
         health -= damage;
         StartCoroutine(TakeDamageAnim());
         if (!IsAlive()) Die();

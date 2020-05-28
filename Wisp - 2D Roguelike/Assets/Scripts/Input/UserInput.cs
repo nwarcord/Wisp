@@ -84,7 +84,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         if (movement != Vector2.zero) { // If user pressing move input
             // if (playerCombat.inCombat) Time.timeScale = 1.0f;
             if (!playerMoving && playerCombat.inCombat) { // If player wasn't moving previously and they're in combat
-                Debug.Log("GREEN LIGHT!");
+                // Debug.Log("GREEN LIGHT!");
                 EventManager.RaisePlayerMoving(); // Let everyone know player is now moving
                 // playerMoving = true; // Flag player as moving
             }
@@ -94,7 +94,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
         else { // If user isn't pressing move input
             // if (playerCombat.inCombat) Time.timeScale = 0f;
             if (playerMoving && playerCombat.inCombat) { // If player was moving previously and they're in combat
-                Debug.Log("RED LIGHT!");
+                // Debug.Log("RED LIGHT!");
                 EventManager.RaisePlayerStopped(); // Let everyone know player stopped
                 // playerMoving = false; // Flag player as stopped
             }
