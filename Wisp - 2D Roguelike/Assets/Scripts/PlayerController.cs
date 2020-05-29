@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     public void TakeDamage(int damage) {
         Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
-        audioSource.PlayOneShot(hitSound);
+        if (gameObject.activeInHierarchy) audioSource.PlayOneShot(hitSound);
         if (health < 0) health = 0;
         EventManager.RaisePlayerHealthUpdate();
         if (health == 0) EventManager.RaisePlayerDied();

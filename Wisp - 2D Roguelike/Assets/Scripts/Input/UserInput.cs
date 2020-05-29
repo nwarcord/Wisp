@@ -75,6 +75,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     // ----------------------------------------------------------------
 
     public void Update() {
+        if (!player.activeInHierarchy) return;
         // frames++;
         // if (frames >= 240) {
         //     frames = 0;
