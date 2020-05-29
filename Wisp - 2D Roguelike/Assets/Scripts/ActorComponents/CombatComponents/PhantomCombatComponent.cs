@@ -10,7 +10,7 @@ public class PhantomCombatComponent : BaseCombatComponent {
 
     protected override void SetAttacks() {
         this.melee = new MeleeAttack(
-            2,
+            3,
             actorPosition,
             new MeleeRangeAugment(),
             new DamageAugment(),

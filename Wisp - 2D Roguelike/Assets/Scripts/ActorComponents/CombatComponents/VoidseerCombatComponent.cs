@@ -12,7 +12,7 @@ public class VoidseerCombatComponent : BaseCombatComponent {
     protected override void SetAttacks() {
 
         this.melee = new MeleeAttack(
-            3,
+            2,
             actorPosition,
             new MeleeRangeAugment(),
             new DamageAugment(),

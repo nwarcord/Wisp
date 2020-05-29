@@ -53,7 +53,9 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     void Awake() {
         // grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        GameObject playerTemp = GameObject.FindWithTag("Player");
+        if (playerTemp != null) playerTransform = playerTemp.transform;
+        // playerTransform = GameObject.FindWithTag("Player").transform;
         Init();
     }
 

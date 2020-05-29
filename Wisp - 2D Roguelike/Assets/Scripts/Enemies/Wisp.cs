@@ -12,7 +12,7 @@ public class Wisp : Enemy {
     protected AudioClip meleeSound;
 
     protected override void SetHealth() {
-        this.health = 1;
+        this.health = 2;
     }
 
     protected override void SetCombat() {

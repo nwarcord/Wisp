@@ -16,7 +16,7 @@ public class Phantom : Enemy {
     }
 
     protected override void SetVision() {
-        this.vision = 3;
+        this.vision = 4;
     }
 
     protected override void SetAI() {

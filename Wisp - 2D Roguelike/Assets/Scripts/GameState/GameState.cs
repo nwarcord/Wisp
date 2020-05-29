@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameState : MonoBehaviour {
 
+    private const int uniqueEnemies = 3;
+
     private GameObject player;
     // private TurnSystem turnSystem;
     public static Grid grid;
@@ -17,6 +19,7 @@ public class GameState : MonoBehaviour {
     private GameObject winPrompt = default;
     [SerializeField]
     private GameObject gameOverPrompt = default;
+    private int currentEnemies = 0;
 
     private void OnEnable() {
         // EventManager.aggroPlayer += InitTurnSystem;
@@ -50,6 +53,15 @@ public class GameState : MonoBehaviour {
 
     private void Start() {
         StartCoroutine(ImageDelayAndShow(objectivePrompt));
+        SetCurrentEnemies();
+        Debug.Log("Enemies in scene: " + currentEnemies);
+    }
+
+    private void Update() {
+        if (currentEnemies == 0) {
+            // EventManager.RaiseLevelComplete();
+            LevelComplete();
+        }
     }
 
     private void InitTurnSystem(ITurnAct enemy) {
@@ -89,6 +101,7 @@ public class GameState : MonoBehaviour {
                 combatants = 0;
             }
         }
+        currentEnemies--;
     }
 
     private void IgnoreSpawnerColliders() {
@@ -115,6 +128,7 @@ public class GameState : MonoBehaviour {
 
     private void GameOver() {
         StartCoroutine(ImageDelayAndEnd(gameOverPrompt));
+        player.SetActive(false);
         // GameObject.Find("UserInput").SetActive(false);
     }
 
@@ -131,6 +145,13 @@ public class GameState : MonoBehaviour {
         yield return new WaitForSecondsRealtime(2.5f);
         // imageObject.GetComponent<Image>().enabled = false;
         UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    private void SetCurrentEnemies() {
+        // currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        // Enemy[] enemies = Resources.FindObjectsOfTypeAll<Enemy>();
+        // foreach (Enemy enemy in enemies) Debug.Log("Enemy -> " + enemy);
+        currentEnemies = Resources.FindObjectsOfTypeAll<Enemy>().Length - uniqueEnemies;
     }
 
 }
