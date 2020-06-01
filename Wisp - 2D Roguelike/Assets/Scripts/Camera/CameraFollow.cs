@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour {
 
 		CustomHelpers.CheckForInitializedFields(this);
 
-		DontDestroyOnLoad(gameObject);
+		// DontDestroyOnLoad(gameObject);
 		xOffset = thisCamera.orthographicSize * Screen.width / Screen.height;
 		yOffset = thisCamera.orthographicSize;
 

@@ -58,7 +58,7 @@ public class ActivatedRoom : MonoBehaviour {
             //     if (block != null) block.GetComponent<PathBlock>().enabled = false;
             // }
             SetPathBlockActive(false);
-            Debug.Log("Path Cleared.");
+            // Debug.Log("Path Cleared.");
         }
     }
 
@@ -70,7 +70,7 @@ public class ActivatedRoom : MonoBehaviour {
 
     private void SetListActive<T>(List<T> objects, bool state) where T : Component {
         foreach (T obj in objects) {
-            obj.gameObject.SetActive(state);
+            if (obj != null) obj.gameObject.SetActive(state);
         }
     }
 

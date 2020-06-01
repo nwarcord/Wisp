@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameState : MonoBehaviour {
 
+    // private const int uniqueEnemies = 3;
+
     private GameObject player;
     // private TurnSystem turnSystem;
     public static Grid grid;
@@ -17,6 +19,9 @@ public class GameState : MonoBehaviour {
     private GameObject winPrompt = default;
     [SerializeField]
     private GameObject gameOverPrompt = default;
+    private int currentEnemies = 0;
+
+    private bool gameEnding = false;
 
     private void OnEnable() {
         // EventManager.aggroPlayer += InitTurnSystem;
@@ -39,17 +44,33 @@ public class GameState : MonoBehaviour {
     }
 
     void Awake() {
+        combatState = false;
+        combatants = 0;
         player = GameObject.FindWithTag("Player");
         objectivePrompt.GetComponent<Image>().enabled = false;
         winPrompt.GetComponent<Image>().enabled = false;
         gameOverPrompt.GetComponent<Image>().enabled = false;
         IgnoreSpawnerColliders();
         InitGrid();
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
 
     private void Start() {
         StartCoroutine(ImageDelayAndShow(objectivePrompt));
+        SetCurrentEnemies();
+        // Debug.Log("Enemies in scene: " + currentEnemies);
+        // Debug.Log("Combat State: " + combatState);
+        // Debug.Log("Combatants: " + combatants);
+    }
+
+    private void Update() {
+        if (currentEnemies == 0) {
+            // EventManager.RaiseLevelComplete();
+            LevelComplete();
+        }
+        if (Input.GetKey(KeyCode.Escape)) {
+            LoadMainMenu();
+        }
     }
 
     private void InitTurnSystem(ITurnAct enemy) {
@@ -89,6 +110,8 @@ public class GameState : MonoBehaviour {
                 combatants = 0;
             }
         }
+        currentEnemies--;
+        Debug.Log("Enemy killed | Enemies remaining: " + currentEnemies);
     }
 
     private void IgnoreSpawnerColliders() {
@@ -110,11 +133,16 @@ public class GameState : MonoBehaviour {
     }
 
     private void LevelComplete() {
+        if (gameEnding) return;
+        gameEnding = true;
         StartCoroutine(ImageDelayAndEnd(winPrompt));
     }
 
     private void GameOver() {
+        if (gameEnding) return;
+        gameEnding = true;
         StartCoroutine(ImageDelayAndEnd(gameOverPrompt));
+        player.SetActive(false);
         // GameObject.Find("UserInput").SetActive(false);
     }
 
@@ -130,7 +158,21 @@ public class GameState : MonoBehaviour {
         imageObject.GetComponent<Image>().enabled = true;
         yield return new WaitForSecondsRealtime(2.5f);
         // imageObject.GetComponent<Image>().enabled = false;
-        UnityEditor.EditorApplication.isPlaying = false;
+        // UnityEditor.EditorApplication.isPlaying = false;
+        LoadMainMenu();
+    }
+
+    private void SetCurrentEnemies() {
+        // currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        // Enemy[] enemies = Resources.FindObjectsOfTypeAll<Enemy>();
+        // foreach (Enemy enemy in enemies) Debug.Log("Enemy -> " + enemy);
+        currentEnemies = Resources.FindObjectsOfTypeAll<Enemy>().Length;
+    }
+
+    private void LoadMainMenu() {
+        combatants = 0;
+        combatState = false;
+        SceneManager.LoadScene(0);
     }
 
 }

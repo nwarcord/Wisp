@@ -15,7 +15,7 @@ public class PathBlockSound : MonoBehaviour {
     }
 
     private void OnEnable() {
-        audioSource.PlayOneShot(closeSound);
+        if (audioSource.enabled) audioSource.PlayOneShot(closeSound);
     }
 
     public void DoorDisable() {
@@ -23,7 +23,7 @@ public class PathBlockSound : MonoBehaviour {
     }
 
     IEnumerator WaitForSound() {
-        audioSource.PlayOneShot(openSound);
+        if (audioSource.enabled) audioSource.PlayOneShot(openSound);
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
     }
