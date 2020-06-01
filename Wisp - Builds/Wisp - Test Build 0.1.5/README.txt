@@ -17,8 +17,13 @@ to real-time movement.
 
 Projectiles and Thrown attacks are directional (performed in direction of mouse cursor).
 
+Projectiles can be fired continuously, but will damage player if used more than once ever 1.5 seconds.
+(This serves as a soft cooldown, allowing the player to sacrifice health for damage, if needed).
+
 Poison bottles travel 4 tiles or until they hit a wall / enemy. The impact does damage and a 3x3 square is
 created at impact that will do 1 dmg per tick to enemies standing on it when the tick occurs (lasts 3 seconds).
+
+Poison bottles have a 4 second cooldown.
 
 Enemies drop health. Plain health (heals 1 hp) and Glowing health (heals 4 hp).
 
