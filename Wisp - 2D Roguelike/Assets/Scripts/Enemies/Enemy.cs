@@ -178,6 +178,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     public void CombatNotActive() {
         combatActive = false;
+        movementStopped = false;
     }
 
     public void EnableMovement() {
