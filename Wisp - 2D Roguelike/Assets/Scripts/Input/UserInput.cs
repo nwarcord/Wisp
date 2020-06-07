@@ -200,7 +200,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     }
 
     private bool LeftClick() {
-        return Input.GetMouseButtonUp(0);
+        return Input.GetMouseButtonDown(0);
     }
 
     // private bool MoveAction() {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameState : MonoBehaviour {
 
@@ -21,6 +22,13 @@ public class GameState : MonoBehaviour {
     private GameObject gameOverPrompt = default;
     private int currentEnemies = 0;
 
+    // private FloatParameter normalColor = new FloatParameter {value = 0f};
+    // private FloatParameter grayscaleColor = new FloatParameter {value = -100f};
+
+    private bool isGray = false;
+
+    private ColorGrading cameraColor;
+
     private bool gameEnding = false;
 
     private void OnEnable() {
@@ -31,6 +39,8 @@ public class GameState : MonoBehaviour {
         SceneManager.activeSceneChanged += UpdateGrid;
         EventManager.playerDied += GameOver;
         EventManager.levelComplete += LevelComplete;
+        EventManager.playerMoving += SetCameraColorNormal;
+        EventManager.playerStopped += SetCameraGrayscale;
     }
 
     private void OnDisable() {
@@ -41,6 +51,8 @@ public class GameState : MonoBehaviour {
         SceneManager.activeSceneChanged -= UpdateGrid;
         EventManager.playerDied -= GameOver;
         EventManager.levelComplete -= LevelComplete;
+        EventManager.playerMoving -= SetCameraColorNormal;
+        EventManager.playerStopped -= SetCameraGrayscale;
     }
 
     void Awake() {
@@ -50,6 +62,7 @@ public class GameState : MonoBehaviour {
         objectivePrompt.GetComponent<Image>().enabled = false;
         winPrompt.GetComponent<Image>().enabled = false;
         gameOverPrompt.GetComponent<Image>().enabled = false;
+        GameObject.FindWithTag("EffectCamera").GetComponent<PostProcessVolume>().profile.TryGetSettings(out cameraColor);
         IgnoreSpawnerColliders();
         InitGrid();
         // DontDestroyOnLoad(gameObject);
@@ -71,6 +84,8 @@ public class GameState : MonoBehaviour {
         if (Input.GetKey(KeyCode.Escape)) {
             LoadMainMenu();
         }
+        // SetCameraGrayscale(GameMovementStopped());
+        if (!combatState && isGray) SetCameraColorNormal();
     }
 
     private void InitTurnSystem(ITurnAct enemy) {
@@ -173,6 +188,45 @@ public class GameState : MonoBehaviour {
         combatants = 0;
         combatState = false;
         SceneManager.LoadScene(0);
+    }
+
+    private void SetCameraGrayscale() {
+        // if (state && cameraColor.saturation.value != -100f) {
+            isGray = true;
+            StopCoroutine(FadeToColor());
+            StartCoroutine(FadeToGray());
+            // cameraColor.saturation.value = -100f;
+            // isGray = true;
+        // }
+        // else if (!state && cameraColor.saturation.value != 0f) {
+        //     cameraColor.saturation.value = 0f;
+        // }
+    }
+
+    private void SetCameraColorNormal() {
+        isGray = false;
+        StopCoroutine(FadeToGray());
+        StartCoroutine(FadeToColor());
+            // cameraColor.saturation.value = 0f;
+            // isGray = false;
+    }
+
+    IEnumerator FadeToGray() {
+        while (cameraColor.saturation.value > -99.99f && isGray) {
+            cameraColor.saturation.value -= Time.deltaTime;
+            yield return null;
+        }
+        if (cameraColor.saturation.value < -99f) cameraColor.saturation.value = -100f;
+        yield return null;
+    }
+
+    IEnumerator FadeToColor() {
+        while (cameraColor.saturation.value < 0.01f && !isGray) {
+            cameraColor.saturation.value += 1;
+            yield return null;
+        }
+        if (cameraColor.saturation.value > 0.001f) cameraColor.saturation.value = 0f;
+        yield return null;
     }
 
 }
