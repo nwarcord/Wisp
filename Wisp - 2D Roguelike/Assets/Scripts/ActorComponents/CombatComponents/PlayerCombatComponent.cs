@@ -15,7 +15,7 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
     protected override void SetAttacks() {
 
-        melee = new MeleeAttack(this.actorPosition);
+        melee = new MeleeAttack(this.actorPosition, 2);
         ranged = new RangedAttack(this.actorPosition, projectile);
         // aoe = new AoeAttack(this.actorPosition, thrown, this.grid);
         thrown = new RangedAttack(this.actorPosition, thrownProjectile);

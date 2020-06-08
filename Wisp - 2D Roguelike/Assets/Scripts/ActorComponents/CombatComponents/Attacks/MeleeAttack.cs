@@ -20,6 +20,14 @@ public class MeleeAttack : IAttack {
         cleaveAugment = new MeleeCleaveAugment();
     }
 
+    public MeleeAttack(Transform actorPosition, int damage) {
+        this.damage = damage;
+        this.actorPosition = actorPosition;
+        rangeAugment = new MeleeRangeAugment();
+        damageAugment = new DamageAugment();
+        cleaveAugment = new MeleeCleaveAugment();
+    }
+
     public MeleeAttack(int damage, Transform actorPosition, MeleeRangeAugment rangeAugment, DamageAugment damageAugment, MeleeCleaveAugment cleaveAugment) {
         this.damage = damage;
         this.actorPosition = actorPosition;

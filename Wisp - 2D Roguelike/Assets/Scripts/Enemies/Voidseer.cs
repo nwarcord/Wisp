@@ -10,7 +10,7 @@ public class Voidseer : Enemy {
     protected AudioClip meleeSound = default;
 
     protected override void SetHealth() {
-        this.health = 5;
+        this.health = 6;
     }
 
     protected override void SetCombat() {

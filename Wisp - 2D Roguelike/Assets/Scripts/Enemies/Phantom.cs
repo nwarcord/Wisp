@@ -8,7 +8,7 @@ public class Phantom : Enemy {
     protected AudioClip meleeSound = default;
 
     protected override void SetHealth() {
-        this.health = 4;
+        this.health = 5;
     }
 
     protected override void SetCombat() {

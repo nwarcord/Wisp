@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         // Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
         if (gameObject.activeInHierarchy) audioSource.PlayOneShot(hitSound);
+        StartCoroutine(TakeDamageAnim());
         if (health < 0) health = 0;
         EventManager.RaisePlayerHealthUpdate();
         if (health == 0) EventManager.RaisePlayerDied();
@@ -114,6 +115,13 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     private void PlayPlayerHeal() {
         audioSource.PlayOneShot(healSound, 0.7f);
+    }
+
+    private IEnumerator TakeDamageAnim() {
+        SpriteRenderer rend = GetComponent<SpriteRenderer>();
+        rend.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        rend.color = Color.white;
     }
 
 }
