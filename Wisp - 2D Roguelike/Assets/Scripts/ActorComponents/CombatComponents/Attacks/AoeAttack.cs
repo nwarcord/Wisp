@@ -24,7 +24,6 @@ public class AoeAttack : IAttack {
         // this.augment = newAugment;
     }
 
-    // public bool ExecuteAttack(Vector3 target) {
     public bool ExecuteAttack(Vector3 attackDirection) {
 
         Vector3 actorPos = actorPosition.position;
@@ -37,7 +36,6 @@ public class AoeAttack : IAttack {
         spawnPoint.y -= 0.5f;
 
         ThrownDestructable t = GameObject.Instantiate(thrownDestructable, spawnPoint, new Quaternion());
-        // t.SetTargetPoint(new Vector3());
         
         return true;
     }

@@ -6,7 +6,6 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
     private MeleeAttack melee;
     private RangedAttack ranged;
-    // private AoeAttack aoe;
     private RangedAttack thrown;
     [SerializeField]
     private Projectile projectile = default;
@@ -17,7 +16,6 @@ public class PlayerCombatComponent : BaseCombatComponent {
 
         melee = new MeleeAttack(this.actorPosition, 2);
         ranged = new RangedAttack(this.actorPosition, projectile);
-        // aoe = new AoeAttack(this.actorPosition, thrown, this.grid);
         thrown = new RangedAttack(this.actorPosition, thrownProjectile);
     }
 

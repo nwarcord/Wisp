@@ -6,15 +6,12 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
 
     [SerializeField]
     private int baseDamage = 0;
-    // [SerializeField]
-    // private int tileMovePerTurn = 0;
     [SerializeField]
     private bool isContinuous = false;
     [SerializeField]
     private int tileRange = 50;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
-    // private ProjectileMovement movement;
     private bool combatActive = false;
     private bool isCombatTurn = false;
     private Vector3 startingPoint;
@@ -40,10 +37,8 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
     void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
-        // movement = new ProjectileMovement(gameObject, this, GameObject.FindWithTag("Grid").GetComponent<Grid>());
         combatActive = GameState.combatState;
         startingPoint = transform.position;
-        // if (combatActive) movementStopped = true; // FIXME: Still has bug where combat started while player moving
         if (GameState.GameMovementStopped()) movementStopped = true;
         if (tileRange > 50) {
             Debug.LogError("Projectile range cannot exceed 50 tiles");
@@ -57,15 +52,6 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         CheckFlightDistance();
         isColliding = false;
     }
-
-    // public void TakeTurn() {
-    //     isCombatTurn = true;
-    //     StartCoroutine(TurnRoutine());
-    // }
-
-    // private void ProjectileMove() {
-    //     movement.AttemptMove(transform.position + ((transform.up - transform.right).normalized * tileMovePerTurn));
-    // }
 
     private void CheckFlightDistance() {
         if (CurrentFlightDistance() >= tileRange) {
@@ -103,12 +89,5 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
     private void DisableMovement() {
         movementStopped = true;
     }
-
-    // public IEnumerator TurnRoutine() {
-    //     ProjectileMove();
-    //     yield return null;
-    //     EventManager.RaiseActorTurnOver();
-    //     isCombatTurn = false;
-    // }
 
 }

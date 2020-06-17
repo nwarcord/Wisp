@@ -6,7 +6,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
 
     public GameObject player; // User controlled GameObject
     private PlayerController playerController;
-    private MovementComponent playerMovement;
+    // private MovementComponent playerMovement;
     private PlayerCombatComponent playerCombat;
     private const float delayDuration = 25f;
     private float inputDelay = delayDuration;
@@ -59,7 +59,7 @@ public class UserInput : MonoBehaviour/*, ITurnAct*/ {
     // Using Start instead of Awake to ensure Player is initialized first
     public void Start() {
         playerController = player.GetComponent<PlayerController>();
-        playerMovement = playerController.GetMovement();
+        // playerMovement = playerController.GetMovement();
         playerCombat = playerController.Combat();
         rb2D = player.GetComponent<Rigidbody2D>();
         meleeSprite = player.transform.GetChild(0).GetComponent<MeleeAttackSprite>();
