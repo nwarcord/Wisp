@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
+    private const int maxHealth = 10;
     private int health;
     private PlayerCombatComponent combat;
-    private MovementComponent movement;
     private BoxCollider2D boxCollider;
     private CircleCollider2D circleCollider;
-    [SerializeField]
-    private Grid grid = default;
     private AudioSource audioSource;
     [SerializeField]
     private AudioClip meleeSound = default;
@@ -44,11 +42,8 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         combat = gameObject.GetComponent<PlayerCombatComponent>();
-        movement = new MovementComponent(gameObject, this, grid);
         audioSource = gameObject.GetComponent<AudioSource>();
     }
-
-    // private void Update() {}
 
     public PlayerCombatComponent Combat() {
         return this.combat;
@@ -72,13 +67,12 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     }
 
     public void TakeDamage(int damage) {
-        // Debug.Log("PLAYER DAMAGED | Health before: " + this.health + " and after: " + (this.health - damage));
         health -= damage;
         if (gameObject.activeInHierarchy) audioSource.PlayOneShot(hitSound);
+        StartCoroutine(TakeDamageAnim());
         if (health < 0) health = 0;
         EventManager.RaisePlayerHealthUpdate();
         if (health == 0) EventManager.RaisePlayerDied();
-        // Debug.Log("Player health: " + this.health + " | Damage taken: " + damage);
     }
 
     public bool IsAlive() {
@@ -88,17 +82,13 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
     public void Heal(int amount) {
         this.health += amount;
         PlayPlayerHeal();
-        if (this.health > 10) this.health = 10;
+        if (this.health > maxHealth) this.health = maxHealth;
         EventManager.RaisePlayerHealthUpdate();
     }
 
     // ----------------------------------------------------------------
     // Turn mechanics
     // ----------------------------------------------------------------
-
-    public MovementComponent GetMovement() {
-        return movement;
-    }
 
     public AudioSource GetAudioSource() {
         return audioSource;
@@ -114,6 +104,13 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
 
     private void PlayPlayerHeal() {
         audioSource.PlayOneShot(healSound, 0.7f);
+    }
+
+    private IEnumerator TakeDamageAnim() {
+        SpriteRenderer rend = GetComponent<SpriteRenderer>();
+        rend.color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        rend.color = Color.white;
     }
 
 }

@@ -12,6 +12,7 @@ public class MeleeAttackSprite : MonoBehaviour {
         sprite.enabled = false;
     }
 
+    // Orient melee sprite and enable
     public void SpawnOrientation(Vector3 actorCoords, Vector3 attackCoords) {
         Vector3 attackModified = attackCoords;
         attackModified.z = 0;

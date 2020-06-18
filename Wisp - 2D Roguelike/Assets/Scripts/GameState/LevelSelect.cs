@@ -37,11 +37,13 @@ public class LevelSelect : MonoBehaviour {
         }
     }
 
+    // Wait for menu animation to finish
     IEnumerator MenuScreenLoad() {
         yield return new WaitForSeconds(2f);
         loading = false;
     }
 
+    // Load selected scene
     private void LevelPlay(int num) {
         SceneManager.LoadScene(num);
     }

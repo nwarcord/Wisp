@@ -35,6 +35,7 @@ public class ThrownCooldown : MonoBehaviour {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
+    // Called 50 times per second
     private void FixedUpdate() {
         if (coolingDown && (!combatActive || isActive)) {
             countdown--;
@@ -52,20 +53,9 @@ public class ThrownCooldown : MonoBehaviour {
     }
 
     private void OnCooldown() {
-        // if (coolingDown) {
-        //     // StopAllCoroutines();
-        //     player.TakeDamage(1);
-        // }
-        // else {
         if (!coolingDown) {
-            // countdown = duration;
-            // image.color = Color.gray;
-            // coolingDown = true;
-            // EventManager.RaiseThrownOnCooldown();
             StartCoroutine(SlightWait());
         }
-        
-        // StartCoroutine(RefreshCooldown());
     }
 
     private void RefreshCooldown() {
@@ -81,12 +71,6 @@ public class ThrownCooldown : MonoBehaviour {
         coolingDown = true;
         EventManager.RaiseThrownOnCooldown();
     }
-
-    // IEnumerator RefreshCooldown() {
-    //     yield return new WaitForSeconds(1.5f);
-    //     image.color = Color.white;
-    //     coolingDown = false;
-    // }
 
     private void CombatIsActive() {
         combatActive = true;

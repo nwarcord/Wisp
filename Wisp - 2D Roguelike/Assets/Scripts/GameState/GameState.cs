@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameState : MonoBehaviour {
 
-    // private const int uniqueEnemies = 3;
-
     private GameObject player;
-    // private TurnSystem turnSystem;
-    public static Grid grid;
     public static bool combatState = false;
     private static int combatants = 0;
     [SerializeField]
@@ -21,26 +18,32 @@ public class GameState : MonoBehaviour {
     private GameObject gameOverPrompt = default;
     private int currentEnemies = 0;
 
+    private bool isGray = false;
+
+    private ColorGrading cameraColor;
+
     private bool gameEnding = false;
 
+    // ----------------------------------------------------------------
+    // GameState Initialization
+    // ----------------------------------------------------------------
+
     private void OnEnable() {
-        // EventManager.aggroPlayer += InitTurnSystem;
         EventManager.aggroPlayer += CombatEnabled;
-        // EventManager.combatOver += ClearTurnSystem;
         EventManager.enemyDeath += EnemyDeath;
-        SceneManager.activeSceneChanged += UpdateGrid;
         EventManager.playerDied += GameOver;
         EventManager.levelComplete += LevelComplete;
+        EventManager.playerMoving += SetCameraColorNormal;
+        EventManager.playerStopped += SetCameraGrayscale;
     }
 
     private void OnDisable() {
-        // EventManager.aggroPlayer -= InitTurnSystem;
         EventManager.aggroPlayer -= CombatEnabled;
-        // EventManager.combatOver -= ClearTurnSystem;
         EventManager.enemyDeath -= EnemyDeath;
-        SceneManager.activeSceneChanged -= UpdateGrid;
         EventManager.playerDied -= GameOver;
         EventManager.levelComplete -= LevelComplete;
+        EventManager.playerMoving -= SetCameraColorNormal;
+        EventManager.playerStopped -= SetCameraGrayscale;
     }
 
     void Awake() {
@@ -50,56 +53,38 @@ public class GameState : MonoBehaviour {
         objectivePrompt.GetComponent<Image>().enabled = false;
         winPrompt.GetComponent<Image>().enabled = false;
         gameOverPrompt.GetComponent<Image>().enabled = false;
+        GameObject.FindWithTag("EffectCamera").GetComponent<PostProcessVolume>().profile.TryGetSettings(out cameraColor);
         IgnoreSpawnerColliders();
-        InitGrid();
-        // DontDestroyOnLoad(gameObject);
     }
 
     private void Start() {
         StartCoroutine(ImageDelayAndShow(objectivePrompt));
         SetCurrentEnemies();
-        // Debug.Log("Enemies in scene: " + currentEnemies);
-        // Debug.Log("Combat State: " + combatState);
-        // Debug.Log("Combatants: " + combatants);
     }
+
+    // ----------------------------------------------------------------
+    // Frame-to-frame behavior
+    // ----------------------------------------------------------------
 
     private void Update() {
         if (currentEnemies == 0) {
-            // EventManager.RaiseLevelComplete();
             LevelComplete();
         }
         if (Input.GetKey(KeyCode.Escape)) {
             LoadMainMenu();
         }
+        if (!combatState && isGray) SetCameraColorNormal();
     }
 
-    private void InitTurnSystem(ITurnAct enemy) {
-        combatants++;
-        if (combatState) {
-            EventManager.RaiseCombatSpawn(enemy);
-        }
-        else {
-            // turnSystem = gameObject.AddComponent<TurnSystem>() as TurnSystem;
-            EventManager.RaiseCombatStart();
-            combatState = true;
-            // turnSystem.NextTurn();
-        }
-    }
+    // ----------------------------------------------------------------
+    // Combat State
+    // ----------------------------------------------------------------
 
     private void CombatEnabled() {
         if (!combatState) EventManager.RaiseCombatStart();
         combatState = true;
         combatants++;
     }
-
-    // private void ClearTurnSystem() {
-    //     if (combatState) {
-    //         combatants = 0;
-    //         combatState = false;
-    //         // Destroy(turnSystem);
-    //         // Debug.Log("Turn System deleted.");
-    //     }
-    // }
 
     private void EnemyDeath() {
         if (combatState) {
@@ -114,23 +99,23 @@ public class GameState : MonoBehaviour {
         Debug.Log("Enemy killed | Enemies remaining: " + currentEnemies);
     }
 
+    // ----------------------------------------------------------------
+    // Level Initialization
+    // ----------------------------------------------------------------
+
     private void IgnoreSpawnerColliders() {
         Physics2D.IgnoreLayerCollision(11, 8);
         // Physics2D.IgnoreLayerCollision(11, 9);
         Physics2D.IgnoreLayerCollision(11, 10);
     }
 
-    private void UpdateGrid(Scene current, Scene next) {
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-    }
-
-    private void InitGrid() {
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-    }
-
     public static bool GameMovementStopped() {
         return combatState && Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0;
     }
+
+    // ----------------------------------------------------------------
+    // Level and UI States
+    // ----------------------------------------------------------------
 
     private void LevelComplete() {
         if (gameEnding) return;
@@ -143,7 +128,6 @@ public class GameState : MonoBehaviour {
         gameEnding = true;
         StartCoroutine(ImageDelayAndEnd(gameOverPrompt));
         player.SetActive(false);
-        // GameObject.Find("UserInput").SetActive(false);
     }
 
     private IEnumerator ImageDelayAndShow(GameObject imageObject) {
@@ -157,15 +141,10 @@ public class GameState : MonoBehaviour {
         yield return new WaitForSecondsRealtime(1.5f);
         imageObject.GetComponent<Image>().enabled = true;
         yield return new WaitForSecondsRealtime(2.5f);
-        // imageObject.GetComponent<Image>().enabled = false;
-        // UnityEditor.EditorApplication.isPlaying = false;
         LoadMainMenu();
     }
 
     private void SetCurrentEnemies() {
-        // currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        // Enemy[] enemies = Resources.FindObjectsOfTypeAll<Enemy>();
-        // foreach (Enemy enemy in enemies) Debug.Log("Enemy -> " + enemy);
         currentEnemies = Resources.FindObjectsOfTypeAll<Enemy>().Length;
     }
 
@@ -173,6 +152,40 @@ public class GameState : MonoBehaviour {
         combatants = 0;
         combatState = false;
         SceneManager.LoadScene(0);
+    }
+
+    // ----------------------------------------------------------------
+    // Time-Stop Camera Effects
+    // ----------------------------------------------------------------
+
+    private void SetCameraGrayscale() {
+        isGray = true;
+        StopCoroutine(FadeToColor());
+        StartCoroutine(FadeToGray());
+    }
+
+    private void SetCameraColorNormal() {
+        isGray = false;
+        StopCoroutine(FadeToGray());
+        StartCoroutine(FadeToColor());
+    }
+
+    IEnumerator FadeToGray() {
+        while (cameraColor.saturation.value > -99.99f && isGray) {
+            cameraColor.saturation.value -= Time.deltaTime;
+            yield return null;
+        }
+        if (cameraColor.saturation.value < -99f) cameraColor.saturation.value = -100f;
+        yield return null;
+    }
+
+    IEnumerator FadeToColor() {
+        while (cameraColor.saturation.value < 0.01f && !isGray) {
+            cameraColor.saturation.value += 1;
+            yield return null;
+        }
+        if (cameraColor.saturation.value > 0.001f) cameraColor.saturation.value = 0f;
+        yield return null;
     }
 
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+// ----------------------------------------------------------------
+// Not currently in use
+// ----------------------------------------------------------------
+
 // Enum for state choice? Patrol - Move - Attack (with type)
 
 public abstract class BaseAIComponent : MonoBehaviour {
