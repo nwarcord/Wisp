@@ -53,6 +53,7 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         isColliding = false;
     }
 
+    // Determine if max range has been met
     private void CheckFlightDistance() {
         if (CurrentFlightDistance() >= tileRange) {
             Destroy(gameObject);
@@ -71,6 +72,7 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         combatActive = false;
     }
 
+    // When colliding with another object
     private void OnTriggerEnter2D(Collider2D other) {
         ICanBeDamaged victim = other.gameObject.GetComponent<ICanBeDamaged>();
         if (victim != null && !isColliding) {

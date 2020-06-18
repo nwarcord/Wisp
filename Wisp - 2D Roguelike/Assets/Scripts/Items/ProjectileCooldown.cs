@@ -35,6 +35,7 @@ public class ProjectileCooldown : MonoBehaviour {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
+    // Called 50 times per second
     private void FixedUpdate() {
         if (coolingDown && (!combatActive || isActive)) {
             countdown--;
@@ -51,9 +52,9 @@ public class ProjectileCooldown : MonoBehaviour {
         }
     }
 
+    // If on cooldown, deal damage to the player
     private void SelfDamage() {
         if (coolingDown) {
-            // StopAllCoroutines();
             player.TakeDamage(1);
         }
         else {
@@ -61,7 +62,6 @@ public class ProjectileCooldown : MonoBehaviour {
         }
         image.color = Color.red;
         coolingDown = true;
-        // StartCoroutine(RefreshCooldown());
     }
 
     private void RefreshCooldown() {
@@ -69,11 +69,9 @@ public class ProjectileCooldown : MonoBehaviour {
         coolingDown = false;
     }
 
-    // IEnumerator RefreshCooldown() {
-    //     yield return new WaitForSeconds(1.5f);
-    //     image.color = Color.white;
-    //     coolingDown = false;
-    // }
+    // ----------------------------------------------------------------
+    // Gamestate related behavior
+    // ----------------------------------------------------------------
 
     private void CombatIsActive() {
         combatActive = true;

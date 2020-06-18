@@ -44,6 +44,7 @@ public class MeleeAttack : IAttack {
         Vector2 overlapSpawn = new Vector2();
         Vector2 overlapSize = new Vector2(1.5f, 1f);
         int overlapDegrees = 0;
+        
         // If pointing up
         if (difference.y > 0 && (difference.x <= midPoint && difference.x >= -midPoint)) {
             overlapSpawn = new Vector2(actorPos.x, actorPos.y + 0.5f);
@@ -62,8 +63,11 @@ public class MeleeAttack : IAttack {
             overlapDegrees = 90;
             overlapSpawn = new Vector2(actorPos.x - 0.5f, actorPos.y);
         }
+
         bool gottaHit = false;
+        // Get all actors in melee zone
         Collider2D[] victims = Physics2D.OverlapBoxAll(overlapSpawn, overlapSize, overlapDegrees, LayerMask.GetMask("Characters", "Player"));
+        // If the actor isn't of same type as this actor, deal damage
         foreach(Collider2D collider in victims) {
             ICanBeDamaged victim = collider.GetComponent<ICanBeDamaged>();
             if (victim != null && collider.gameObject.tag != actorPosition.gameObject.tag) {

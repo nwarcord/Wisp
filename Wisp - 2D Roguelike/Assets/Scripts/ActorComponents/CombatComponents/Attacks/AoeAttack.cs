@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Not currently used - to be implemented (maybe)
 public class AoeAttack : IAttack {
 
     private Transform actorPosition;

@@ -7,12 +7,6 @@ public class RangedAttack : IAttack {
     private Transform actorPosition;
     private Projectile projectile;
 
-    // public RangedAttack(Transform actorPosition, Projectile projectile, Grid grid) {
-    //     this.actorPosition = actorPosition;
-    //     this.projectile = projectile;
-    //     this.grid = grid;
-    // }
-
     public RangedAttack(Transform actorPosition, Projectile projectile) {
         this.actorPosition = actorPosition;
         this.projectile = projectile;
@@ -20,35 +14,22 @@ public class RangedAttack : IAttack {
 
     public bool ExecuteAttack(Vector3 attackDirection) {
         
-        // Debug.Log("Attack direction: " + attackDirection);
-
         Vector3 mousePosition = attackDirection;
         mousePosition.z = 0;
         Vector3 actorPos = actorPosition.position;
         actorPos.y -= 0.5f;
-        // Vector3Int gridDirection = grid.WorldToCell(attackDirection);
-        // Vector3Int actorTile = grid.WorldToCell(actorPosition.position);
-        // actorTile.y -= 1;
-        // gridDirection.z = actorTile.z;
-        // Vector3 spawnPoint = TileSystem.AdjacentTile(gridDirection, actorTile, actorPosition.position);
-        // spawnPoint.y -= 0.5f;
-        
-        // Vector3 spawnPoint = (attackDirection - actorPos).normalized;
-        // spawnPoint *= 3.5f;
-        // spawnPoint += actorPos;
 
         Vector3 spawnPoint = (mousePosition - actorPos).normalized;
-        // spawnPoint *= 1.5f;
         spawnPoint += actorPos;
 
-        if (spawnPoint == actorPos) return false;
-        if (Vector3.Magnitude(mousePosition - actorPos) < 0.5f) return false;
+        if (spawnPoint == actorPos) return false; // Don't spawn on this actor
+        if (Vector3.Magnitude(mousePosition - actorPos) < 0.5f) return false; // Extra check for spawn on actor
 
-        Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, -45) * (spawnPoint - actorPos);
+        Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, -45) * (spawnPoint - actorPos); // Direction to target
 
-        Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
+        Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget); // Rotation facing target
 
-        Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation);
+        Projectile p = GameObject.Instantiate(projectile, spawnPoint, targetRotation); // Spawn projectile
         
         return true;
 

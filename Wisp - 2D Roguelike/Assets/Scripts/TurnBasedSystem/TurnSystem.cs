@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ----------------------------------------------------------------
+// Obsolete TurnSystem class - kept for reference
+// ----------------------------------------------------------------
+
 public interface ITurnAct {
     void TakeTurn();
     IEnumerator TurnRoutine();
