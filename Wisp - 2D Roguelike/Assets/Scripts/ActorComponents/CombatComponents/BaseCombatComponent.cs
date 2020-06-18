@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface ICanBeDamaged {
+    
+    void TakeDamage(int damage);
+    bool IsAlive();
+
+}
+
 public abstract class BaseCombatComponent : MonoBehaviour {
 
     public bool inCombat { get; private set; }

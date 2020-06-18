@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ----------------------------------------------------------------
+// Obsolete class - kept for reference
+// ----------------------------------------------------------------
+
 public class ProjectileMovement {
 
 // Script to attach to objects, allowing movement in a grid-like pattern.

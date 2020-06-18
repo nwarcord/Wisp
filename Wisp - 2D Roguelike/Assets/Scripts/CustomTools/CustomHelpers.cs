@@ -56,41 +56,6 @@ public static class CustomHelpers {
 #endif
 	}
 
-	// Start of pathfinding - needs to take value into account
-
-	// public static Vector3 Pathfinding(Vector3 start, Vector3 target) {
-
-	// 	int runCount = 1;
-
-	// 	Vector3 targetCopy = target;
-	// 	targetCopy.z = 0;
-	// 	Queue<Vector3> path = new Queue<Vector3>();
-	// 	List<Vector3> finalPath = new List<Vector3>();
-	// 	path.Enqueue(targetCopy);
-	// 	while (path.Count > 0) {
-	// 		Debug.Log(runCount++);
-	// 		if (runCount >= 42) break;
-	// 		Vector3 current = path.Dequeue();
-	// 		if (current.x == start.x && current.y == start.y) break;
-	// 		finalPath.Add(current);
-	// 		Vector3 up = new Vector3(current.x, current.y + 1, current.z + 1);
-	// 		Vector3 down = new Vector3(current.x, current.y - 1, current.z + 1);
-	// 		Vector3 left = new Vector3(current.x - 1, current.y, current.z + 1);
-	// 		Vector3 right = new Vector3(current.x + 1, current.y, current.z + 1);
-	// 		if (TileSystem.ObjectAtTile(up) == null) path.Enqueue(up);
-	// 		if (TileSystem.ObjectAtTile(down) == null) path.Enqueue(down);
-	// 		if (TileSystem.ObjectAtTile(left) == null) path.Enqueue(left);
-	// 		if (TileSystem.ObjectAtTile(right) == null) path.Enqueue(right);
-	// 	}
-
-	// 	if (path.Count == 0) return start;
-
-	// 	Vector3 moveTo = path.Dequeue();
-	// 	moveTo.z = 0;
-	// 	return moveTo;
-
-	// }
-
 	public static float GetRandomValue(int to) {
 		return rand.Next(to + 1);
 	}
