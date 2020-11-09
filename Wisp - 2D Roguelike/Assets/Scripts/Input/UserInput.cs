@@ -7,7 +7,7 @@ public class UserInput : MonoBehaviour, ITurnAct {
     public GameObject player; // User controlled GameObject
     private MovementComponent playerMovement;
     private PlayerCombatComponent playerCombat;
-    private const float delayDuration = 0.5f;
+    private const float delayDuration = 0.15f;
     private float inputDelay = delayDuration;
     private bool inputEnabled = true; // User input flag
     private bool actionTaken = false; // For turn coroutine

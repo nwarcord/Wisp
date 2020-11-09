@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 8331676982162608915, guid: dbef91857e95ef044ab606afff7e2707,
+        type: 3}
+      propertyPath: orthographic size
+      value: 11.39236
+      objectReference: {fileID: 0}
     - target: {fileID: 8331676982162608937, guid: dbef91857e95ef044ab606afff7e2707,
         type: 3}
       propertyPath: minBoundaryX
@@ -153,6 +158,11 @@ PrefabInstance:
       propertyPath: maxBoundaryY
       value: 
       objectReference: {fileID: 284995286}
+    - target: {fileID: 8331676982162608937, guid: dbef91857e95ef044ab606afff7e2707,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8331676982162608940, guid: dbef91857e95ef044ab606afff7e2707,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -161,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 8331676982162608940, guid: dbef91857e95ef044ab606afff7e2707,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -6.3
       objectReference: {fileID: 0}
     - target: {fileID: 8331676982162608940, guid: dbef91857e95ef044ab606afff7e2707,
         type: 3}

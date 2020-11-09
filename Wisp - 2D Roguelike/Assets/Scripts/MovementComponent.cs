@@ -89,7 +89,8 @@ public class MovementComponent {
 
             // If no collision, then start coroutine for movement
             if (hit.transform == null) {
-                mb.StartCoroutine(SmoothMovement(endPos));
+                // mb.StartCoroutine(SmoothMovement(endPos));
+                actorTransform.position = endPos;
                 return true;
             }
         }
