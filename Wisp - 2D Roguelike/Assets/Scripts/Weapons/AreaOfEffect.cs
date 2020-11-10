@@ -61,7 +61,8 @@ public class AreaOfEffect : MonoBehaviour {
         // For each victim, deal damage
         for (int i = 0; i < victims; i++) {
             ICanBeDamaged victim = hitColliders2d[i].gameObject.GetComponent<ICanBeDamaged>();
-            if (victim != null) victim.TakeDamage(damagePerTick);
+            // if (victim != null) victim.TakeDamage(damagePerTick);
+            if (victim != null) victim.TakeDamage(new AttackInfo(damagePerTick));
         }
 
     }

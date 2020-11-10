@@ -4,9 +4,25 @@ using UnityEngine;
 
 public interface ICanBeDamaged {
     
-    void TakeDamage(int damage);
+    void TakeDamage(AttackInfo attackInfo);
+    // void TakeDamage(int damage);
     bool IsAlive();
 
+}
+
+public class AttackInfo {
+    public int damage { get; private set; }
+    public Vector3 pointOfHit { get; private set; }
+
+    public AttackInfo(int damage) {
+        this.damage = damage;
+        this.pointOfHit = new Vector3();
+    }
+
+    public AttackInfo(int damage, Vector3 pointOfHit) {
+        this.damage = damage;
+        this.pointOfHit = pointOfHit;
+    }
 }
 
 public abstract class BaseCombatComponent : MonoBehaviour {

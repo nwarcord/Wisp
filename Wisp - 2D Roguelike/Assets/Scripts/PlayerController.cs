@@ -66,8 +66,17 @@ public class PlayerController : MonoBehaviour, ICanBeDamaged {
         Debug.Log("Player left combat");
     }
 
-    public void TakeDamage(int damage) {
-        health -= damage;
+    // public void TakeDamage(int damage) {
+    //     health -= damage;
+    //     if (gameObject.activeInHierarchy) audioSource.PlayOneShot(hitSound);
+    //     StartCoroutine(TakeDamageAnim());
+    //     if (health < 0) health = 0;
+    //     EventManager.RaisePlayerHealthUpdate();
+    //     if (health == 0) EventManager.RaisePlayerDied();
+    // }
+    
+    public void TakeDamage(AttackInfo attackInfo) {
+        health -= attackInfo.damage;
         if (gameObject.activeInHierarchy) audioSource.PlayOneShot(hitSound);
         StartCoroutine(TakeDamageAnim());
         if (health < 0) health = 0;

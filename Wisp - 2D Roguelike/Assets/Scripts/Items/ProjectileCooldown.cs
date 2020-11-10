@@ -55,7 +55,8 @@ public class ProjectileCooldown : MonoBehaviour {
     // If on cooldown, deal damage to the player
     private void SelfDamage() {
         if (coolingDown) {
-            player.TakeDamage(1);
+            // player.TakeDamage(1);
+            player.TakeDamage(new AttackInfo(1));
         }
         else {
             countdown = duration;

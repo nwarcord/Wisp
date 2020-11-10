@@ -77,7 +77,8 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         ICanBeDamaged victim = other.gameObject.GetComponent<ICanBeDamaged>();
         if (victim != null && !isColliding) {
             isColliding = true;
-            victim.TakeDamage(baseDamage);
+            // victim.TakeDamage(baseDamage);
+            victim.TakeDamage(new AttackInfo(baseDamage));
         }
         if (!isContinuous) {
             Destroy(gameObject);

@@ -19,7 +19,7 @@ public class BasicMeleeAttack {
         if (target != null && TileSystem.TileDistance(target.position, actorPosition.position) <= (range + rangeMod)) {
             ICanBeDamaged victim = target.GetComponent<ICanBeDamaged>();
             if (victim != null) {
-                victim.TakeDamage(damage + dmgMod);
+                // victim.TakeDamage(damage + dmgMod);
                 return true;
             }
 

@@ -18,10 +18,12 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
     protected BaseAIComponent ai;
     private bool movementStopped = false;
     private SpriteRenderer sprite;
+    private bool pushingBack = false;
 
     protected AIDestinationSetter destinationSetter;
     protected Transform target;
     protected AIPath aIPath;
+    protected float aiMaxSpeed;
 
     protected MeleeAttackSprite meleeAttack;
 
@@ -72,7 +74,14 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (!combat.inCombat && PlayerVisible()) AggroPlayer();
         if (!movementStopped) aIPath.canMove = true;
         else aIPath.canMove = false;
-        if (aIPath.canMove) TakeAction();
+        if (aIPath.canMove && !pushingBack) TakeAction();
+        else if (aIPath.canMove && pushingBack) {
+            if (aIPath.reachedEndOfPath) {
+                destinationSetter.enabled = true;
+                pushingBack = false;
+                aIPath.maxSpeed = aiMaxSpeed;
+            }
+        }
     }
 
     protected void Init() {
@@ -90,6 +99,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         dyingBreath = gameObject.GetComponent<DyingBreath>();
         loot = gameObject.GetComponent<LootPool>();
         dynamicGridObstacle = gameObject.GetComponent<DynamicGridObstacle>();
+        aiMaxSpeed = aIPath.maxSpeed;
         SetHealth();
         SetCombat();
         SetVision();
@@ -120,13 +130,21 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         return playerTransform.position;
     }
 
-    public void TakeDamage(int damage) {
-        // Debug.Log("ENEMY DAMAGED");
-        health -= damage;
+    // public void TakeDamage(int damage) {
+    //     health -= damage;
+    //     StartCoroutine(TakeDamageAnim());
+    //     if (!IsAlive()) Die();
+    //     if (!combat.inCombat) AggroPlayer();
+    //     PlayDamagedSound();
+    // }
+
+    public void TakeDamage(AttackInfo attackInfo) {
+        health -= attackInfo.damage;
         StartCoroutine(TakeDamageAnim());
         if (!IsAlive()) Die();
         if (!combat.inCombat) AggroPlayer();
         PlayDamagedSound();
+        if (attackInfo.pointOfHit != Vector3.zero) Pushback(attackInfo.pointOfHit);
     }
 
     public bool IsAlive() {
@@ -214,6 +232,13 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         rend.color = Color.red;
         yield return new WaitForSeconds(0.25f);
         rend.color = Color.white;
+    }
+
+    private void Pushback(Vector3 pushDirection) {
+        destinationSetter.enabled = false;
+        pushingBack = true;
+        aIPath.destination = pushDirection;
+        aIPath.maxSpeed = 20f;
     }
 
 }

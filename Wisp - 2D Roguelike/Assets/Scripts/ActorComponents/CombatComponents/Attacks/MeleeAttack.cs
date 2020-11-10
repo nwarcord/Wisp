@@ -71,7 +71,8 @@ public class MeleeAttack : IAttack {
         foreach(Collider2D collider in victims) {
             ICanBeDamaged victim = collider.GetComponent<ICanBeDamaged>();
             if (victim != null && collider.gameObject.tag != actorPosition.gameObject.tag) {
-                victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
+                // victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
+                victim.TakeDamage(new AttackInfo(damageAugment.ModifiedDmg(this.damage)));
                 gottaHit = true;
             }
         }
