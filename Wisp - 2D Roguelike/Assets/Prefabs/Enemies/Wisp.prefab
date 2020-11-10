@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 425454142946390744}
   - component: {fileID: 5083265607127317238}
   - component: {fileID: 2885100297982848262}
+  - component: {fileID: 2872607766393624927}
   m_Layer: 9
   m_Name: Wisp
   m_TagString: Enemy
@@ -59,6 +60,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -123,7 +125,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6403043758388874316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -377,6 +379,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSound: {fileID: 8300000, guid: 5da6e3e074b2a9b4b96a95db7b7fb9c5, type: 3}
+--- !u!114 &2872607766393624927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6403043758388874316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 2209315586564985223
+  updateError: 1
+  checkTime: 0.2
 --- !u!1001 &4238660193882826107
 PrefabInstance:
   m_ObjectHideFlags: 0

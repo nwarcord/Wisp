@@ -33,6 +33,8 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     private LootPool loot;
 
+    private DynamicGridObstacle dynamicGridObstacle;
+
     // ----------------------------------------------------------------
     // Initialization
     // ----------------------------------------------------------------
@@ -87,6 +89,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         sprite = gameObject.GetComponent<SpriteRenderer>();
         dyingBreath = gameObject.GetComponent<DyingBreath>();
         loot = gameObject.GetComponent<LootPool>();
+        dynamicGridObstacle = gameObject.GetComponent<DynamicGridObstacle>();
         SetHealth();
         SetCombat();
         SetVision();
@@ -152,6 +155,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
         if (MyTurn() && IsAlive()) {
             if (combat.inCombat) CombatBehavior();
             else NonCombatBehavior();
+            // dynamicGridObstacle.DoUpdateGraphs();
         }
     }
 
@@ -202,6 +206,7 @@ public abstract class Enemy : MonoBehaviour, ICanBeDamaged {
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (!combat.inCombat) aIPath.destination = this.transform.position;
+        // else movementStopped = false;
     }
 
     private IEnumerator TakeDamageAnim() {

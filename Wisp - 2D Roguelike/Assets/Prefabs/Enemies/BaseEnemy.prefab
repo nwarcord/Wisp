@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1550044744364607209}
   - component: {fileID: 1550044744364607210}
   - component: {fileID: 1550044744364606997}
+  - component: {fileID: 8924986814583042735}
   m_Layer: 9
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -50,6 +51,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -163,3 +165,19 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 0
   runOnlyOnce: 0
+--- !u!114 &8924986814583042735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550044744364607211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183748dd497aa473a98ff0cd8cb67fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 483638795546973193
+  updateError: 1
+  checkTime: 0.2
