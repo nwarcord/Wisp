@@ -66,13 +66,18 @@ public class MeleeAttack : IAttack {
 
         bool gottaHit = false;
         // Get all actors in melee zone
-        Collider2D[] victims = Physics2D.OverlapBoxAll(overlapSpawn, overlapSize, overlapDegrees, LayerMask.GetMask("Characters", "Player"));
+        Collider2D[] victims = Physics2D.OverlapBoxAll(overlapSpawn, overlapSize, overlapDegrees, LayerMask.GetMask("Characters", "Player", "Items"));
         // If the actor isn't of same type as this actor, deal damage
         foreach(Collider2D collider in victims) {
             ICanBeDamaged victim = collider.GetComponent<ICanBeDamaged>();
             if (victim != null && collider.gameObject.tag != actorPosition.gameObject.tag) {
                 // victim.TakeDamage(damageAugment.ModifiedDmg(this.damage));
                 victim.TakeDamage(new AttackInfo(damageAugment.ModifiedDmg(this.damage)));
+                gottaHit = true;
+            }
+            else if (collider.GetComponent<Projectile>()) {
+                Debug.Log("Deflection!");
+                collider.GetComponent<Projectile>().Deflect();
                 gottaHit = true;
             }
         }

@@ -93,4 +93,8 @@ public class Projectile : MonoBehaviour/*, ITurnAct*/ {
         movementStopped = true;
     }
 
+    public void Deflect() {
+        transform.rotation *= Quaternion.Euler(0, 0, 180f);
+    }
+
 }
